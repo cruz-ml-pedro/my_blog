@@ -1,0 +1,583 @@
+---
+title: "Cotação do ouro- Modelos"
+author: "Pedro Lima"
+date: "2023-07-27"
+categories: [EDA, Série-Temporal,R]
+toc: true
+toc-depth: 3
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 8, fig.height = 5)
+```
+
+# Análise exploratória - Cotação Ouro (GLD)
+
+Essa é a primeira postagem de uma série de posts relacionados a cotação ouro, obtidos do Yahoo Finanças. Nessa série, irei realizar a análise exploratória desses dados e modelá-los utilizando métodos clássicos e de aprendizado de máquina. Além disso, em um futuro próximo, buscaremos possíveis regressores que nos ajudem a aprimorar nossas previsões sobre o valor do ouro.
+
+A Análise Exploratória de Séries Temporais é um processo essencial na compreensão e interpretação de conjuntos de dados que evoluem ao longo do tempo. Por meio dessa abordagem, busca-se desvendar padrões, tendências e características intrínsecas presentes em dados sequenciais, permitindo uma visão aprofundada das variações temporais. Ao explorar visualizações, estatísticas descritivas, análise de autocorrelação e decomposição, entre outras técnicas, os analistas podem identificar relações de dependência, sazonalidades e eventos atípicos, contribuindo para uma compreensão mais sólida do comportamento temporal dos dados. Através dessa exploração minuciosa, a Análise Exploratória de Séries Temporais desempenha um papel fundamental no embasamento de decisões informadas e na construção de modelos de previsão mais precisos.
+
+## Carregando os pacotes utilizados
+
+Neste projeto, utilizaremos uma seleção de pacotes para análise avançada de séries temporais financeiras. Para facilitar o carregamento dos pacotes vamos usar a função `p_load()` oriundo do pacote pacman, que permite carregar as bibliotecas de modo unificado
+
+-   tidyquant: Este pacote agiliza a coleta e manipulação de dados financeiros, integrando-se ao "tidyverse" e permitindo aquisição de dados de diversas fontes, como Yahoo Finanças.
+
+-   tsibble: O "tsibble" fornece uma estrutura de dados eficiente para manipulação de séries temporais, facilitando o tratamento de datas, horários e valores.
+
+-   fabletools: Parte da família "fable", o "fabletools" oferece ferramentas para análise e previsão de séries temporais, tornando mais acessíveis técnicas avançadas.
+
+-   timetk: Com foco na preparação de dados de séries temporais, o "timetk" oferece métodos simplificados para transformações e limpeza de informações temporais.
+
+-   tibbletime: Este pacote amplia as funcionalidades do "tibble" para dados temporais, permitindo manipulações intuitivas e agregações eficientes.
+
+-   feasts: O "feasts" é voltado para modelagem e previsão de séries temporais, com suporte para decomposição, ajuste de modelos e geração de previsões.
+
+-   tidyverse: Uma coleção de pacotes interligados para manipulação e visualização de dados. Com suas funcionalidades, ele é uma base sólida para análise.
+
+-   tseries: Focado em econometria e séries temporais, o "tseries" oferece métodos estatísticos e ferramentas para análise temporal avançada.
+
+-   WaveletComp: Este pacote é utilizado para análise de séries temporais por meio da transformada wavelet, permitindo identificar padrões em diferentes escalas.
+
+```{r}
+pacman::p_load(tidyquant, tsibble,fabletools,fabletools,timetk,fpp3,
+               tibbletime,feasts, tidyverse, tseries, WaveletComp,
+               tsoutliers, DT, plotly)
+```
+
+# Carregando os dados
+
+Para obter os dados que serão utilizados nesta série de posts, vamos utilizar a função `tq_get` do pacote `tidyquant`. Essa função tem como padrão a opção `stock.prices`, que retorna os valores de 'open', 'high', 'low', 'close', 'volume' e 'adjusted' do Yahoo Finanças. No entanto, é possível obter outras opções, como dividendos ou 'split' de ações, além de dados de outras fontes.
+
+Ao utilizarmos o padrão da função, informando apenas o símbolo da ação que desejamos obter, serão retornados todos os dados disponíveis para o período de tempo completo.
+
+```{r}
+# Obter dados da ação de ouro (código GLD)
+gold_data <- tq_get("GLD")
+```
+
+# Análise preliminar
+
+Uma vez que os dados foram carregados, podemos começar nossa análise. Vamos utilizar as funções `head` e `summary` para visualizar as primeiras linhas dos nossos dados e algumas estatísticas básicas.
+
+```{r}
+datatable(
+  gold_data,
+  options = list(
+    width = "100%",       # Definir a largura da tabela
+    columnDefs = list(
+      list(width = "30%", targets = 2),  # Ajustar a largura da coluna "Nome"
+      list(orderable = FALSE, targets = "_all")  # Desabilitar a ordenação em todas as colunas
+    ),
+    paging = TRUE,        # Ativar paginação
+    searching = FALSE,     # Ativar busca
+    style = "responsive"  # Estilo responsivo
+    )
+  ) %>% 
+  formatRound(
+  columns = colnames(gold_data)[sapply(gold_data, is.numeric)],
+  digits = 2
+)
+
+```
+
+Analisando a saída dessas funções, talvez o ponto mais relevante seja a irregularidade amostral, uma vez que os dados não possuem registros para os finais de semana e feriados. Isso pode gerar efeitos indesejáveis e até inviabilizar algumas análises.
+
+Dentre as diversas abordagens para lidar com essa situação, optaremos pelo método do "resampling", onde converteremos nossos dados que possuem uma frequência amostral diária em mensal.
+
+Apesar dessa técnica levar a uma perda de resolução, ela pode proporcionar uma simplificação do processamento e análise, além da diminuição do ruido nos dados. Pontos que serão muito positivos levando em conta o propósito demonstrativo deste post. É importante ressaltar que, dependendo do propósito da análise, a melhor opção seria utilizar o máximo de informação possível e optar pelo "descarte" de parte das informações apenas após uma avaliação mais criteriosa.
+
+## Reamostrando os dados
+
+Para criar as médias mensais e deixar o conjunto de dados no formato desejado, são necessários alguns passos, os quais são explicados nos comentários do código abaixo. Em suma, a principal função utilizada foi a `summarise` do pacote `dplyr`.
+
+```{r, message=FALSE, warning=FALSE}
+gold_data <-
+  gold_data %>% 
+  # criando variáveis ano e mês para cálculo das médias mensais
+  mutate(
+    year = lubridate::year(date),
+    month = lubridate::month(date)
+    )%>% 
+  #agrupando os dados pelas variáveis ano e mês
+  group_by(year,month) %>% 
+  #calculando as médias mensais
+  summarise(
+    month_mean = mean(close)
+    ) %>% 
+  #desagrupando os dados
+  ungroup() %>% 
+  #criando a variável que será usada com index temporal
+   mutate(
+     index = make_yearmonth(year,month)
+     ) %>% 
+  #renomeando a coluna dos valores
+  rename(
+    value = month_mean
+    ) %>%
+  #selecionando apenas as colunas de interesse
+  select(index,value) %>% 
+  # transformando os dados em tsibble, formato adequado para os pacotes utilizados
+  tsibble::tsibble() 
+
+
+head(gold_data)
+```
+
+## Gráfico da série temporal
+
+Agora que os dados estão no formato desejádo vamos criar um gráfico para uma primeira avaliação visual.
+
+```{r}
+gold_data %>% 
+  ggplot(aes(x=index,y=value))+
+  geom_line()+
+  geom_smooth(formula = y ~ s(x, bs = "cs"), method = 'gam')+
+  labs(title = "Valor Ouro 2013-2023")+
+  xlab("data")+
+  ylab("")+
+  theme_minimal()
+```
+
+Analisando o gráfico do conjunto de dados, é possível identificar apenas mudanças em sua tendência ao longo do tempo e que, aparentemente, a série não é estacionária e não possui valores extremos.
+
+## Identificando Outliers
+
+Embora o gráfico aparentemente não revele valores atípicos, iremos realizar uma verificação mais precisa utilizando o pacote `tsoutliers`. Esse pacote oferece uma opção automatizada para essa tarefa. Considerando que esses dados provêm de plataformas que disponibilizam valores oficiais do mercado de ações, a eventual presença de outliers nesses dados provavelmente estará ligada a eventos notáveis, e não a qualquer tipo de erro.
+
+```{r}
+tsoutliers::tso(ts(gold_data$value))
+```
+
+Nenhum outlier foi detectado, fato esperado já que os dados são médias mensais e portanto "suavizados".
+
+# Decompondo a série temporal
+
+Uma técnica comumente utilizada para extrair mais informações dos dados é a decomposição em diferentes componentes por meio de um modelo STL (Seasonal and Trend decomposition using Loess). O STL é uma técnica de decomposição de séries temporais que visa separar os padrões sazonais, de tendência e de erro de uma série temporal. Essa abordagem é amplamente utilizada para analisar e visualizar séries temporais que possuem componentes sazonais e de tendência. O método de decomposição STL utiliza um algoritmo baseado em suavização local (Loess) para estimar as componentes da série temporal.
+
+```{r}
+fit <- 
+  gold_data %>%
+  fabletools::model(
+    feasts::STL(value)
+  ) %>% 
+  fabletools::components() 
+```
+
+Vamso visualizar as componentes obtidas pelo modelo STL.
+
+```{r}
+fit %>% autoplot()
+```
+
+O modelo indica a presença de componentes de tendência, ruído e um componente sazonal. Além disso, são observadas estruturas aparentes dentro da componente de ruído. Antes de prosseguirmos e investigarmos a possível presença de componentes periódicos nos dados, vamos verificar se a componente "remainder" pode ser considerada ruído branco. Para isso, utilizaremos o teste de Ljung-Box, que verifica a existência de correlação significativa nos dados.
+
+```{r}
+fit %>% 
+  features(remainder, ljung_box, lag = 18)
+```
+
+O resultado do teste rejeita a hipótese nula de que não há autocorrelação nos resíduos. Assim, não podemos considerar que a componente não possui informações relevantes.
+
+# Análises espectrais
+
+Para investigar mais a fundo a presença de componentes periódicas nos dados à seguinte abordagem será adotada. Através do cálculo do espectro de potência e do escalogrma de wavelets, vamos verificar a presença e a evolução ao longo do registro das componentes espectrias nos dados originais e nas componentes (season, remainder) resultantes do modelo STL.
+
+A análise espectral é uma técnica fundamental em processamento de sinais e análise de dados que envolve decompor um sinal ou série temporal em suas componentes de frequência. Isso é alcançado por meio da transformada de Fourier ou outras técnicas similares, permitindo que o sinal seja representado no domínio das frequências em vez do domínio do tempo. A análise espectral é valiosa para identificar padrões periódicos, identificar frequências dominantes, detectar sazonalidades e compreender a estrutura subjacente de um sinal. Em muitos casos, a análise espectral pode revelar informações ocultas nos dados que não são facilmente perceptíveis na forma temporal original. Por exemplo, na análise de séries temporais financeiras, climáticas ou biológicas, a análise espectral pode ajudar a identificar ciclos recorrentes e comportamentos subjacentes. Além disso, a análise espectral é amplamente utilizada em áreas como processamento de áudio, telecomunicações, geofísica e muitos outros campos onde a interpretação das características de frequência dos dados é crucial para a compreensão e tomada de decisões informadas.
+
+## Remoção da tendência e normalização dos dados
+
+Uma etapa necessária antes de realizar a análise espectral de um conjunto de dados é a remoção da tendência, caso exista, e a normalização dos dados. Para isso, utilizaremos as componentes criadas pelo modelo STL, que foram salvas no objeto chamado "fit", em conjunto com a função base do R chamada `scale`. Embora a maioria das funções especializadas em análise espectral possuam essas etapas embutidas em sua execução, realizaremos separadamente para ilustrar o processo.
+
+```{r}
+detrend_ts <- 
+  fit %>%
+  mutate(
+    value = value - trend,
+    value = scale(value)
+    ) %>% 
+  select(index,value) 
+
+head(detrend_ts)
+```
+
+Pronto, nossos dados estão prontos para as análises espectrais!
+
+## Cálculo da transformada wavelet
+
+Para realizar essa análise, vamos utilizar o pacote `WaveletComp`. O código usado para calcular os valores e criar os gráficos será o mesmo tanto para os dados originais como para as saídas do modelo. Os códigos serão apresentados apenas na primeira aplicação e omitidos nas demais para evitar repetições desnecessárias.
+
+```{r, message=FALSE, warning=FALSE, error=FALSE, results='hide'}
+# Calculando a transformada wavelet dos dados sem o trend
+w.ouro.dt <- 
+  WaveletComp::analyze.wavelet(
+    detrend_ts,
+    "value",
+    date.format="%Y-%M",
+    loess.span = 0,
+    verbose=FALSE
+    )
+```
+
+```{r,message=FALSE, warning=FALSE, error=FALSE, results='hide', echo=FALSE}
+# Calculando a transformada wavelet anual
+w.ouro.y <- 
+  WaveletComp::analyze.wavelet(
+    fit,
+    "season_year",
+    date.format="%Y-%M",
+    verbose=FALSE
+    )
+
+```
+
+```{r,message=FALSE, warning=FALSE, error=FALSE, results='hide', echo=FALSE}
+# Calculando a transformada wavelet anual
+w.ouro.r <-WaveletComp::analyze.wavelet(fit,
+                            "remainder",
+                            date.format="%Y-%M",
+                            verbose=FALSE)
+
+```
+
+Uma vez calculada a transformada wavelet através da função `analyze.wavelet`, podemos criar o gráfico do espectro de potência dos dados sem tendência.
+
+```{r, warning=FALSE, message=FALSE}
+#Plot do gráfico de espectro de potência ad
+WaveletComp::wt.avg(w.ouro.dt, show.legend = FALSE)
+```
+
+O espectro de potência dos dados originais apresenta dois picos estatisticamente significativos, em aproximadamente 11 meses e 16 meses. Embora a presença desses dois picos seja evidente, os resultados não possuem uma boa resolução.
+
+Vamos verificar o comportamento dessas componentes ao longo da variável tempo. O código abaixo cria o gráfico do escalograma de wavelets, utilizando também a saída da função `analyze.wavelet`.
+
+```{r,warning=FALSE, message=FALSE}
+#Plot do escalograma de wavelet
+WaveletComp::wt.image(
+  w.ouro.dt, color.key = "interval",
+  legend.params = list(lab = "wavelet power levels"),
+  date.format="%Y-%m-%d",
+  show.date = TRUE
+  )
+```
+
+Assim como nos resultados anteriores, não existe uma boa resolução das compoentes espectrais. Apesar de presentes ao longo de todo o registro, os valores de atribuidos aos períodos detectados são baixos, atingindo seus valores mais altos na parte final do registro. Outro ponto a ser destacado é que as componentes sofrem peqenas mudanças em suas faixas ao longo do registro, podendo ser efeito de interações complexas entre as componentes como modulação.
+
+Vamos prosseguir com a análise e verificar os resultados para a componente season gerada pelo modelo STL.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+#Plot do gráfico de espectro de potência y
+WaveletComp::wt.avg(w.ouro.y, show.legend = FALSE)
+```
+
+Diferente dos resultados anteriores, as componentes aqui presentes são bem definidas e estão centradas em 12 meses e 6 meses. Outros pontos relevantes a serem destacados são: a ausência da componente de aproximadamente 16 meses, que estava presente nos resultados anteriores. Além disso, a componente de 6 meses apresenta significância estatística, o que difere dos resultados anteriores.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+#Plot do escalograma de wavelet
+WaveletComp::wt.image(
+  w.ouro.y, color.key = "interval",
+  legend.params = list(lab = "wavelet power levels"),
+  show.date = TRUE
+  )
+```
+
+As componentes detectadas nos resultados anteriores aparecem de forma contínua e bem definida ao longo de todo o registro. A componente anual apresenta comportamento semelhante ao longo de todo o registro. No entanto, a componente de 6 meses possui altos valores de amplitude atribuídos a ela apenas até a metade do tempo do registro, praticamente não apresentando energia na parte final.
+
+Vamos agora verificar a componente "remainder" criada pelo modelo STL
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+#Plot do gráfico de espectro de potência ad
+WaveletComp::wt.avg(w.ouro.r, show.legend = FALSE)
+```
+
+Apesar de ser tratada como resíduo pelo modelo STL, os resultados do espectro de potência são bastante similares aos dos dados originais, apresentando picos espectrais mais definidos. As componentes detectadas estão em torno de \~16 meses e 10 meses. Há também uma componente de \~6 meses, mas esta está fora da margem de significância estatística.
+
+Vamos verificar o escalograma de wavelets.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+#Plot do escalograma de wavelet
+WaveletComp::wt.image(
+  w.ouro.r, color.key = "interval",
+  legend.params = list(lab = "wavelet power levels"),
+  date.format="%Y-%b",
+  show.date = TRUE
+  )
+```
+
+É fácil notar a semelhança entre os resultados da componente "remainder" e os dados originais. Dessa forma, podemos concluir que o modelo STL não foi capaz de capturar a componente de \~16 meses ou a considerou como ruído vermelho. Isso é surpreendente, pois esse método é teoricamente capaz de identificar tanto padrões cíclicos como semicíclicos.
+
+## pontos mais relevantes
+
+Após analisarmos os dados originais (sem tendência) e as componentes geradas pelo modelo STL, encontramos evidências que nos levam a crer na presença de componentes periódicas em nossos dados. Caso essa informação seja confirmada, teremos uma boa capacidade de predição, o que resultará em modelos mais eficientes e robustos.
+
+# Análise de Autocorrelação
+
+A autocorrelação é um conceito chave na análise de séries temporais e dados sequenciais, indicando a relação entre observações em diferentes pontos no tempo. Ela mede a similaridade entre os valores de uma série e seus próprios valores atrasados (defasados) em diferentes intervalos de tempo. Quando a autocorrelação é forte, significa que os valores passados influenciam fortemente os valores futuros da série. Isso pode ser usado para identificar padrões cíclicos, sazonalidades e tendências nos dados. A função de autocorrelação é uma ferramenta essencial para entender a estrutura temporal dos dados e para selecionar adequadamente modelos de previsão. A autocorrelação também está intimamente relacionada ao conceito de estacionariedade, já que séries temporais estacionárias frequentemente exibem autocorrelações consistentes ao longo do tempo, o que facilita a aplicação de técnicas de modelagem e previsão.
+
+Um método adicional que pode ser empregado para identificar a existência de componentes periódicas é a análise de autocorrelação. Essa análise não apenas auxilia na detecção dessas componentes, mas também proporciona informações valiosas durante o processo de modelagem, tais como os coeficientes de correlação para diversos intervalos de tempo, que podem sinalizar a estacionariedade da série.
+
+A seguir, adotaremos a análise de autocorrelação para investigar a presença de periodicidade nos dados e avaliar a estacionariedade da série.
+
+Existem diversas funções disponíveis no ambiente R e em pacotes especializados para calcular e visualizar a função de autocorrelação. Entretanto, para aprimorar a visualização dessa função, optaremos por criar uma função personalizada. Isso simplificará a análise e interpretação dos resultados.
+
+```{r}
+tidy_acf <- function(data, value, lags = 0:20) {
+  
+  #value_expr <- enquo(value)
+  
+  acf_values <- data %>%
+    acf(lag.max = tail(lags, 1), plot = FALSE) %>%
+    .$acf %>%
+    .[,,1]
+  
+  ret <- tibble(acf = acf_values) %>%
+    rowid_to_column(var = "lag") %>%
+    mutate(lag = lag - 1) %>%
+    filter(lag %in% lags)
+  
+  return(ret)
+}
+```
+
+Uma vez que a função tenha sido criada, podemos prosseguir com a verificação da autocorrelação dos dados. Nesse contexto, iremos definir um intervalo de atraso de 127, um valor que ultrapassa a componente de aproximadamente 16 meses.
+
+```{r}
+max_lag <- nrow(gold_data)-1
+
+confidence <- 1.96 / sqrt(nrow(gold_data))
+
+
+tidy_acf(gold_data$value, lags = 0:max_lag) %>%
+  ggplot(aes(lag, acf)) +
+  geom_segment(aes(xend = lag, yend = 0), color = palette_light()[[1]]) +
+  geom_vline(xintercept = 18, linewidth = 1.8, color = palette_light()[[2]]) +
+  geom_hline(yintercept = confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  geom_hline(yintercept = -confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  annotate("text", label = "18 meses", x = 19, y = 0.8, 
+           color = palette_light()[[2]], size = 6, hjust = 0) +
+  theme_tq() +
+  labs(title = "ACF: Valor do Ouro ")
+```
+
+A análise de correlação reforça as conclusões das análises espectrais realizadas, apontando para uma correlação significativa com um atraso de 18 meses. Além disso, é perceptível a presença de vários atrasos com valores estatisticamente relevantes. Agora, vamos examinar mais detalhadamente esses resultados.
+
+Para isso, vamos utilizar a função que criamos a fim de ampliar nossa visão sobre os resultados, permitindo uma avaliação mais precisa.
+
+```{r}
+tidy_acf(gold_data$value, lags = 12:24) %>%
+  ggplot(aes(lag, acf)) +
+  geom_vline(xintercept = 18, linewidth = 3, color = palette_light()[[2]]) +
+  geom_segment(aes(xend = lag, yend = 0), color = palette_light()[[1]]) +
+  geom_hline(yintercept = confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  geom_hline(yintercept = -confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  geom_point(color = palette_light()[[1]], size = 2) +
+  geom_label(aes(label = acf %>% round(2)), vjust = -1,
+             color = palette_light()[[1]]) +
+  annotate("text", label = "18 meses", x =18.5, y = 0.8, 
+           color = palette_light()[[2]], size = 5, hjust = 0) +
+  theme_tq() +
+  labs(title = "ACF: Valor do Ouro",
+       subtitle = "Zoom entre os Lags 12 a 24")
+```
+
+Através desse enfoque mais detalhado, podemos observar que o último atraso com um valor igual ou superior a 0.5, teoricamente fornecendo um sólido potencial de previsão, é, de fato, o atraso de 18 meses. Durante a fase de modelagem, pretende-se experimentar com intervalos de tempo superiores a 18 meses, contudo, é provável que isso não resulte em melhorias substanciais nos resultados.
+
+## pontos mais relevantes
+
+O resultado da análise de autocorrelação reforça os resultados encontrados pelas análises espctrais. Apesar dos resultados de correlação apresentarem valores acima da faixa de significância para lags além de 18 meses, os valores são todos inferiores a 0.5. Além disso nenhuma periodicidade muito maior que 18 meses aparece nos testes espectrais.
+
+Conforme evidenciado pelo gráfico da série temporal, esses resultados apontam para a não estacionariedade dos dados.
+
+# Verificando a estacionariedade dos dados
+
+A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações. Existem testes estatísticos e técnicas de transformação para avaliar e alcançar a estacionariedade em séries temporais, garantindo assim uma base sólida para análises e previsões precisas.
+
+Observando o gráfico dos dados da cotação do valor do ouro e seus resultados de autocorrelação já encontramos indicativos que a nosa série temporal não é estacionária.
+
+Vamos utilizar o teste Aumentado Dickey-Fuller (`adf.test()`) e o teste de Kwiatkowski-Phillips-Schmidt-Shin (`unitroot_kpss`) para verificar, de forma menos subjetiva se a série temporal é estacionária. Talves você estejá se perguntanto o motivo de utilizar dois teste. Eu considero uma boa prática para tornar os resutados mais robustos.
+
+```{r}
+tseries::adf.test(ts(gold_data$value),alternative ="stationary")
+```
+
+O teste adf não encontrou evidencia para rejeitar a hipótese nula de não estacionariedade. Vamos verificar o resultado do teste kpss.
+
+```{r}
+gold_data %>%
+  features(value, unitroot_kpss)
+```
+
+O teste kpss, apresenta evidência para rejeitar a hipótese nula, que nesse caso é de estacionariedade.
+
+Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável e, em alguns casos, essencial para certos tipos de modelos. Em breve, examinaremos as principais abordagens para abordar essa situação e transformar os dados em um estado estacionário. Vale ressaltar desde já que a transformação dos dados para torná-los estacionários requer a aplicação de algum tipo de transformação, a qual precisa ser revertida durante as fases de previsão.
+
+## Verificando a explosividade da série.
+
+Verificar a explosividade de uma série temporal é de extrema importância em diversas áreas, especialmente em finanças e economia. A explosividade refere-se à presença de mudanças rápidas e extremas nos valores da série ao longo do tempo. Esses movimentos abruptos podem indicar eventos impactantes, mudanças estruturais.
+
+Nas análises realizadas até o momento não existe nenhum indício da presença de moviemntos extremos em nossos dados. Contudo, vamos realizar um teste para determinar essa possibilidade.
+
+```{r}
+tseries::adf.test(ts(gold_data$value),alternative = "explosive")
+```
+
+O p-value elevado sugere que os dados não oferecem respaldo para a presença de explosividade na série.
+
+Em termos práticos, um p-value de 0.5859 indica que há aproximadamente 58,59% de probabilidade de obter os resultados observados ou mais extremos sob a hipótese nula de não explosividade. Portanto, com base nos resultados do teste, não há indícios significativos de explosividade na série temporal.
+
+Desse modo, em conjunto com a análise visual e a observação do gráfico de ACF, temos elementos suficientes para concluir que a série não é estacionária e também não apresenta características explosivas.
+
+## Pontos mais relevantes
+
+Até o momento, as informações-chave que podem orientar a etapa de modelagem são as seguintes:
+
+A série não é estacionária, o que aponta para a necessidade de aplicar alguma forma de transformação nos dados. Opções incluem a transformação Box-Cox, raiz quadrada, diferenciação, remoção de tendência, entre outras.
+
+# Transformando os dados
+
+Vamos agora avaliar os resultados de algumas dessas técnicas. Durante a análise da eficácia dessas abordagens em tornar a série estacionária, reaproveitaremos diversos testes já conduzidos, cujos códigos serão omitidos.
+
+## Box Cox
+
+A transformação de Box-Cox é uma técnica estatística usada para estabilizar a variância e tornar uma distribuição mais próxima da normalidade. Ela é frequentemente aplicada em séries temporais ou outras análises estatísticas quando os dados exibem heteroscedasticidade (variação não constante) ou não seguem uma distribuição normal. A transformação é especialmente útil quando você deseja aplicar métodos estatísticos que assumem uma distribuição normal dos dados.
+
+$$y(\lambda) = \begin{cases}
+\frac{y^\lambda - 1}{\lambda}, & \text{se } \lambda \neq 0 \\
+\log(y), & \text{se } \lambda = 0
+\end{cases}$$
+
+Nesta fórmula,$y$ é o valor original da série temporal e $λ$ é o parâmetro de transformação. O parâmetro $λ$ pode assumir qualquer valor real, e diferentes valores de $λ$ resultam em diferentes transformações. A escolha do valor ideal de $λ$ geralmente é feita de maneira a maximizar a normalidade ou estabilizar a variância dos dados transformados.
+
+Para escolher o valor ideal de $λ$, é comum testar vários valores em um intervalo, aplicar a transformação a cada valor da série e analisar a normalidade e a homogeneidade da variância dos dados transformados. Isso pode ser feito visualmente ou por meio de testes estatísticos. Para essa tarefa vamos utilizando a função `forecast::BoxCox.lambda` do pacote `forecast`.
+
+```{r}
+lambda <- round(forecast::BoxCox.lambda(gold_data$value), digits = 2)
+lambda
+```
+
+```{r}
+gold_data %>%
+   mutate(box_cox_close = fabletools::box_cox(value, lambda=lambda)) %>% 
+   features(box_cox_close, unitroot_kpss)
+```
+
+Mesmo após a transformação continuamos encontrando evidências para rejeitar a estacionariedade. Não será mostrado, mas outras transformações foram tentadas (log, sqrt) e também não foram eficazes.
+
+### Visualizando os dados após a tranformação
+
+```{r}
+gold_data %>%
+   mutate(box_cox_close = fabletools::box_cox(value, lambda=lambda)) %>% 
+  ggplot(aes(x=index, y=box_cox_close))+
+  geom_line()
+```
+
+Como essa abordagem não se mostrou efetiva não vamos processeguir avaliando seus resultados.
+
+## Diferenciação
+
+A diferenciação em séries temporais é uma técnica fundamental para transformar dados não estacionários em um formato mais adequado para análise e modelagem. Ela envolve a subtração de valores consecutivos da série, visando remover tendências e padrões de sazonalidade. Ao aplicar diferenciação, a série é transformada em uma nova série de diferenças, que é esperançosamente estacionária. Essa abordagem permite a utilização de modelos estatísticos, como o ARIMA (AutoRegressive Integrated Moving Average), que pressupõem a estacionariedade dos dados.
+
+Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função unitroot_ndiffs. O termo "unit root" refere-se à raiz unitária, que é uma característica de uma série temporal não estacionária. A presença de uma raiz unitária indica que a série não reverte rapidamente a perturbações ou choques, o que pode tornar a análise e a modelagem mais desafiadoras.
+
+```{r}
+gold_data %>%
+  features(value,  unitroot_ndiffs)
+```
+
+O teste indica que uma diferenciação é necessária para tornar a série estacionária.
+
+```{r, echo=FALSE}
+gold_data %>%
+   mutate(diff_close = difference(value)) %>% 
+  features(diff_close, unitroot_kpss)
+```
+
+O tete KPSS apresenta evidência para aceitar a hipótese nula de estacionariedade. Vamos visualizar a Série temporal após a aplicação de uma diferença.
+
+```{r, echo=FALSE}
+gold_data %>% 
+  mutate(diff_close = difference(value)) %>% 
+  ggplot(aes(index,diff_close))+
+  geom_line()
+
+```
+
+Após a transformação os dados, aparentemente, não existe nenhuma estrutura remanecente. Vamos utilizar o teste Ljung-Box para verificar se os valores observados das autocorrelações são consistentes com o que seria esperado em uma série de dados aleatórios sem autocorrelação. Valores significativos no teste podem indicar que há autocorrelações nas defasagens testadas, o que sugere que um modelo de série temporal pode ser necessário para capturar essas correlações.
+
+```{r, echo=FALSE}
+gold_data %>% 
+  mutate(diff_close = difference(value)) %>% 
+  features(diff_close, ljung_box, lag = 12)
+```
+
+Vamos verificar a função de autocorrelção novamente
+
+```{r, echo=FALSE}
+gold_data %>% 
+  mutate(diff_close = difference(value)) %>% 
+  feasts::ACF(diff_close,lag_max = 127) %>% 
+  autoplot()
+```
+
+Através do gráfico e do teste Ljung-Box encontramos evidências de que após esse procedimento os dados não apresentam autocorrelação entre os atrasos da série.
+
+### pontos relevantes
+
+Após a modelagem, é necessário reverter a diferenciação para realizar previsões na escala original da série temporal. Isso envolve somar as diferenças previstas aos valores anteriores da série (ou ao último valor conhecido da série original). Ao realizar esse processo, estamos extrapolando as mudanças previstas para os próximos períodos e adicionando-as aos valores anteriores para obter as previsões finais. Isso pressupõe que as mudanças esperadas no período futuro sejam semelhantes às mudanças observadas no período de treinamento do modelo.
+
+Aqui está uma fórmula geral para ilustrar o processo de reversão da diferenciação:
+
+Seja $y_t$ o valor original na época $t$ e $y'_t$ a série temporal diferenciada na época $t$. Seja $y'_t+1$ a previsão diferenciada para o período $t+1$. Então, a previsão final $y'_{t+1}$ na escala original é calculada da seguinte forma:
+
+$$y_{t+1} = y_t + y'_{t+1}$$
+
+## Remoção da tendência
+
+Após a decomposição dos dados podemos obter os dados sem o trend de modo bem simples, apenas subtraindo o trend, encontrado pelo modelo, dos dados originais.
+
+Vamos utilizar novamente o test KPSS para verificar a estacionariedade dos dados.
+
+```{r, echo=FALSE}
+detrend_ts %>%
+  features(value, unitroot_kpss)
+```
+
+Encontramos evidencia de que a série é estacionária
+
+Visualizando os dados após a remoção do trend.
+
+```{r, echo=FALSE}
+detrend_ts %>%
+  ggplot(aes(index,value))+
+  geom_line()
+```
+
+Vamos verificar a função de autocorrelção novamente
+
+```{r, echo=FALSE}
+detrend_ts %>% 
+  feasts::ACF(value,lag_max = 127) %>% 
+  autoplot()
+```
+
+```{r, echo=FALSE}
+detrend_ts %>% 
+  features(value, ljung_box, lag = 24)
+```
+
+Existem evidências para rejeitar a hipótese nula de que não há autocorrelação. Assim como nos dados originais e na transformação box_cox, os dados apresentam correlação com seus atrasos de modo significativo. Porém a caracteristica da curva de correlção com a remoção do trend é bem diferente, sugerindo a existência de um padrão ciclico nos dados. Isso vai de encontro as componetes encontradas pelo modelo STL, que indica a existência de componetes sazonais nos dados. Contudo, os lags com valore de até 0.5 vão até o lag 35.
+
+# Conclusão
+
+# Referências
+
+[Forecasting: Principles and Practice (3rd ed)](https://otexts.com/fpp3/)
+
+[WaveletComp 1.1:A guided tour through the R package](http://www.hs-stat.com/projects/WaveletComp/WaveletComp_guided_tour.pdf)

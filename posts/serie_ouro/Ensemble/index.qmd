@@ -1,0 +1,170 @@
+---
+title: "Cotação do ouro - Parte 4 "
+subtitle: "Ensemble"
+author: "Pedro Lima"
+date: "2023-08-05"
+categories: [Ensemble,Série-Temporal,R, Machine Learning]
+toc: true
+toc-depth: 3
+draft: true
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 8, fig.height = 5)
+
+pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime, modeltime.ensemble)
+
+# This toggles plots from plotly (interactive) to ggplot (static)
+interactive <- FALSE
+```
+
+```{r, echo=FALSE}
+# Obter dados da ação de ouro (código GLD)
+gold_data <- tq_get("GLD")
+
+```
+
+```{r, echo=FALSE}
+gold_mean <-
+  gold_data %>% 
+  group_by(mes = format(date, "%Y-%m")) %>%
+  summarize(media = mean(close, na.rm = TRUE)) %>% 
+   mutate(
+    mes=as_date(mes, format="%Y-%m")
+    )
+```
+
+```{r, echo=FALSE}
+ splits <-
+   gold_mean %>% 
+   time_series_split(
+     assess = "1 year",
+     cumulative = TRUE
+     )
+
+```
+
+```{r, echo=FALSE, results='hide'}
+splits %>% 
+  tk_time_series_cv_plan() %>% 
+  plot_time_series_cv_plan(mes,media, .facet_ncol = 1, .interactive = FALSE)
+```
+
+## Recipe
+
+```{r}
+recipe_spec <- recipe(media ~ mes, training(splits)) %>%
+    step_timeseries_signature(mes) %>%
+    step_rm(matches("(.iso$)|(.xts$)")) %>%
+    step_normalize(matches("(index.num$)|(_year$)")) %>%
+    step_dummy(all_nominal()) %>%
+    step_fourier(mes, K = 1, period = 12)
+
+recipe_spec %>% prep() %>% juice()
+```
+
+## Model 1 - Auto ARIMA
+
+```{r}
+model_spec_arima <- arima_reg() %>%
+    set_engine("auto_arima")
+
+wflw_fit_arima <- workflow() %>%
+    add_model(model_spec_arima) %>%
+    add_recipe(recipe_spec %>% step_rm(all_predictors(), -mes)) %>%
+    fit(training(splits))
+```
+
+## Model 2 - Prophet
+
+```{r}
+model_spec_prophet <- prophet_reg() %>%
+    set_engine("prophet")
+
+wflw_fit_prophet <- workflow() %>%
+    add_model(model_spec_prophet) %>%
+    add_recipe(recipe_spec %>% step_rm(all_predictors(), -mes)) %>%
+    fit(training(splits))
+```
+
+## Model 3 - Elastic Net
+
+```{r}
+model_spec_glmnet <- linear_reg(
+    mixture = 0.9,
+    penalty = 4.36e-6
+) %>%
+    set_engine("glmnet")
+
+wflw_fit_glmnet <- workflow() %>%
+    add_model(model_spec_glmnet) %>%
+    add_recipe(recipe_spec %>% step_rm(mes)) %>%
+    fit(training(splits))
+```
+
+## Modeltime Workflow for Ensemble Forecasting
+
+## Step 1 - Create a Modeltime Table
+
+```{r}
+m750_models <- modeltime_table(
+    wflw_fit_arima,
+    wflw_fit_prophet,
+    wflw_fit_glmnet
+)
+
+m750_models
+```
+
+## desempenho dos modelos
+
+```{r}
+m750_models %>%
+  modeltime_calibrate(testing(splits)) %>%
+  modeltime_accuracy()%>% 
+  table_modeltime_accuracy(.interactive = FALSE)
+```
+
+## Step 2 - Make an Ensemble
+
+```{r}
+ensemble_fit <- m750_models %>%
+    ensemble_average(type = "mean")
+
+ensemble_fit
+```
+
+```{r}
+# ensemble_fit <- m750_models %>%
+#     ensemble_weighted(type = "mean")
+# 
+# ensemble_fit
+```
+
+## Step 3 - Forecast! (the Test Data)
+
+```{r}
+# Calibration
+calibration_tbl <- modeltime_table(
+    ensemble_fit
+) %>%
+    modeltime_calibrate(testing(splits))
+```
+
+```{r}
+calibration_tbl %>% 
+modeltime_accuracy() %>% 
+  table_modeltime_accuracy(.interactive = FALSE)
+```
+
+```{r}
+# Forecast vs Test Set
+calibration_tbl %>%
+    modeltime_forecast(
+        new_data    = testing(splits),
+        actual_data = gold_mean
+    ) %>%
+    plot_modeltime_forecast(.interactive = TRUE)
+```

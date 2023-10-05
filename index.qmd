@@ -1,0 +1,29 @@
+---
+title: ""
+image: IMG_20230109_160442686.jpg
+output:
+  html_document:
+    css: styles.css
+    class: justify 
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/pedro-lima-8a9356268/
+    - icon: github
+      text: Github
+      href: https://github.com/cruz-ml-pedro
+---
+
+# Saudações a todos!
+
+Me chamo Pedro Lima, sou geofísico de formação e mestre em ciências, é um prazer dar as boas-vindas a vocês em meu blog. Neste espaço pretendo compartilhar minha jornada de exploração e aprendizado contínuo sobre uma variedade de conteúdos relaionados a análise e modelagem de dados.
+
+Pretendo compartilhar tutoriais detalhados, insights sobre minhas próprias experiências e, é claro, códigos práticos em R, e espero que em breve, também conteúdos em Python.
+
+Caso tenha interesse em entrar em contato, vocês encontrarão links para minhas redes sociais na parte superior e inferior da página, onde estou sempre aberto a discussões, perguntas e compartilhamento de ideias. Além disso, vocês terão a oportunidade de acessar e baixar meu currículo diretamente aqui no blog, para que possam conhecer mais sobre minha jornada e experiência.
+
+Com entusiasmo,
+
+Pedro Lima

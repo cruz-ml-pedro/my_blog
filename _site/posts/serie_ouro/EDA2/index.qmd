@@ -1,0 +1,332 @@
+---
+title: "Cotação do ouro - Parte 2"
+subtitle: "Análise Exploratória (2)"
+author: "Pedro Lima"
+date: "2023-07-27"
+categories: [EDA, Série-Temporal,R]
+toc: true
+toc-depth: 3
+draft: false
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 8, fig.height = 5)
+```
+
+```{r,echo=FALSE}
+pacman::p_load(tidyquant, tsibble,fabletools,fabletools,timetk,fpp3,
+               tibbletime,feasts, tidyverse, tseries, WaveletComp,
+               tsoutliers, DT, plotly)
+```
+
+```{r,echo=FALSE}
+# Obter dados da ação de ouro (código GLD)
+gold_data <- tidyquant::tq_get("GLD")
+
+
+gold_data <-
+  gold_data %>% 
+  # criando variáveis ano e mês para cálculo das médias mensais
+  mutate(
+    year = lubridate::year(date),
+    month = lubridate::month(date)
+    )%>% 
+  #agrupando os dados pelas variáveis ano e mês
+  group_by(year,month) %>% 
+  #calculando as médias mensais
+  summarise(
+    month_mean = mean(close)
+    ) %>% 
+  #desagrupando os dados
+  ungroup() %>% 
+  #criando a variável que será usada com index temporal
+   mutate(
+     index = tsibble::make_yearmonth(year,month)
+     ) %>% 
+  #renomeando a coluna dos valores
+  rename(
+    value = month_mean
+    ) %>%
+  #selecionando apenas as colunas de interesse
+  select(index,value) %>% 
+  # transformando os dados em tsibble, formato adequado para os pacotes utilizados
+  tsibble::tsibble() 
+```
+
+## Análise de Autocorrelação
+
+A autocorrelação é um conceito chave na análise de séries temporais e dados sequenciais, indicando a relação entre observações em diferentes pontos no tempo. Ela mede a similaridade entre os valores de uma série e seus próprios valores atrasados (defasados) em diferentes intervalos de tempo. Quando a autocorrelação é forte, significa que os valores passados influenciam fortemente os valores futuros da série. Isso pode ser usado para identificar padrões cíclicos, sazonalidades e tendências nos dados. A função de autocorrelação é uma ferramenta essencial para entender a estrutura temporal dos dados e para selecionar adequadamente modelos de previsão. A autocorrelação também está intimamente relacionada ao conceito de estacionariedade, já que séries temporais estacionárias frequentemente exibem autocorrelações consistentes ao longo do tempo, o que facilita a aplicação de técnicas de modelagem e previsão.
+
+Um método adicional que pode ser empregado para identificar a existência de componentes periódicas é a análise de autocorrelação. Essa análise não apenas auxilia na detecção dessas componentes, mas também proporciona informações valiosas durante o processo de modelagem, tais como os coeficientes de correlação para diversos intervalos de tempo, que podem sinalizar a estacionariedade da série.
+
+A seguir, adotaremos a análise de autocorrelação para investigar a presença de periodicidade nos dados e avaliar a estacionariedade da série.
+
+Existem diversas funções disponíveis no ambiente R e em pacotes especializados para calcular e visualizar a função de autocorrelação. Entretanto, para aprimorar a visualização dessa função, optaremos por criar uma função personalizada. Isso simplificará a análise e interpretação dos resultados.
+
+```{r}
+tidy_acf <- function(data, value, lags = 0:20) {
+  
+  #value_expr <- enquo(value)
+  
+  acf_values <- data %>%
+    acf(lag.max = tail(lags, 1), plot = FALSE) %>%
+    .$acf %>%
+    .[,,1]
+  
+  ret <- tibble(acf = acf_values) %>%
+    rowid_to_column(var = "lag") %>%
+    mutate(lag = lag - 1) %>%
+    filter(lag %in% lags)
+  
+  return(ret)
+}
+```
+
+Uma vez que a função tenha sido criada, podemos prosseguir com a verificação da autocorrelação dos dados. Nesse contexto, iremos definir um intervalo de atraso de 127, um valor que ultrapassa a componente de aproximadamente 16 meses.
+
+```{r}
+max_lag <- nrow(gold_data)-1
+
+confidence <- 1.96 / sqrt(nrow(gold_data))
+
+
+tidy_acf(gold_data$value, lags = 0:max_lag) %>%
+  ggplot(aes(lag, acf)) +
+  geom_segment(aes(xend = lag, yend = 0), color = palette_light()[[1]]) +
+  geom_vline(xintercept = 18, linewidth = 1.8, color = palette_light()[[2]]) +
+  geom_hline(yintercept = confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  geom_hline(yintercept = -confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  annotate("text", label = "18 meses", x = 19, y = 0.8, 
+           color = palette_light()[[2]], size = 6, hjust = 0) +
+  theme_tq() +
+  labs(title = "ACF: Valor do Ouro ")
+```
+
+A análise de correlação reforça as conclusões das análises espectrais realizadas, apontando para uma correlação significativa com um atraso de 18 meses. Além disso, é perceptível a presença de vários atrasos com valores estatisticamente relevantes. Agora, vamos examinar mais detalhadamente esses resultados.
+
+Para isso, vamos utilizar a função que criamos a fim de ampliar nossa visão sobre os resultados, permitindo uma avaliação mais precisa.
+
+```{r}
+tidy_acf(gold_data$value, lags = 12:24) %>%
+  ggplot(aes(lag, acf)) +
+  geom_vline(xintercept = 18, linewidth = 3, color = palette_light()[[2]]) +
+  geom_segment(aes(xend = lag, yend = 0), color = palette_light()[[1]]) +
+  geom_hline(yintercept = confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  geom_hline(yintercept = -confidence, color = "red",
+             linetype = "dotted",linewidth = 1.2) +
+  geom_point(color = palette_light()[[1]], size = 2) +
+  geom_label(aes(label = acf %>% round(2)), vjust = -1,
+             color = palette_light()[[1]]) +
+  annotate("text", label = "18 meses", x =18.5, y = 0.8, 
+           color = palette_light()[[2]], size = 5, hjust = 0) +
+  theme_tq() +
+  labs(title = "ACF: Valor do Ouro",
+       subtitle = "Zoom entre os Lags 12 a 24")
+```
+
+Através desse enfoque mais detalhado, podemos observar que o último atraso com um valor igual ou superior a 0.5, teoricamente fornecendo um sólido potencial de previsão, é, de fato, o atraso de 18 meses. Durante a fase de modelagem, pretende-se experimentar com intervalos de tempo superiores a 18 meses, contudo, é provável que isso não resulte em melhorias substanciais nos resultados.
+
+## Verificando a Estacionariedade dos Dados
+
+A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações. Existem testes estatísticos e técnicas de transformação para avaliar e alcançar a estacionariedade em séries temporais, garantindo assim uma base sólida para análises e previsões precisas.
+
+Observando o gráfico dos dados da cotação do valor do ouro e seus resultados de autocorrelação já encontramos indicativos que a nosa série temporal não é estacionária.
+
+Vamos utilizar o teste Aumentado Dickey-Fuller (`adf.test()`) e o teste de Kwiatkowski-Phillips-Schmidt-Shin (`unitroot_kpss`) para verificar, de forma menos subjetiva se a série temporal é estacionária. Talves você estejá se perguntanto o motivo de utilizar dois teste. Eu considero uma boa prática para tornar os resutados mais robustos.
+
+```{r}
+tseries::adf.test(ts(gold_data$value),alternative ="stationary")
+```
+
+O teste adf não encontrou evidencia para rejeitar a hipótese nula de não estacionariedade. Vamos verificar o resultado do teste kpss.
+
+```{r}
+gold_data %>% 
+  fabletools::features(value, unitroot_kpss)
+```
+
+O teste kpss, apresenta evidência para rejeitar a hipótese nula, que nesse caso é de estacionariedade.
+
+Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável e, em alguns casos, essencial para certos tipos de modelos. Em breve, examinaremos as principais abordagens para abordar essa situação e transformar os dados em um estado estacionário. Vale ressaltar desde já que a transformação dos dados para torná-los estacionários requer a aplicação de algum tipo de transformação, a qual precisa ser revertida durante as fases de previsão.
+
+## Verificando a Explosividade da Série.
+
+Verificar a explosividade de uma série temporal é de extrema importância em diversas áreas, especialmente em finanças e economia. A explosividade refere-se à presença de mudanças rápidas e extremas nos valores da série ao longo do tempo. Esses movimentos abruptos podem indicar eventos impactantes, mudanças estruturais.
+
+Nas análises realizadas até o momento não existe nenhum indício da presença de moviemntos extremos em nossos dados. Contudo, vamos realizar um teste para determinar essa possibilidade.
+
+```{r}
+tseries::adf.test(ts(gold_data$value),alternative = "explosive")
+```
+
+O p-value elevado sugere que os dados não oferecem respaldo para a presença de explosividade na série.
+
+Em termos práticos, um p-value de 0.5859 indica que há aproximadamente 58,59% de probabilidade de obter os resultados observados ou mais extremos sob a hipótese nula de não explosividade. Portanto, com base nos resultados do teste, não há indícios significativos de explosividade na série temporal.
+
+Desse modo, em conjunto com a análise visual e a observação do gráfico de ACF, temos elementos suficientes para concluir que a série não é estacionária e também não apresenta características explosivas.
+
+## Pontos Mais Relevantes
+
+Até o momento, as informações-chave que podem orientar a etapa de modelagem são as seguintes:
+
+A série não é estacionária, o que aponta para a necessidade de aplicar alguma forma de transformação nos dados. Opções incluem a transformação Box-Cox, raiz quadrada, diferenciação, remoção de tendência, entre outras.
+
+## Transformando os Dados
+
+Vamos agora avaliar os resultados de algumas dessas técnicas. Durante a análise da eficácia dessas abordagens em tornar a série estacionária, reaproveitaremos diversos testes já conduzidos, cujos códigos serão omitidos.
+
+### Box Cox
+
+A transformação de Box-Cox é uma técnica estatística usada para estabilizar a variância e tornar uma distribuição mais próxima da normalidade. Ela é frequentemente aplicada em séries temporais ou outras análises estatísticas quando os dados exibem heteroscedasticidade (variação não constante) ou não seguem uma distribuição normal. A transformação é especialmente útil quando você deseja aplicar métodos estatísticos que assumem uma distribuição normal dos dados.
+
+$$y(\lambda) = \begin{cases}
+\frac{y^\lambda - 1}{\lambda}, & \text{se } \lambda \neq 0 \\
+\log(y), & \text{se } \lambda = 0
+\end{cases}$$
+
+Nesta fórmula,$y$ é o valor original da série temporal e $λ$ é o parâmetro de transformação. O parâmetro $λ$ pode assumir qualquer valor real, e diferentes valores de $λ$ resultam em diferentes transformações. A escolha do valor ideal de $λ$ geralmente é feita de maneira a maximizar a normalidade ou estabilizar a variância dos dados transformados.
+
+Para escolher o valor ideal de $λ$, é comum testar vários valores em um intervalo, aplicar a transformação a cada valor da série e analisar a normalidade e a homogeneidade da variância dos dados transformados. Isso pode ser feito visualmente ou por meio de testes estatísticos. Para essa tarefa vamos utilizando a função `forecast::BoxCox.lambda` do pacote `forecast`.
+
+```{r}
+lambda <- round(forecast::BoxCox.lambda(gold_data$value), digits = 2)
+lambda
+```
+
+```{r}
+gold_data %>%
+   mutate(box_cox_close = fabletools::box_cox(value, lambda=lambda)) %>% 
+   features(box_cox_close, unitroot_kpss)
+```
+
+Mesmo após a transformação continuamos encontrando evidências para rejeitar a estacionariedade. Não será mostrado, mas outras transformações foram tentadas (log, sqrt) e também não foram eficazes.
+
+### Visualizando os Dados Após a Tranformação
+
+```{r}
+gold_data %>%
+   mutate(
+     box_cox_close = fabletools::box_cox(value, lambda=lambda)
+     ) %>% 
+   ggplot(aes(x=index, y=box_cox_close))+
+   geom_line()
+```
+
+Como essa abordagem não se mostrou efetiva não vamos processeguir avaliando seus resultados.
+
+### Diferenciação
+
+A diferenciação em séries temporais é uma técnica fundamental para transformar dados não estacionários em um formato mais adequado para análise e modelagem. Ela envolve a subtração de valores consecutivos da série, visando remover tendências e padrões de sazonalidade. Ao aplicar diferenciação, a série é transformada em uma nova série de diferenças, que é esperançosamente estacionária. Essa abordagem permite a utilização de modelos estatísticos, como o ARIMA (AutoRegressive Integrated Moving Average), que pressupõem a estacionariedade dos dados.
+
+Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função unitroot_ndiffs. O termo "unit root" refere-se à raiz unitária, que é uma característica de uma série temporal não estacionária. A presença de uma raiz unitária indica que a série não reverte rapidamente a perturbações ou choques, o que pode tornar a análise e a modelagem mais desafiadoras.
+
+```{r}
+gold_data %>% 
+  fabletools::features(value,  unitroot_ndiffs)
+```
+
+O teste indica que uma diferenciação é necessária para tornar a série estacionária.
+
+```{r, echo=FALSE}
+gold_data %>%
+   mutate(
+     diff_close = tsibble::difference(value)
+     ) %>% 
+  fabletools::features(diff_close, unitroot_kpss)
+```
+
+O tete KPSS apresenta evidência para aceitar a hipótese nula de estacionariedade. Vamos visualizar a Série temporal após a aplicação de uma diferença.
+
+```{r, echo=FALSE}
+gold_data %>% 
+  mutate(
+    diff_close = tsibble::difference(value)
+    ) %>% 
+  ggplot(aes(index,diff_close))+
+  geom_line()
+
+```
+
+Após a transformação os dados, aparentemente, não existe nenhuma estrutura remanecente. Vamos utilizar o teste Ljung-Box para verificar se os valores observados das autocorrelações são consistentes com o que seria esperado em uma série de dados aleatórios sem autocorrelação. Valores significativos no teste podem indicar que há autocorrelações nas defasagens testadas, o que sugere que um modelo de série temporal pode ser necessário para capturar essas correlações.
+
+```{r, echo=FALSE}
+gold_data %>% 
+  mutate(
+    diff_close = tsibble::difference(value)
+    ) %>% 
+  fabletools::features(diff_close, ljung_box, lag = 12)
+```
+
+Vamos verificar a função de autocorrelção novamente
+
+```{r, echo=FALSE}
+gold_data %>% 
+  mutate(
+    diff_close =  tsibble::difference(value)
+    ) %>% 
+  feasts::ACF(diff_close,lag_max = 127) %>% 
+  fabletools::autoplot()
+```
+
+Através do gráfico e do teste Ljung-Box encontramos evidências de que após esse procedimento os dados não apresentam autocorrelação entre os atrasos da série.
+
+### Remoção da Tendência
+
+Após a decomposição dos dados podemos obter os dados sem o trend de modo bem simples, apenas subtraindo o trend, encontrado pelo modelo, dos dados originais.
+
+Vamos utilizar novamente o test KPSS para verificar a estacionariedade dos dados.
+
+```{r, echo=FALSE}
+detrend_ts %>%
+  fabletools::features(value, unitroot_kpss)
+```
+
+Encontramos evidencia de que a série é estacionária
+
+Visualizando os dados após a remoção do trend.
+
+```{r, echo=FALSE}
+detrend_ts %>%
+  ggplot(aes(index,value))+
+  geom_line()
+```
+
+Vamos verificar a função de autocorrelção novamente
+
+```{r, echo=FALSE}
+detrend_ts %>% 
+  feasts::ACF(value,lag_max = 127) %>% 
+  fabletools::autoplot()
+```
+
+```{r, echo=FALSE}
+detrend_ts %>% 
+  fabletools::features(value, ljung_box, lag = 24)
+```
+
+Existem evidências para rejeitar a hipótese nula de que não há autocorrelação. Assim como nos dados originais e na transformação box_cox, os dados apresentam correlação com seus atrasos de modo significativo. Porém a caracteristica da curva de correlção com a remoção do trend é bem diferente, sugerindo a existência de um padrão ciclico nos dados. Isso vai de encontro as componetes encontradas pelo modelo STL, que indica a existência de componetes sazonais nos dados. Contudo, os lags com valore de até 0.5 vão até o lag 35.
+
+# Conclusão
+
+O resultado da análise de autocorrelação reforça os resultados encontrados pelas análises espctrais. Apesar dos resultados de correlação apresentarem valores acima da faixa de significância para lags além de 18 meses, os valores são todos inferiores a 0.5. Além disso nenhuma periodicidade muito maior que 18 meses aparece nos testes espectrais.
+
+Conforme evidenciado pelo gráfico da série temporal, esses resultados apontam para a não estacionariedade dos dados.
+
+Após a modelagem, é necessário reverter a diferenciação para realizar previsões na escala original da série temporal. Isso envolve somar as diferenças previstas aos valores anteriores da série (ou ao último valor conhecido da série original). Ao realizar esse processo, estamos extrapolando as mudanças previstas para os próximos períodos e adicionando-as aos valores anteriores para obter as previsões finais. Isso pressupõe que as mudanças esperadas no período futuro sejam semelhantes às mudanças observadas no período de treinamento do modelo.
+
+Aqui está uma fórmula geral para ilustrar o processo de reversão da diferenciação:
+
+Seja $y_t$ o valor original na época $t$ e $y'_t$ a série temporal diferenciada na época $t$. Seja $y'_t+1$ a previsão diferenciada para o período $t+1$. Então, a previsão final $y'_{t+1}$ na escala original é calculada da seguinte forma:
+
+$$y_{t+1} = y_t + y'_{t+1}$$
+
+# Referências
+
+[Forecasting: Principles and Practice (3rd ed)/Chapter 3 Time series decomposition](https://otexts.com/fpp3/decomposition.html)
+
+[Forecasting: Principles and Practice (3rd ed)/Chapter 4 Time series features](https://otexts.com/fpp3/decomposition.html)

@@ -1,0 +1,15 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/EDA-ouro/index.html",
+      "/posts/post-with-code/index.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/serie_ouro/EDA/index.html"
+    ]
+  }
+]

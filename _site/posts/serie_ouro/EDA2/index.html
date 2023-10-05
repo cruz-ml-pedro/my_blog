@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Lima">
+<meta name="dcterms.date" content="2023-09-22">
+
+<title>PeDrOOM Blog - Cotação do ouro - Parte 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script src="../../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">PeDrOOM Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../CV.html" rel="" target="">
+ <span class="menu-text">Curriculum vitæ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/cruz-ml-pedro" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-lima-8a9356268/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Cotação do ouro - Parte 2</h1>
+            <p class="subtitle lead">Análise Exploratória - Parte 2</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">EDA</div>
+                <div class="quarto-category">Série-Temporal</div>
+                <div class="quarto-category">R</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Pedro Lima </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 22, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
+  <li><a href="#estacionariedade-dos-dados" id="toc-estacionariedade-dos-dados" class="nav-link" data-scroll-target="#estacionariedade-dos-dados">Estacionariedade dos Dados</a>
+  <ul class="collapse">
+  <li><a href="#dickey-fuller-adf" id="toc-dickey-fuller-adf" class="nav-link" data-scroll-target="#dickey-fuller-adf">Dickey-Fuller (ADF)</a></li>
+  <li><a href="#kwiatkowski-phillips-schmidt-shin-kpss" id="toc-kwiatkowski-phillips-schmidt-shin-kpss" class="nav-link" data-scroll-target="#kwiatkowski-phillips-schmidt-shin-kpss">Kwiatkowski-Phillips-Schmidt-Shin (KPSS)</a></li>
+  </ul></li>
+  <li><a href="#transformando-os-dados" id="toc-transformando-os-dados" class="nav-link" data-scroll-target="#transformando-os-dados">Transformando os Dados</a>
+  <ul class="collapse">
+  <li><a href="#decomposição" id="toc-decomposição" class="nav-link" data-scroll-target="#decomposição">Decomposição</a></li>
+  <li><a href="#box-cox" id="toc-box-cox" class="nav-link" data-scroll-target="#box-cox">Box Cox</a></li>
+  <li><a href="#diferenciação" id="toc-diferenciação" class="nav-link" data-scroll-target="#diferenciação">Diferenciação</a></li>
+  </ul></li>
+  <li><a href="#funções-de-autocorrelações" id="toc-funções-de-autocorrelações" class="nav-link" data-scroll-target="#funções-de-autocorrelações">Funções de Autocorrelações</a>
+  <ul class="collapse">
+  <li><a href="#função-de-autocorrelação-acf" id="toc-função-de-autocorrelação-acf" class="nav-link" data-scroll-target="#função-de-autocorrelação-acf">Função de Autocorrelação (ACF)</a></li>
+  <li><a href="#função-de-autocorrelação-parcial-pacf" id="toc-função-de-autocorrelação-parcial-pacf" class="nav-link" data-scroll-target="#função-de-autocorrelação-parcial-pacf">Função de Autocorrelação Parcial (PACF)</a></li>
+  <li><a href="#algumas-aplicações" id="toc-algumas-aplicações" class="nav-link" data-scroll-target="#algumas-aplicações">Algumas Aplicações</a>
+  <ul class="collapse">
+  <li><a href="#dados-originais" id="toc-dados-originais" class="nav-link" data-scroll-target="#dados-originais">Dados Originais</a></li>
+  <li><a href="#dados-sem-tendência" id="toc-dados-sem-tendência" class="nav-link" data-scroll-target="#dados-sem-tendência">Dados sem Tendência</a></li>
+  <li><a href="#dados-sazonais" id="toc-dados-sazonais" class="nav-link" data-scroll-target="#dados-sazonais">Dados sazonais</a></li>
+  <li><a href="#dados-diferenciados" id="toc-dados-diferenciados" class="nav-link" data-scroll-target="#dados-diferenciados">Dados Diferenciados</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_417379c2a3f06487b90172439f7f6fbb">
+<style type="text/css">
+.justify {
+  text-align: justify;
+}
+</style>
+</div>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<div class="justify">
+<p>Nesta segunda e última parte da análise exploratória dos dados da cotação do ouro vou continuar análisando caracteristicas dos dados que possam ser úteis na criação de modelos preditivos. Os dados e pacotes utilizados, assim como o pré-processamentos, podem ser encontrados na <a href="">primeira parte</a> desta análise. O objéto criado na postagem anterior que será utilizado nesta postagem será o <code>fit</code>, que contem os dados originais e as componenete criadas pelo modelo STL.</p>
+</div>
+</section>
+<section id="estacionariedade-dos-dados" class="level1">
+<h1>Estacionariedade dos Dados</h1>
+<div class="justify">
+<p>A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações. Existem testes estatísticos e técnicas de transformação para avaliar e alcançar a estacionariedade em séries temporais, garantindo assim uma base sólida para análises e previsões precisas.</p>
+<p>Para avaliar a estacionariedade dos dados serão utilizados o teste Dickey-Fuller Aumentado (<code>adf.test()</code>) e o teste de Kwiatkowski-Phillips-Schmidt-Shin (<code>unitroot_kpss</code>).</p>
+</div>
+<section id="dickey-fuller-adf" class="level2">
+<h2 class="anchored" data-anchor-id="dickey-fuller-adf">Dickey-Fuller (ADF)</h2>
+<div class="justify">
+<p>O teste Dickey-Fuller Aumentado (ADF) é usado para verificar a presença de raízes unitárias em uma série temporal univariada. A hipótese nula deste teste é de que a série temporal tem uma raiz unitária, ou seja, que a série não é estacionária. Se o valor-p do teste for menor que um determinado nível de significância, podemos rejeitar a hipótese nula e concluir que a série é estacionária.</p>
+<p>A equação do teste ADF é dada por:</p>
+<p><span class="math display">\[\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 \Delta y_{t-1} + \delta_2 \Delta y_{t-2} + \ldots + \delta_p \Delta y_{t-p} + \varepsilon_t\]</span></p>
+<p>onde:</p>
+<ul>
+<li><p><span class="math inline">\(\Delta y_t \text{ é a diferença entre } y_t \text{ e } y_{t-1}\)</span>,</p></li>
+<li><p><span class="math inline">\(\alpha\)</span> é o termo constante,</p></li>
+<li><p><span class="math inline">\(\beta\)</span> é o coeficiente da tendência temporal,</p></li>
+<li><p><span class="math inline">\(\gamma\)</span> é o coeficiente de <span class="math inline">\(y_{t-1}\)</span>,</p></li>
+<li><p><span class="math inline">\(\delta_1\)</span>, <span class="math inline">\(\delta_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\delta_p\)</span> são os coeficientes das diferenças defasadas de <span class="math inline">\(y_t\)</span>,</p></li>
+<li><p><span class="math inline">\(\varepsilon_t\)</span> é o termo de erro.</p></li>
+</ul>
+<p>Aqui vou utilizar a função <code>adf.test</code> do pacote <code>tseries</code>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_a4170aa165313ef108cd2db1e70892fa">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tseries<span class="sc">::</span><span class="fu">adf.test</span>(<span class="fu">ts</span>(fit<span class="sc">$</span>value),<span class="at">alternative =</span><span class="st">"stationary"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Augmented Dickey-Fuller Test
+
+data:  ts(fit$value)
+Dickey-Fuller = -2.4719, Lag order = 5, p-value = 0.3803
+alternative hypothesis: stationary</code></pre>
+</div>
+</div>
+<p>O teste adf não encontrou evidencia para rejeitar a hipótese nula de não estacionariedade.</p>
+</div>
+</section>
+<section id="kwiatkowski-phillips-schmidt-shin-kpss" class="level2">
+<h2 class="anchored" data-anchor-id="kwiatkowski-phillips-schmidt-shin-kpss">Kwiatkowski-Phillips-Schmidt-Shin (KPSS)</h2>
+<div class="justify">
+<p>A ideia básica por trás do teste KPSS é verificar se a série temporal é estacionária em torno de uma tendência determinística, em oposição à estacionariedade ao redor de um valor médio constante. A hipótese nula do teste KPSS é que a série é estacionária em torno de uma tendência determinística. A estatística do teste KPSS é calculada para testar essa hipótese, e a interpretação depende do valor-p do teste em relação a um nível de significância escolhido. Se o valor-p for maior que o nível de significância, não podemos rejeitar a hipótese nula, o que sugere que a série é estacionária em torno de uma tendência. Por outro lado, se o valor-p for menor que o nível de significância, podemos rejeitar a hipótese nula e concluir que a série não é estacionária em torno de uma tendência, o que significa que a tendência é estocástica.</p>
+<p>A estatística do teste KPSS é definida da seguinte forma:</p>
+<p><span class="math display">\[KPSS = \frac{T^2 \cdot \hat{\sigma}^2}{\sum_{t=1}^{T} S_t^2}\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(T\)</span> é o número de observações na série temporal.</p></li>
+<li><p><span class="math inline">\(S_t\)</span> é a soma cumulativa das diferenças entre as observações e a estimativa da tendência local em cada ponto na série temporal. Calculado como: <span class="math display">\[S_t = \sum_{i=1}^{t} (X_i - \hat{m}_t)\]</span>.</p></li>
+</ul>
+<p>Onde <span class="math inline">\(X_i\)</span> é a observação no tempo <span class="math inline">\(i\)</span> e <span class="math inline">\(\hat{m}_t\)</span> é a estimativa da tendência local no tempo <span class="math inline">\(t\)</span>. <span class="math inline">\(\hat{\sigma}^2\)</span> é uma estimativa da variância da série temporal.</p>
+<p>Para o teste KPSS será usado a função <code>unitroot_kpss</code> do pacote <code>fable</code>.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_2489486b4ee3ecfd5e099a593ce62f96">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(value, unitroot_kpss) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="st">"Teste KPSS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste KPSS</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">1.8768</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O teste kpss, apresenta evidência para rejeitar a hipótese nula, que nesse caso é de estacionariedade.</p>
+<p>Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável que, em alguns casos, é essencial para certos tipos de modelos. A seguir examinaremos algumas das principais abordagens para transformar os dados em um estado estacionário. É importante ressaltar desde já que a transformação dos dados com o objetivo de torná-los estacionários devem ser revertida durante a fase de previsão.</p>
+</div>
+</section>
+</section>
+<section id="transformando-os-dados" class="level1">
+<h1>Transformando os Dados</h1>
+<div class="justify">
+<p>Existem diversos métodos para transformar séries temporais a fim de torná-las estacionárias. A escolha do método depende das características da série temporal e dos objetivos da análise e ou modelagem. Às vezes, pode ser necessário experimentar vários métodos para determinar qual é o mais adequado antes de aplicar um modelo de previsão. Aqui estão alguns dos principais métodos de transformação:</p>
+<ul>
+<li><p>Diferenciação: A diferenciação é uma técnica simples, ela envolve subtrair cada valor na série pelo valor anterior. Se uma série temporal não for estacionária devido a uma tendência linear, uma diferenciação de primeira ordem geralmente é suficiente.</p></li>
+<li><p>Diferenciação sazonal: Envolve subtrair o valor atual pelo valor do mesmo período sazonal anterior (por exemplo, o valor de um ano atrás, se a sazonalidade for anual).</p></li>
+<li><p>Transformações Logarítmicas: Se a série temporal possui uma tendência exponencial, uma transformação logarítmica pode ser útil. Isso é feito aplicando o logaritmo natural (ln) aos valores da série, tornando a série mais linear.</p></li>
+<li><p>Decomposição: A decomposição é uma técnica que separa uma série temporal em três componentes principais: tendência, sazonalidade e ruído. Uma vez separados, você pode remover a tendência e a sazonalidade, deixando apenas o componente de ruído estacionário. A decomposição de séries temporais pode ser realizada usando métodos como a decomposição de média móvel ou a análise de componentes principais.</p></li>
+<li><p>Suavização exponencial: A suavização exponencial é uma técnica que suaviza os dados, removendo flutuações de curto prazo. Ela pode ser usada para tornar a série mais estável, especialmente se houver ruído aleatório significativo.</p></li>
+<li><p>Box-Cox Transformation: A transformação Box-Cox é uma família de transformações paramétricas que inclui a transformação logarítmica como um caso especial. Ela é usada quando a variância dos dados não é constante ao longo do tempo. A transformação Box-Cox pode ajudar a estabilizar a variância dos dados.</p></li>
+</ul>
+<p>A seguir vou verificar a eficácia de três métodos aos dados da cotação do ouro: a decomposição, Box-Cox e diferenciação.</p>
+</div>
+<section id="decomposição" class="level2">
+<h2 class="anchored" data-anchor-id="decomposição">Decomposição</h2>
+<div class="justify">
+<p>Após a decomposição dos dados, conforme discutido na <a href="">primeira postagem</a> desta série, obtemos várias versões dos dados originais. Neste ponto, estou examinando a estacionariedade dos dados usados nos testes espectrais, que resultam da remoção da componente ‘tendência’ criada pelo modelo STL dos dados originais. Como já mencionado anteriormente, os dados sem a tendência apresentam o mesmo comportamento da componente residual do modelo STL.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_5beede2123bc5b95738414dc3a7058f0">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p>Vamos utilizar novamente o test KPSS para verificar a estacionariedade dos dados.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_6600e63bcec8669aa91c37dd9a2c554f">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste KPSS</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">0.0361</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O teste não encontrou evidências para rejeitar a hipótese nula de estacionariedade.</p>
+<p>Agora vou aplicar o teste de Ljung-Box, <a href="">que foi introduzido anteriormente</a>, para verificar se as observações na série temporal exibem autocorrelação ou se os valores são aleatórios e independentes.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_31fb44d44cb0ad719b8b5b4249d2e2a0">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste LJUNG-BOX</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lb_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lb_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">343.7225</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O teste indica a presença de correlação entre as observações. Este resultado era esperado, uma vez que esses são os mesmos dados usados nas análises espectrais que mostraram a presença de componentes periódicas nos dados.</p>
+</div>
+</section>
+<section id="box-cox" class="level2">
+<h2 class="anchored" data-anchor-id="box-cox">Box Cox</h2>
+<div class="justify">
+<p>A transformação de Box-Cox é uma técnica estatística usada para estabilizar a variância e tornar uma distribuição mais próxima da normalidade. Ela é frequentemente aplicada em séries temporais ou outras análises estatísticas quando os dados exibem heteroscedasticidade (variação não constante) ou não seguem uma distribuição normal.</p>
+<p>Sua forma geral pode ser definida matematicamente da seguinte maneira:</p>
+<p>Para um conjunto de dados <span class="math inline">\((x_1, x_2, x_3, \ldots, x_n)\)</span> a transformação de Box-Cox é definida como:</p>
+<p><span class="math display">\[y_i =
+\begin{cases}
+\frac{x_i^\lambda - 1}{\lambda}, &amp; \text{se } \lambda \neq 0 \\
+\ln(x_i), &amp; \text{se } \lambda = 0
+\end{cases}\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(y_i\)</span> é o valor transformado do dado <span class="math inline">\(x_i\)</span></p></li>
+<li><p><span class="math inline">\(\lambda\)</span> é um parâmetro que controla o tipo de transformação.</p></li>
+</ul>
+<p>Quando <span class="math inline">\(\lambda\)</span> é igual a zero, a transformação se torna uma transformação logarítmica natural (<span class="math inline">\(ln(x_i)\)</span>) Quando <span class="math inline">\(\lambda\)</span> não é igual a zero, a transformação é uma potência do dado original (<span class="math inline">\(x_i^\lambda\)</span>) com uma correção para garantir que a transformação seja bem definida para todos os valores de <span class="math inline">\(x_i\)</span>.</p>
+<p>A escolha do valor ideal de <span class="math inline">\(λ\)</span> geralmente é feita de maneira a maximizar a normalidade ou estabilizar a variância dos dados transformados. É comum testar vários valores em um intervalo, aplicar a transformação a cada valor da série e analisar a normalidade e a homogeneidade da variância dos dados transformados. Para esta tarefa vou utilizando a função <code>forecast::BoxCox.lambda</code> do pacote <code>forecast</code>, que possibilita a seleção automática desse parâmetro. Essa função escolhe o lambda de modo a maximizar o perfil da verossimilhança logarítmica de um modelo linear ajustado aos dados. Para dados não sazonais, é ajustada uma tendência temporal linear, enquanto que para dados sazonais, é usado um modelo linear de tendência temporal com variáveis dummy sazonais</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_ba379b0b96559876fed3ff75948b6994">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">round</span>(forecast<span class="sc">::</span><span class="fu">BoxCox.lambda</span>(fit<span class="sc">$</span>value), <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lambda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.38</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_071de99b33a9c4e543952056c0c1b8d3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">box_cox_close =</span> fabletools<span class="sc">::</span><span class="fu">box_cox</span>(value, <span class="at">lambda=</span>lambda)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(index,box_cox_close))<span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Transformação Box-Cox"</span>)<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_f8abc3ddf6dccfcb213eccf82ef81355">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">box_cox_close =</span> fabletools<span class="sc">::</span><span class="fu">box_cox</span>(value, <span class="at">lambda=</span>lambda)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">features</span>(box_cox_close, unitroot_kpss) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">set_tab</span>(<span class="st">"Teste KPSS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste KPSS</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">1.8652</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>A transformação não modificou a forma dos dados, apenas o range de valores do eixo y. Entretanto, como o teste KPSS indicou isso não foi o suficiente para tornar os dados estacionários.</p>
+</div>
+</section>
+<section id="diferenciação" class="level2">
+<h2 class="anchored" data-anchor-id="diferenciação">Diferenciação</h2>
+<div class="justify">
+<p>A diferenciação em séries temporais é uma técnica comumente usada para transformar dados não estacionários em um formato mais adequado para análise e modelagem. Ela envolve a subtração de valores consecutivos da série, visando remover tendências e padrões de sazonalidade. Ao aplicar diferenciação, a série é transformada em uma nova série de diferenças, que é esperançosamente estacionária. Essa abordagem permite a utilização de modelos estatísticos, como o ARIMA (AutoRegressive Integrated Moving Average), que pressupõem a estacionariedade dos dados.</p>
+<p>Está tecnica pode ser descrita da seguinte forma:</p>
+<p><span class="math display">\[\Delta y_t = y_t - y_{t-1}\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><span class="math inline">\(\Delta\)</span> representa a diferença entre o valor atual <span class="math inline">\(y_t\)</span> e o valor anterior <span class="math inline">\(y_{t-1}\)</span> na série tempora.</li>
+</ul>
+<p>Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função unitroot_ndiffs, que tem com base o teste ADF, anteriormente explicado. Lembrando que o termo “unit root” refere-se à raiz unitária, que é uma característica de uma série temporal não estacionária. A presença de uma raiz unitária indica que a série não reverte rapidamente a perturbações, o que pode tornar a análise e a modelagem mais desafiadoras.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_5dd7af013672e725a587f933e282be06">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(value,  unitroot_ndiffs) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="st">"Número de Diferenças"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Número de Diferenças</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ndiffs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O teste indica a necessidade de realizar uma diferenciação para tornar a série estacionária.</p>
+<div class="cell" data-hash="index_cache/html/grafico-diff_251552ef2105203b95907924c80aec6b">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">diff_close =</span> tsibble<span class="sc">::</span><span class="fu">difference</span>(value)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(index,diff_close))<span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Transformação por diferenças"</span>)<span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/grafico-diff-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p>Após a transformação dos dados, aparentemente, não parece haver nenhuma estrutura remanescente.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_3715cdbdca8aee39574b789cb94b7617">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste KPSS</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">kpss_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">0.3244</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O teste KPSS apresenta evidências que sustentam a aceitação da hipótese nula de estacionariedade.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-17_29558d2945cb6439d9efe57b4d3c8700">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">diff_close =</span> tsibble<span class="sc">::</span><span class="fu">difference</span>(value)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(value, ljung_box, <span class="at">lag =</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="st">"Teste LJUNG-BOX"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste LJUNG-BOX</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lb_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lb_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">2860.319</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O teste Ljung-Box indica que a série se comporta como um ruído branco, ou seja, não apresenta autocorrelação significativa.</p>
+</div>
+</section>
+</section>
+<section id="funções-de-autocorrelações" class="level1">
+<h1>Funções de Autocorrelações</h1>
+<div class="justify">
+<p>As funções de autocorrelação (do inglês, Autocorrelation Function ACF) e de Autocorrelação Parcial (Partial Autocorrelation Function PACF) são ferramentas muito utilizadas na análise de séries temporais para identificar estruturas dentro dos dados, como sazonalidade, tendência e estacionáriedade.</p>
+<p>Como estas ferramentes são essênciais para diversos tipos de modelos vou detalhar um pouco mais o seu funcionamento e aplicações. Dando um enfoque maior na sua relação como modelos ETS e ARIMA, temas dos próximos posts.</p>
+</div>
+<section id="função-de-autocorrelação-acf" class="level2">
+<h2 class="anchored" data-anchor-id="função-de-autocorrelação-acf">Função de Autocorrelação (ACF)</h2>
+<div class="justify">
+<p>A ACF pode ser representada da seguinte forma:</p>
+<p>Dada uma série temporal <span class="math inline">\({X_t}\)</span>, onde t representa o tempo, a autocorrelação para um atraso (lag) <span class="math inline">\(k\)</span> é calculada da seguinte maneira:</p>
+<p><span class="math display">\[ρ(k) = Cov(X_t, X_{t-k}) / (σ(X_t) * σ(X_{t-k}))\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(ρ(k)\)</span> é a autocorrelação para o atraso <span class="math inline">\(k\)</span>.</p></li>
+<li><p><span class="math inline">\(Cov(X_t, X_{t-k})\)</span> é a covariância entre <span class="math inline">\(X_t\)</span> e <span class="math inline">\(X_{t-k}\)</span>, ou seja, a medida de como as observações estão relacionadas em <span class="math inline">\(t\)</span> e <span class="math inline">\(t-k\)</span>.</p></li>
+<li><p><span class="math inline">\(σ(X_t)\)</span> é o desvio padrão de <span class="math inline">\(X_t\)</span>, que mede a variabilidade dos valores em <span class="math inline">\(t\)</span>.</p></li>
+<li><p><span class="math inline">\(σ(X_{t-k})\)</span> é o desvio padrão de <span class="math inline">\(X_{t-k}\)</span>, que mede a variabilidade dos valores em <span class="math inline">\(t-k\)</span>.</p></li>
+</ul>
+<p>Em resumo, a autocorrelação para um determinado atraso <span class="math inline">\(k\)</span> é a covariância normalizada pela variabilidade (desvio padrão) das observações separadas por esse atraso. Ela varia de -1 a 1, onde valores próximos de 1 indicam forte autocorrelação positiva, valores próximos de -1 indicam forte autocorrelação negativa e valores próximos de 0 indicam ausência de autocorrelação.</p>
+</div>
+</section>
+<section id="função-de-autocorrelação-parcial-pacf" class="level2">
+<h2 class="anchored" data-anchor-id="função-de-autocorrelação-parcial-pacf">Função de Autocorrelação Parcial (PACF)</h2>
+<div class="justify">
+<p>A PACF é calculada da seguinte maneira:</p>
+<p>Suponha que temos uma série temporal <span class="math inline">\(x_t\)</span> para <span class="math inline">\(t = 1, 2, \ldots, N\)</span>. O PACF de atraso <span class="math inline">\(k\)</span> (<span class="math inline">\(PACF_k\)</span>) é definido como:</p>
+<p><span class="math display">\[PACF_k = \frac{\gamma_{t,t-k} - \sum_{i=1}^{k-1} \phi_i \gamma_{t-k,t-k+i}}{1 - \sum_{i=1}^{k-1} \phi_i PACF_i}\]</span></p>
+<p>onde:</p>
+<ul>
+<li><p><span class="math inline">\(\gamma_{t,t-k}\)</span> é a função de autocovariância entre <span class="math inline">\(x_t\)</span> e <span class="math inline">\(x_t-k\)</span>.</p></li>
+<li><p><span class="math inline">\(\phi_i\)</span> são os coeficientes estimados de um modelo AR de ordem <span class="math inline">\(i\)</span>, onde <span class="math inline">\(i = 1, 2, \ldots, k-1\)</span></p></li>
+</ul>
+<p>A função PACF é calculada iterativamente, começando com <span class="math inline">\(k\)</span> = 1 e progredindo até o atraso máximo desejado. Mede a correlação entre uma observação em um determinado momento e observações em intervalos de tempo anteriores, removendo o efeito de observações em lags intermediários. Isso ajuda a identificar a estrutura de dependência direta, indicando o possível número de termos autorregressivos a serem incluídos em um modelo AR, crucial para fazer previsões precisas.</p>
+</div>
+</section>
+<section id="algumas-aplicações" class="level2">
+<h2 class="anchored" data-anchor-id="algumas-aplicações">Algumas Aplicações</h2>
+<div class="justify">
+<ul>
+<li><p>Avaliação de Estacionariedade:</p>
+<ul>
+<li><p>A presença de autocorrelação significativa em lags variados nas funções ACF pode sugerir que a série não é estacionária. A estacionariedade é uma condição importante para muitos modelos de séries temporais, como modelos ARMA e modelos de suavização exponencial.</p></li>
+<li><p>Se a série não for estacionária, pode ser necessário aplicar diferenciação para torná-la estacionária antes de modelar.</p></li>
+<li><p>Se após a diferenciação a série parecer ter flutuações constantes em torno de um nível médio, isso sugere uma tendência aditiva. Se as flutuações em torno do nível médio parecem crescer ou diminuir ao longo do tempo, isso sugere uma tendência multiplicativa.</p></li>
+<li><p>Se a ACF apresentar picos em múltiplos do período sazonal, isso sugere que há uma sazonalidade presente na série que precisa ser ajustada por meio da diferenciação sazonal.</p></li>
+<li><p>A PACF é especialmente útil para identificar o número de diferenciações sazonais necessárias. Se houver um componente sazonal na série, você pode observar picos significativos na PACF em lags correspondentes aos múltiplos do período sazonal.</p></li>
+</ul></li>
+<li><p>Identificando o componente de sazonalidade:</p>
+<ul>
+<li><p>Identifique picos significativos nas defasagens da ACF. Se esses picos ocorrerem em múltiplos inteiros do período sazonal, é um indício de sazonalidade.</p></li>
+<li><p>Se houver sazonalidade aditiva na série, você geralmente verá picos significativos na ACF em múltiplos lags (intervalos de tempo) que correspondem aos períodos sazonais. Por exemplo, em uma série mensal com sazonalidade anual, você esperaria ver picos nas defasagens 12, 24, 36, etc.</p></li>
+<li><p>Para sazonalidade multiplicativa, os picos na ACF tendem a ser mais espaçados, seguindo os múltiplos do período sazonal, mas podem ser mais fracos em comparação com a sazonalidade aditiva.</p></li>
+<li><p>Novamente, para sazonalidade aditiva, você pode ver picos significativos na PACF em múltiplos do período sazonal. Para sazonalidade multiplicativa, a PACF também pode mostrar picos, mas eles podem ser menos pronunciados que na sazonalidade aditiva.</p></li>
+</ul></li>
+<li><p>Ordem de Modelos ARMA (Autoregressive Moving Average):</p>
+<ul>
+<li><p>A ACF pode ajudar a identificar a ordem dos termos de média móvel (MA) em um modelo ARMA/ARIMA, observando os lags significativos na ACF.</p></li>
+<li><p>A análise da PACF é particularmente útil para determinar a ordem dos termos autorregressivos (AR) em um modelo ARMA. Os lags significativos na PACF indicam quantos lags anteriores devem ser incluídos no modelo.</p></li>
+</ul></li>
+</ul>
+<p>Para fins didáticos, eu vou aplicar as técnicas mencionadas aos dados em seu estado original, nos dados sem a componente de tendência, mas com as compoentes periódicas. E nos dados após a diferenciação, onde os dados podem resultantes podem ser considerados ruido branco.</p>
+</div>
+<section id="dados-originais" class="level3">
+<h3 class="anchored" data-anchor-id="dados-originais">Dados Originais</h3>
+<div class="justify">
+<p>A utilização das funções ACF e PACF pode ser adotada como uma abordagem inicial em uma análise exploratória, visando identificar estruturas de interesse. Minha escolha por iniciar a análise utilizando métodos de decomposição e análises espectrais ocorre porque considero essas técnicas mais robustas e informativas.</p>
+<p>Caso escolhidas como primeira aboragem os resultados a ser interpretados seriam os seguintes.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_ec465393982fd8bcc747a7d946df99bd">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#max_lag &lt;- nrow(fit)-1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-19_62b8540d347829283b0a85a170a5c0fb">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>acf_plot <span class="ot">&lt;-</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">ACF</span>(value, <span class="at">lag_max =</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-20_1cce3f901a9377182c55b1676ed53a26">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pacf_plot <span class="ot">&lt;-</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">PACF</span>(value, <span class="at">lag_max =</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-21_14f438ebc83b94e32fe4bb5ba45136a9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(acf_plot,pacf_plot, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p>Os resultados da função ACF exibem um padrão aparentemente senoidal, com valores de correlação que oscilam entre positivos e negativos de forma significativa. Os lags são sequenciais, e a transição entre esses valores ocorre de maneira gradual. Por outro lado, os resultados da função PACF mostram valores significativos apenas no lag zero, enquanto os lags subsequentes não demonstram um comportamento senoidal. Esses resultados, juntamente com a análise visual dos dados brutos, sugerem fortemente a presença de não estacionariedade nos dados. A correlação significativa entre os dados parece ser devido à existência de uma tendência nos mesmos.</p>
+<p><strong>Um aspecto interessante desses resultados é que o último lag (ACF) com valores teoricamente indicativos de boa previsibilidade (&gt;= 0.5) é observado no lag de 19 meses, o que está em linha com as conclusões das análises espectrais realizadas nos dados que não apresentam tendência.</strong></p>
+</div>
+</section>
+<section id="dados-sem-tendência" class="level3">
+<h3 class="anchored" data-anchor-id="dados-sem-tendência">Dados sem Tendência</h3>
+<div class="justify">
+<p>A remoção apenas da tendência dos dados para torná-los estacionários não é uma prática comum quando se trata de modelagem, especialmente em modelos estatísticos. Em geral, esses modelos buscam eliminar tanto a tendência quanto a sazonalidade, pois essas estruturas são mais previsíveis. O foco principal recai sobre a análise da parte residual e aleatória dos dados. No entanto, os dados que foram despojados apenas da componente de tendência podem ser úteis para ilustrar duas situações: a primeira é que os dados não apresentam uma tendência intrínseca; a segunda é que, mesmo após a aplicação da diferenciação para torná-los estacionários, ainda podem persistir indícios de sazonalidade nos dados.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-24_d67854052afdde82309e2f4e1f231f3e">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="dados-sazonais" class="level3">
+<h3 class="anchored" data-anchor-id="dados-sazonais">Dados sazonais</h3>
+<div class="justify">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-27_7bb4a5069648b7f35d058cd798e3dfb5">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="dados-diferenciados" class="level3">
+<h3 class="anchored" data-anchor-id="dados-diferenciados">Dados Diferenciados</h3>
+<div class="justify">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-30_d282386488a57b3c64917edbec730ec1">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<div class="justify">
+<p>Uma vez que já apresentamos e testamos a diferenciação dos dados, temos conhecimento de que a aplicação dessa técnica se mostra eficaz na transformação dos dados em uma forma estacionária. É importante mencionar isso, pois este é o próximo passo após a identificação de tendências e não estacionariedade. Ao analisarmos o gráfico resultante da diferenciação, que exibe um comportamento aproximadamente constante, sugere-se a presença de uma tendência aditiva.</p>
+<p>Existem evidências para rejeitar a hipótese nula de que não há autocorrelação. Assim como nos dados originais e na transformação box_cox, os dados apresentam correlação com seus atrasos de modo significativo. Porém a caracteristica da curva de correlção com a remoção do trend é bem diferente, sugerindo a existência de um padrão ciclico nos dados. Isso vai de encontro as componetes encontradas pelo modelo STL, que indica a existência de componetes sazonais nos dados. Contudo, os lags com valore de até 0.5 vão até o lag 35.</p>
+<p>Até o momento, as informações-chave que podem orientar a etapa de modelagem são as seguintes:</p>
+<p>A série não é estacionária, o que aponta para a necessidade de aplicar alguma forma de transformação nos dados. Opções incluem a transformação Box-Cox, raiz quadrada, diferenciação, remoção de tendência, entre outras.</p>
+<p>O resultado da análise de autocorrelação reforça os resultados encontrados pelas análises espctrais. Apesar dos resultados de correlação apresentarem valores acima da faixa de significância para lags além de 18 meses, os valores são todos inferiores a 0.5. Além disso nenhuma periodicidade muito maior que 18 meses aparece nos testes espectrais.</p>
+<p>Conforme evidenciado pelo gráfico da série temporal, esses resultados apontam para a não estacionariedade dos dados.</p>
+<p>Após a modelagem, é necessário reverter a diferenciação para realizar previsões na escala original da série temporal. Isso envolve somar as diferenças previstas aos valores anteriores da série (ou ao último valor conhecido da série original). Ao realizar esse processo, estamos extrapolando as mudanças previstas para os próximos períodos e adicionando-as aos valores anteriores para obter as previsões finais. Isso pressupõe que as mudanças esperadas no período futuro sejam semelhantes às mudanças observadas no período de treinamento do modelo.</p>
+<p>Aqui está uma fórmula geral para ilustrar o processo de reversão da diferenciação:</p>
+<p>Seja <span class="math inline">\(y_t\)</span> o valor original na época <span class="math inline">\(t\)</span> e <span class="math inline">\(y'_t\)</span> a série temporal diferenciada na época <span class="math inline">\(t\)</span>. Seja <span class="math inline">\(y'_t+1\)</span> a previsão diferenciada para o período <span class="math inline">\(t+1\)</span>. Então, a previsão final <span class="math inline">\(y'_{t+1}\)</span> na escala original é calculada da seguinte forma:</p>
+<p><span class="math display">\[y_{t+1} = y_t + y'_{t+1}\]</span></p>
+</div>
+</section>
+<section id="referências" class="level1">
+<h1>Referências</h1>
+<p><a href="https://otexts.com/fpp3/decomposition.html">Forecasting: Principles and Practice (3rd ed)/Chapter 4 Time series features</a></p>
+<p><a href="https://www.rdocumentation.org/packages/tseries/versions/0.10-54/topics/adf.test">adf.test: Augmented Dickey–Fuller Test</a></p>
+<p><a href="https://www.rdocumentation.org/packages/tsfeatures/versions/1.1/topics/unitroot_kpss">unitroot_kpss: Unit Root Test Statistics</a></p>
+<p><a href="https://www.rdocumentation.org/packages/forecast/versions/8.21.1/topics/BoxCox.lambda">BoxCox.lambda: Automatic selection of Box Cox transformation parameter</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

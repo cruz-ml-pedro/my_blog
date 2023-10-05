@@ -1,0 +1,453 @@
+---
+title: "Cotação do ouro - Parte 3"
+subtitle: "Suavização Exponencial"
+author: "Pedro Lima"
+date: "2023-10-02"
+categories: [Modelos Estatísticos, Série-Temporal,R]
+toc: true
+toc-depth: 3
+draft: true
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 8, fig.height = 5)
+
+pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime, xgboost,
+               modeltime.resample)
+
+# This toggles plots from plotly (interactive) to ggplot (static)
+interactive <- FALSE
+```
+
+```{r, echo=FALSE}
+# Obter dados da ação de ouro (código GLD)
+gold_data <- tq_get("GLD")
+```
+
+```{r, echo=FALSE}
+gold_mean <-
+  gold_data %>% 
+  group_by(mes = format(date, "%Y-%m")) %>%
+  summarize(media = mean(close, na.rm = TRUE)) %>% 
+   mutate(
+    mes=as_date(mes, format="%Y-%m")
+    )
+```
+
+```{css, echo=FALSE}
+.justify {
+  text-align: justify;
+}
+```
+
+# Introdução
+
+::: justify
+Nessa segunda post sobre a cotação do ouro, vou criar o primeiro modelo para realizar previsão dos valores de interesse. Os dados utilizados, assim como a escolha dos parâmetros utilizados para criar os modelos a seguir foram, respectivamente, adiquridos e escolhidos na [parte um]() e [dois]() dessa série de postos.
+
+Nesta terceira postagem sobre a cotação do ouro será empregada a mesma estratégia de validação cruzada comparação dos modelos, usadas na [postagem anterior](). Assim, os procedimentos e funções adotados nestas etapas não serão novamentes descritos.
+:::
+
+# Suavização Exponencial
+
+::: justify
+A suavização exponencial foi proposta no final dos anos 1950 (Brown, 1959; Holt, 1957; Winters, 1960) e motivou alguns dos métodos de previsão mais bem-sucedidos. As previsões produzidas usando métodos de suavização exponencial são médias ponderadas das observações passadas, com os pesos diminuindo exponencialmente à medida que as observações envelhecem. Em outras palavras, quanto mais recente for a observação, maior será o peso associado a ela. Esse framework gera previsões confiáveis rapidamente e para uma ampla gama de séries temporais, o que é uma grande vantagem e de grande importância para aplicações na indústria.
+
+Os modelos de suavização exponencial são técnicas de previsão de séries temporais amplamente utilizadas para suavizar variações em dados ao longo do tempo e fazer previsões futuras. Existem vários tipos de modelos de suavização exponencial, sendo os principais:
+
+-   **Suavização Exponencial Simples (SES - Simple Exponential Smoothing):**
+
+    -   É o modelo mais simples de suavização exponencial.
+    -   Adequado para séries temporais com tendência constante e nenhum padrão sazonal.
+    -   Usa apenas uma média ponderada das observações passadas para fazer previsões.
+
+-   **Suavização Exponencial Dupla (DES - Double Exponential Smoothing):**
+
+    -   Adiciona a capacidade de lidar com séries temporais com tendência.
+    -   Usa duas médias ponderadas: uma para a média da série e outra para a tendência.
+    -   Adequado para dados que mostram uma tendência linear ou exponencial.
+
+-   **Suavização Exponencial Tripla (TES - Triple Exponential Smoothing):**
+
+    -   Estende o modelo de suavização exponencial dupla para incluir a capacidade de lidar com sazonalidade.
+    -   Usa três médias ponderadas: uma para a média da série, uma para a tendência e uma para a sazonalidade.
+    -   Adequado para dados com tendência e padrões sazonais.
+
+-   **Suavização Exponencial Holt-Winters:**
+
+    -   É uma variação do método de suavização exponencial tripla.
+    -   Inclui três componentes: média, tendência e sazonalidade, semelhante ao TES.
+    -   Pode ser usado com diferentes níveis de sazonalidade (aditiva ou multiplicativa).
+
+-   **Suavização Exponencial Adaptativa (Adaptive Exponential Smoothing):**
+
+    -   Adapta automaticamente os parâmetros de suavização com base na natureza dos dados.
+    -   Pode lidar com séries temporais com diferentes padrões de variação, como tendência e sazonalidade variáveis.
+
+-   **Suavização Exponencial Estocástica (ETS - Exponential Smoothing State Space Model):**
+
+    -   É uma abordagem mais complexa que modela a série temporal como um sistema de espaço de estados.
+    -   Permite lidar com diferentes combinações de tendência, sazonalidade e erros.
+    -   É útil quando a estrutura subjacente da série não é bem conhecida.
+
+Cada um desses modelos de suavização exponencial é adequado para diferentes tipos de séries temporais, dependendo da presença de tendência, sazonalidade e outros padrões. A escolha do modelo adequado depende da análise dos dados e da compreensão da estrutura da série temporal em questão.
+:::
+
+### ETS - Exponential Smoothing State Space Model
+
+::: jistify
+Os modelos ETS, "Error, Trend, and Seasonality" (Erro, Tendência e Sazonalidade, em português), são usados para analisar e prever dados de séries temporais que exibem tendências e padrões sazonais, descrevendo a estrutura subjacente dos dados em termos desses três componentes principais. Existem diferentes variações de modelos ETS, como ETS(AAA), ETS(MAM), ETS(ANN), entre outros, que especificam como os componentes de erro, tendência e sazonalidade são modelados e combinados. Cada variação é adequada para diferentes tipos de séries temporais, dependendo das características dos dados. Esses modelos são amplamente utilizados em estatísticas e análise de séries temporais para fins de previsão e modelagem.
+
+Modelo ETS:
+
+\textbf{Decomposição ETS:}
+
+O modelo ETS desagrega uma série temporal $y_t$ em três componentes principais: erro ($E_t$), tendência ($T_t$) e sazonalidade ($S_t$).
+
+**Equação de Decomposição:**
+
+$$y_t = T_t + S_t + E_t$$
+
+**Equação da Tendência:**
+
+$$T_t = \alpha Y_t + (1 - \alpha)(T_{t-1} + L_{t-1})$$
+
+**Equação da Sazonalidade:**
+
+$$S_t = \beta(Y_t - T_t) + (1 - \beta)S_{t-m}$$
+
+**Equação do Termo de Sazonalidade:**
+
+$$E_t = \gamma(Y_t - T_t - S_t) + (1 - \gamma)E_{t-1}$$
+
+**Equação do Erro:**
+
+$$E_t = y_t - T_t - S_t$$
+
+Onde:
+
+$\alpha$, $\beta$ e $\gamma$ são os parâmetros de suavização
+
+$m$ é a periodicidade sazonal
+
+$L_{t-1}$ é uma correção de tendência sazonal
+:::
+
+### STL + ETS
+
+::: justify
+A combinação de STL (Seasonal and Trend decomposition using Loess) com ETS (Exponential Smoothing State Space Model) é uma abordagem poderosa para a previsão de séries temporais que lida com a decomposição de uma série em componentes de tendência, sazonalidade e erro, e em seguida, aplica a suavização exponencial estocástica para prever cada componente separadamente.
+
+Aqui estão algumas informações sobre a abordagem STL + ETS:
+
+STL (Seasonal and Trend decomposition using Loess):
+
+STL é uma técnica de decomposição de séries temporais que visa separar uma série em três componentes principais: tendência, sazonalidade e componente residual (erro). Ele usa uma técnica chamada "Loess" (Local Regression) para ajustar curvas locais a partes da série temporal, identificando tendências e padrões sazonais. A decomposição resultante permite uma compreensão mais clara da estrutura subjacente da série temporal, tornando mais fácil a modelagem subsequente. ETS (Exponential Smoothing State Space Model):
+
+ETS é um modelo de suavização exponencial que lida com a previsão de séries temporais por meio de componentes de erro, tendência e sazonalidade. Ele é altamente flexível e pode acomodar diferentes combinações desses componentes. ETS é uma abordagem estocástica que leva em consideração a incerteza associada às previsões e modela as variações aleatórias nos dados. A combinação de STL e ETS aproveita as vantagens de ambas as abordagens:
+
+STL ajuda a identificar e separar claramente os componentes de tendência e sazonalidade de uma série temporal, tornando mais fácil a modelagem desses componentes individualmente.
+
+ETS é eficaz na modelagem dos componentes de erro, tendência e sazonalidade, permitindo a previsão precisa desses componentes.
+
+O fluxo de trabalho típico para usar STL + ETS em previsões de séries temporais é o seguinte:
+
+Aplicar a decomposição STL para separar a série em tendência, sazonalidade e componente de erro.
+
+Aplicar modelos de suavização exponencial estocástica (ETS) separadamente a cada um dos componentes.
+
+Combinar as previsões individuais dos três componentes para obter a previsão final da série temporal.
+
+Essa abordagem é especialmente útil quando a série temporal possui tendência e sazonalidade que variam ao longo do tempo, pois permite adaptar o modelo de suavização exponencial a essas mudanças.
+
+Assim como o método STL, [explicado anteriormente](). Em resumo, a principal diferença entre os modelos STL e ETS está na abordagem de decomposição e na ênfase em previsões. O STL é mais flexível em relação à sazonalidade variável, enquanto o ETS assume uma sazonalidade constante e é mais voltado para previsões.
+:::
+
+### Exponential Smoothing in SSOE state space model
+
+::: justify
+Exponential Smoothing in SSOE state space model" é uma abordagem que combina dois conceitos-chave: suavização exponencial (Exponential Smoothing) e o modelo de espaço de estados com erros estocásticos (SSOE - State Space Model with Stochastic Errors) para modelar e prever séries temporais.
+
+Aqui está uma explicação mais detalhada:
+
+Exponential Smoothing (Suavização Exponencial):
+
+A suavização exponencial é uma técnica amplamente usada para prever séries temporais. Ela se baseia em modelos que estimam componentes de tendência, sazonalidade e erro para fazer previsões futuras. A suavização exponencial utiliza médias ponderadas das observações passadas para estimar os valores futuros. Essas médias são atualizadas exponencialmente, dando mais peso às observações mais recentes. State Space Model with Stochastic Errors (Modelo de Espaço de Estados com Erros Estocásticos - SSOE):
+
+O modelo de espaço de estados é uma estrutura estatística usada para descrever a dinâmica de sistemas complexos ao longo do tempo. Ele é especialmente útil para modelar séries temporais, pois permite representar a evolução dos estados latentes (não observados) e a relação entre esses estados e as observações observadas. Erros estocásticos referem-se a variações aleatórias ou não sistemáticas nas observações. Os modelos de espaço de estados com erros estocásticos são projetados para acomodar essas variações e modelar os processos subjacentes que geram os dados observados. A combinação de Exponential Smoothing com um Modelo de Espaço de Estados (SSOE) implica em incorporar o poder da suavização exponencial para modelar a tendência e a sazonalidade, juntamente com a flexibilidade do modelo de espaço de estados para lidar com erros estocásticos e incertezas. Essa abordagem é particularmente útil quando se deseja modelar séries temporais complexas que podem incluir componentes de tendência e sazonalidade variáveis ao longo do tempo, além de erros estocásticos que não podem ser adequadamente capturados por métodos mais simples de suavização exponencial.
+
+Em resumo, a combinação de Exponential Smoothing com um modelo de espaço de estados com erros estocásticos permite uma modelagem mais sofisticada e precisa de séries temporais, considerando tanto a estrutura subjacente quanto a incerteza associada às previsões. Isso é particularmente valioso em situações em que a complexidade da série temporal exige um modelo mais avançado.Exponential Smoothing in SSOE state space model" é uma abordagem que combina dois conceitos-chave: suavização exponencial (Exponential Smoothing) e o modelo de espaço de estados com erros estocásticos (SSOE - State Space Model with Stochastic Errors) para modelar e prever séries temporais.
+
+Aqui está uma explicação mais detalhada:
+
+Exponential Smoothing (Suavização Exponencial):
+
+A suavização exponencial é uma técnica amplamente usada para prever séries temporais. Ela se baseia em modelos que estimam componentes de tendência, sazonalidade e erro para fazer previsões futuras. A suavização exponencial utiliza médias ponderadas das observações passadas para estimar os valores futuros. Essas médias são atualizadas exponencialmente, dando mais peso às observações mais recentes. State Space Model with Stochastic Errors (Modelo de Espaço de Estados com Erros Estocásticos - SSOE):
+
+O modelo de espaço de estados é uma estrutura estatística usada para descrever a dinâmica de sistemas complexos ao longo do tempo. Ele é especialmente útil para modelar séries temporais, pois permite representar a evolução dos estados latentes (não observados) e a relação entre esses estados e as observações observadas. Erros estocásticos referem-se a variações aleatórias ou não sistemáticas nas observações. Os modelos de espaço de estados com erros estocásticos são projetados para acomodar essas variações e modelar os processos subjacentes que geram os dados observados. A combinação de Exponential Smoothing com um Modelo de Espaço de Estados (SSOE) implica em incorporar o poder da suavização exponencial para modelar a tendência e a sazonalidade, juntamente com a flexibilidade do modelo de espaço de estados para lidar com erros estocásticos e incertezas. Essa abordagem é particularmente útil quando se deseja modelar séries temporais complexas que podem incluir componentes de tendência e sazonalidade variáveis ao longo do tempo, além de erros estocásticos que não podem ser adequadamente capturados por métodos mais simples de suavização exponencial.
+
+Em resumo, a combinação de Exponential Smoothing com um modelo de espaço de estados com erros estocásticos permite uma modelagem mais sofisticada e precisa de séries temporais, considerando tanto a estrutura subjacente quanto a incerteza associada às previsões. Isso é particularmente valioso em situações em que a complexidade da série temporal exige um modelo mais avançado.
+:::
+
+# Validação cruzada
+
+::: juntify
+Antes de iniciarmos a construção do modelo vamos estabelecer um plano de validação cruzada.
+
+A validação cruzada é uma técnica fundamental em aprendizado de máquina e estatística. Ela ajuda a avaliar o desempenho de modelos ao dividir os dados em conjuntos de treinamento e teste múltiplos, mitigando o viés de seleção do conjunto de teste e fornecendo uma estimativa mais confiável do desempenho do modelo em dados não vistos. Isso é essencial para escolher e ajustar modelos de maneira adequada e geralmente envolve k-folds, onde o conjunto de dados é dividido em k partes iguais, alternando entre treinamento e teste para cada iteração.
+
+```{r}
+cv <- 
+  gold_mean %>% 
+  time_series_cv(
+    assess      = 12 * 1,
+    initial     = 12 * 7,
+    skip        = 12 * 0.5,
+    slice_limit = 8,
+    culmulatime = TRUE
+  )
+
+```
+
+```{r}
+cv %>% 
+  tk_time_series_cv_plan() %>% 
+  plot_time_series_cv_plan(mes,media, .facet_ncol = 2, .interactive = FALSE)
+```
+:::
+
+# Criando os Modelos
+
+::: justify
+ets automatico
+
+```{r}
+ets_auto <- 
+ exp_smoothing() %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+ets identificado na análise exploratória
+
+```{r}
+ets <- 
+ exp_smoothing(
+   seasonal_period  = 16,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "additive"
+ ) %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+ets usando o motor smooth_es
+
+```{r}
+es_auto <- 
+ exp_smoothing() %>% 
+  set_engine("smooth_es") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+ets usando o motor smooth_es automatico
+
+```{r}
+es <- 
+ exp_smoothing(
+   seasonal_period  = 16,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "additive"
+ ) %>% 
+  set_engine("smooth_es") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+usando decomposição stl + ets automatico
+
+```{r}
+stl_auto <- seasonal_reg() %>% 
+  set_engine("stlm_ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+usando decomposição stl + ets com as componentes periodicas identificadas
+
+```{r}
+stl_season <- seasonal_reg(
+    seasonal_period_1 = 16,
+    seasonal_period_2 = 12
+  ) %>% 
+  set_engine("stlm_ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+```{r}
+stl_season2 <- seasonal_reg(
+    seasonal_period_1 = 16
+  ) %>% 
+  set_engine("stlm_ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+:::
+
+# Comparando os modelos
+
+::: justify
+```{r}
+model_table <- 
+modeltime_table(
+  ets_auto,
+  ets,
+  es_auto,
+  es,
+  stl_auto,
+  stl_season,
+  stl_season2
+  )
+```
+:::
+
+# Calibrando
+
+::: justify
+```{r}
+calib_table <- 
+  model_table %>% 
+  modeltime_calibrate(testing(cv$splits[[1]]))
+```
+:::
+
+# Residual
+
+::: justify
+```{r, message=FALSE}
+calib_table %>% 
+  modeltime_residuals() %>% 
+  plot_modeltime_residuals(
+     .type = "timeplot",
+     .interactive = FALSE
+     )
+```
+
+```{r, message=FALSE}
+calib_table %>% 
+  modeltime_residuals() %>% 
+  plot_modeltime_residuals(
+     .type = "acf",
+     .interactive = FALSE
+     )
+```
+
+```{r, message=FALSE}
+calib_table %>% 
+  modeltime_residuals() %>% 
+  plot_modeltime_residuals(
+     .type = "seasonality",
+     .interactive = FALSE
+     )
+```
+:::
+
+# Accuracy
+
+::: justify
+```{r}
+calib_table %>% 
+  modeltime_accuracy() 
+```
+:::
+
+# Test set visualization
+
+::: justify
+```{r}
+calib_table %>% 
+  modeltime_forecast(
+    new_data = testing(cv$splits[[1]]),
+    actual_data = gold_mean
+  ) %>% 
+  plot_modeltime_forecast()
+```
+:::
+
+# Validação Cruzada
+
+::: justify
+```{r}
+resamples_fitted <- model_table %>%
+    modeltime_fit_resamples(
+        resamples = cv,
+        control   = control_resamples(verbose = FALSE)
+    )
+
+resamples_fitted
+```
+
+```{r}
+resamples_fitted %>%
+    plot_modeltime_resamples(
+      .point_size  = 3, 
+      .point_alpha = 0.8,
+      .interactive = FALSE
+    )
+```
+
+```{r}
+resamples_fitted %>%
+    modeltime_resample_accuracy(summary_fns = mean) %>%
+    table_modeltime_accuracy(.interactive = FALSE)
+```
+:::
+
+# Forecast future
+
+::: justify
+```{r}
+future_forecast_tbl <- 
+  calib_table %>% 
+  modeltime_refit(gold_mean) %>% 
+  modeltime_forecast(
+    h  = "1 year",
+    actual_data = gold_mean
+  )
+```
+
+```{r}
+future_forecast_tbl %>% 
+  plot_modeltime_forecast()
+```
+:::
+
+# Salvando o modelo
+
+```{r}
+#Engine es_smoooth
+#Período de 16 meses
+#Erro multiplicativo
+#Trend aditivo
+#Sazonalidade aditivo
+saveRDS(es, file = "eng-es-16period-MAA.rds")
+```
+
+# Referências
+
+[General Interface for Exponential Smoothing State Space Models](https://business-science.github.io/modeltime/reference/exp_smoothing.html)
+
+[General Interface for Multiple Seasonality Regression Models (TBATS, STLM)](https://business-science.github.io/modeltime/reference/seasonal_reg.html)
+
+[Forecasting using stl objects](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.html)
+
+[Automatic Time Series Forecasting: the forecast Package for R](https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf)
+
+[Extending Modeltime (Developer Tools)](https://business-science.github.io/modeltime/articles/extending-modeltime.html)
+
+[ets: Exponential smoothing state space model](https://pkg.robjhyndman.com/forecast/reference/ets.html)
+
+[es: Exponential Smoothing in SSOE state space model](https://rdrr.io/cran/smooth/man/es.html)
+
+[TBATS model (Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal components)](https://pkg.robjhyndman.com/forecast/reference/tbats.html)

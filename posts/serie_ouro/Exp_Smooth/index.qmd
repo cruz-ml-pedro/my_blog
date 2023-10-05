@@ -1,0 +1,204 @@
+---
+title: "Cotação do ouro - Parte 4 "
+subtitle: "Modelos exp_smoothing"
+author: "Pedro Lima"
+date: "2023-08-05"
+categories: [Modelos Estatísticos, Série-Temporal,R]
+toc: true
+toc-depth: 3
+draft: true
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 8, fig.height = 5)
+
+pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime, xgboost, modeltime.resample)
+
+# This toggles plots from plotly (interactive) to ggplot (static)
+interactive <- FALSE
+```
+
+```{r, echo=FALSE}
+# Obter dados da ação de ouro (código GLD)
+gold_data <- tq_get("GLD")
+
+```
+
+```{r, echo=FALSE}
+gold_mean <-
+  gold_data %>% 
+  group_by(mes = format(date, "%Y-%m")) %>%
+  summarize(media = mean(close, na.rm = TRUE)) %>% 
+   mutate(
+    mes=as_date(mes, format="%Y-%m")
+    )
+```
+
+```{r}
+ splits <-
+   gold_mean %>% 
+   time_series_split(
+     assess = "1 year",
+     cumulative = TRUE
+     )
+
+cv <- 
+  gold_mean %>% 
+  time_series_cv(
+    assess      = 12 * 0.5,
+    initial     = 12 * 4,
+    skip        = 12 * 1,
+    slice_limit = 6,
+    culmulatime = FALSE
+  )
+
+```
+
+```{r}
+splits %>% 
+  tk_time_series_cv_plan() %>% 
+  plot_time_series_cv_plan(mes,media, .facet_ncol = 1, .interactive = FALSE)
+```
+
+```{r}
+cv %>% 
+  tk_time_series_cv_plan() %>% 
+  plot_time_series_cv_plan(mes,media, .facet_ncol = 2, .interactive = FALSE)
+```
+
+## Modelos
+
+```{r}
+exp_ets <- 
+ exp_smoothing(
+   seasonal_period  = 12,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "multiplicative"
+ ) %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(splits))
+```
+
+```{r}
+exp_croston <- 
+ exp_smoothing(
+   smooth_level = 0.2
+ ) %>% 
+  set_engine("croston") %>% 
+  fit(media ~ mes, training(splits))
+```
+
+```{r}
+exp_theta <- 
+ exp_smoothing() %>% 
+  set_engine("theta") %>% 
+  fit(media ~ mes, training(splits))
+```
+
+```{r}
+exp_smooth <- 
+ exp_smoothing(
+   seasonal_period  = 12,
+   error            = "multiplicative",
+   trend            = "additive_damped",
+   season           = "additive"
+ ) %>% 
+  set_engine("smooth_es") %>% 
+  fit(media ~ mes, training(splits))
+```
+
+## Comparando os modelos
+
+```{r}
+model_table <- 
+modeltime_table(
+  exp_ets,
+  exp_croston,
+  exp_theta,
+  exp_smooth
+  )
+```
+
+## Calibrando
+
+```{r}
+calib_table <- 
+  model_table %>% 
+  modeltime_calibrate(testing(splits))
+```
+
+## Residual
+
+```{r}
+# calib_table %>% 
+#   modeltime_residuals() %>% 
+#   plot_modeltime_residuals(
+#     .type = "seasonality",
+#     .interactive = FALSE
+#     )
+```
+
+## Accuracy
+
+```{r}
+calib_table %>% 
+  modeltime_accuracy() 
+```
+
+## Test set visualization
+
+```{r}
+calib_table %>% 
+  modeltime_forecast(
+    new_data = testing(splits),
+    actual_data = gold_mean
+  ) %>% 
+  plot_modeltime_forecast()
+```
+
+## Validação Cruzada
+
+```{r}
+resamples_fitted <- model_table %>%
+    modeltime_fit_resamples(
+        resamples = cv,
+        control   = control_resamples(verbose = FALSE)
+    )
+
+resamples_fitted
+```
+
+```{r}
+resamples_fitted %>%
+    plot_modeltime_resamples(
+      .point_size  = 3, 
+      .point_alpha = 0.8,
+      .interactive = FALSE
+    )
+```
+
+```{r}
+resamples_fitted %>%
+    modeltime_resample_accuracy(summary_fns = mean) %>%
+    table_modeltime_accuracy(.interactive = FALSE)
+```
+
+## Forecast future
+
+```{r}
+future_forecast_tbl <- 
+  calib_table %>% 
+  modeltime_refit(gold_mean) %>% 
+  modeltime_forecast(
+    h  = "1 year",
+    actual_data = gold_mean
+  )
+```
+
+```{r}
+future_forecast_tbl %>% 
+  plot_modeltime_forecast()
+```

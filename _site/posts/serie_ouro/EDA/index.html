@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Lima">
+<meta name="dcterms.date" content="2023-08-25">
+
+<title>PeDrOOM Blog - Cotação do ouro - Parte 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script src="../../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">PeDrOOM Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../CV.html" rel="" target="">
+ <span class="menu-text">Curriculum vitæ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/cruz-ml-pedro" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-lima-8a9356268/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Cotação do ouro - Parte 1</h1>
+            <p class="subtitle lead">Análise Exploratória - Parte 1</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">EDA</div>
+                <div class="quarto-category">Série-Temporal</div>
+                <div class="quarto-category">R</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Pedro Lima </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 25, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a>
+  <ul>
+  <li><a href="#definição-do-problema" id="toc-definição-do-problema" class="nav-link" data-scroll-target="#definição-do-problema">Definição do Problema</a></li>
+  <li><a href="#carregando-os-pacotes-utilizados" id="toc-carregando-os-pacotes-utilizados" class="nav-link" data-scroll-target="#carregando-os-pacotes-utilizados">Carregando os Pacotes Utilizados</a></li>
+  <li><a href="#aquisição-dos-dados" id="toc-aquisição-dos-dados" class="nav-link" data-scroll-target="#aquisição-dos-dados">Aquisição dos Dados</a></li>
+  <li><a href="#limpeza-dos-dados" id="toc-limpeza-dos-dados" class="nav-link" data-scroll-target="#limpeza-dos-dados">Limpeza dos Dados</a></li>
+  <li><a href="#análise-preliminar" id="toc-análise-preliminar" class="nav-link" data-scroll-target="#análise-preliminar">Análise Preliminar</a></li>
+  <li><a href="#reamostrando-os-dados" id="toc-reamostrando-os-dados" class="nav-link" data-scroll-target="#reamostrando-os-dados">Reamostrando os Dados</a></li>
+  <li><a href="#identificando-outliers" id="toc-identificando-outliers" class="nav-link" data-scroll-target="#identificando-outliers">Identificando Outliers</a></li>
+  </ul></li>
+  <li><a href="#análise-exploratória" id="toc-análise-exploratória" class="nav-link" data-scroll-target="#análise-exploratória">Análise Exploratória</a>
+  <ul>
+  <li><a href="#gráficos-da-série-temporal" id="toc-gráficos-da-série-temporal" class="nav-link" data-scroll-target="#gráficos-da-série-temporal">Gráficos da Série Temporal</a>
+  <ul class="collapse">
+  <li><a href="#gráfico-das-médias-mensais" id="toc-gráfico-das-médias-mensais" class="nav-link" data-scroll-target="#gráfico-das-médias-mensais">Gráfico das médias mensais</a></li>
+  <li><a href="#gráficos-sazonais" id="toc-gráficos-sazonais" class="nav-link" data-scroll-target="#gráficos-sazonais">Gráficos sazonais</a></li>
+  </ul></li>
+  <li><a href="#decompondo-a-série-temporal" id="toc-decompondo-a-série-temporal" class="nav-link" data-scroll-target="#decompondo-a-série-temporal">Decompondo a Série Temporal</a>
+  <ul class="collapse">
+  <li><a href="#modelo-stl-seasonal-trend-decomposition-using-loess" id="toc-modelo-stl-seasonal-trend-decomposition-using-loess" class="nav-link" data-scroll-target="#modelo-stl-seasonal-trend-decomposition-using-loess">Modelo STL (Seasonal-Trend Decomposition Using LOESS)</a></li>
+  </ul></li>
+  <li><a href="#análises-espectrais" id="toc-análises-espectrais" class="nav-link" data-scroll-target="#análises-espectrais">Análises Espectrais</a>
+  <ul class="collapse">
+  <li><a href="#análise-de-fourier" id="toc-análise-de-fourier" class="nav-link" data-scroll-target="#análise-de-fourier">Análise de Fourier</a></li>
+  <li><a href="#análise-wavelets" id="toc-análise-wavelets" class="nav-link" data-scroll-target="#análise-wavelets">Análise Wavelets</a></li>
+  <li><a href="#remoção-da-tendência-e-normalização-dos-dados" id="toc-remoção-da-tendência-e-normalização-dos-dados" class="nav-link" data-scroll-target="#remoção-da-tendência-e-normalização-dos-dados">Remoção da Tendência e Normalização dos Dados</a></li>
+  <li><a href="#resultados-análises-espectrais" id="toc-resultados-análises-espectrais" class="nav-link" data-scroll-target="#resultados-análises-espectrais">Resultados Análises Espectrais</a>
+  <ul class="collapse">
+  <li><a href="#dados-originais" id="toc-dados-originais" class="nav-link" data-scroll-target="#dados-originais">Dados originais</a></li>
+  <li><a href="#componente-season" id="toc-componente-season" class="nav-link" data-scroll-target="#componente-season">Componente ‘season’</a></li>
+  <li><a href="#componente-remainder" id="toc-componente-remainder" class="nav-link" data-scroll-target="#componente-remainder">Componente ‘remainder’</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_417379c2a3f06487b90172439f7f6fbb">
+<style type="text/css">
+.justify {
+  text-align: justify;
+}
+</style>
+</div>
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<div class="justify">
+<p>Este é o primeiro post de uma série dedicada ao desenvolvimento, de maneira simplificada, de um projeto de ciência de dados. Dividido em várias postagens e com ênfase variada nos tópicos, abordaremos os seguintes temas:</p>
+<ol type="1">
+<li>Definição do Problema</li>
+<li>Aquisição de Dados</li>
+<li>Limpeza de Dados</li>
+<li>Análise Exploratória</li>
+<li>Pré-processamento de Dados</li>
+<li>Modelagem</li>
+<li>Avaliação dos modelos</li>
+<li>Implantação dos modelos</li>
+<li>Monitoramento e Manutenção</li>
+<li>Comunicação de Resultados</li>
+</ol>
+<p>Nos dois primeiros artigos, abordarei os quatro primeiros itens, dando um enfoque na análise exploratória. As etapas de 5 a 7 serão discutidas em postagens subsequentes, nas quais uma ampla variedade de modelos estatísticos e de IA serão utilizados. O modelo que apresentar o melhor desempenho será implementado em produção e monitorado (tópicos 8, 9 e 10).</p>
+</div>
+<section id="definição-do-problema" class="level2">
+<h2 class="anchored" data-anchor-id="definição-do-problema">Definição do Problema</h2>
+<div class="justify">
+<p>Conforme o título deste post sugere, esta série estará relacionada à cotação do ouro, mais especificamente na criação de um modelo preditivo para o SPDR Gold Shares (GLD).</p>
+</div>
+</section>
+<section id="carregando-os-pacotes-utilizados" class="level2">
+<h2 class="anchored" data-anchor-id="carregando-os-pacotes-utilizados">Carregando os Pacotes Utilizados</h2>
+<div class="justify">
+<p>Neste projeto, farei uso de uma ampla variedade de pacotes e, consequentemente, suas respectivas funções para realizar as tarefas necessárias. No contexto do R, é comum carregar os pacotes próximos às linhas onde suas funções serão utilizadas. No entanto, isso nem sempre é viável, o que pode tornar a identificação da origem das funções confusa. Isso não apenas dificulta a leitura do código por terceiros, mas também pode complicar a revisão do próprio autor.</p>
+</div>
+<div class="justify">
+<p>Para tornar mais fácil identificar a origem das funções em uso, o R oferece uma opção útil: <code>nome_do_pacote::nome_da_função()</code>. Esse padrão é considerado uma boa prática no R para indicar a origem das funções e será adotado em todas as próximas postagens, sempre que necessário.</p>
+<p>Para simplificar o processo de carregamento dos pacotes, utilizaremos a função <code>p_load()</code>, que faz parte do pacote <code>pacman</code>. Essa função permite carregar as bibliotecas de forma centralizada e eficiente.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-3_ee2fca5aeb8dae3fcc6c379349794715">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyquant, tsibble,fabletools,fabletools,timetk,fpp3,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               tibbletime,feasts, tidyverse, tseries, WaveletComp,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               tsoutliers, DT, plotly, kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Antes de continuar, vou criar uma função personalizada usando o pacote <code>kableExtra</code> para formatar as tabelas que serão apresentadas neste e nos próximos posts. Os argumentos desta função são os dados a serem tabulados e o título da tabela.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-4_3b98259c946b5ceeb2c60ae83eb5ffb0">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>set_tab <span class="ot">&lt;-</span> <span class="cf">function</span>(dados_tab, cap_tab){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable</span>( <span class="at">x =</span> dados_tab,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">booktabs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">escape   =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits   =</span> <span class="dv">4</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption  =</span> cap_tab) <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">latex_options =</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hold_position"</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">position      =</span> <span class="st">"center"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width    =</span> F,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">bootstrap_options =</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="aquisição-dos-dados" class="level2">
+<h2 class="anchored" data-anchor-id="aquisição-dos-dados">Aquisição dos Dados</h2>
+<div class="justify">
+<p>Os dados utilizados nesta série são provenientes do <a href="https://finance.yahoo.com/">Yahoo Finanças</a>. Para acessá-los, utilizaremos a função <code>tq_get</code> do pacote <a href="https://business-science.github.io/tidyquant/">tidyquant</a>. Por padrão, essa função utiliza a opção stock.prices, que retorna os valores de ‘open’, ‘high’, ‘low’, ‘close’, ‘volume’ e ‘adjusted’ do Yahoo Finanças. No entanto, é possível obter outras opções, como dividendos ou informações sobre ‘split’ de ações, além de dados de outras fontes.</p>
+<p>Quando utilizamos o padrão da função e informamos apenas o símbolo da ação desejada, todos os dados disponíveis para o período de tempo completo são retornados.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_160924a2fb68b6708521a9bf68097d53">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obter dados da ação de ouro (código GLD)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gold_data <span class="ot">&lt;-</span> tidyquant<span class="sc">::</span><span class="fu">tq_get</span>(<span class="st">"GLD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="limpeza-dos-dados" class="level2">
+<h2 class="anchored" data-anchor-id="limpeza-dos-dados">Limpeza dos Dados</h2>
+<div class="justify">
+<p>A etapa de limpeza de dados é um processo fundamental na análise de dados que envolve a identificação, correção e eliminação de erros, inconsistências e valores ausentes em um conjunto de dados. Isso inclui remover duplicatas, preencher lacunas, padronizar formatos e eliminar outliers. A limpeza de dados é crucial para garantir a qualidade e confiabilidade dos dados, pois dados sujos ou corrompidos podem levar a análises imprecisas e conclusões equivocadas. Portanto, essa etapa prepara os dados para análise posterior, assegurando que estejam prontos para serem explorados e modelados de forma eficaz.</p>
+<p>Devido a fonte dos dados, <a href="https://finance.yahoo.com/">Yahoo Finanças</a>, amplamente reconhecida e utilizada tanto na indústria quanto por investidores individuais, podemos antecipar que encontraremos poucos problemas.</p>
+<p>Sem mais delongas vamos iniciar a análise dos dados.</p>
+</div>
+</section>
+<section id="análise-preliminar" class="level2">
+<h2 class="anchored" data-anchor-id="análise-preliminar">Análise Preliminar</h2>
+<div class="justify">
+<p>Uma vez que os dados foram carregados, podemos começar nossa análise.</p>
+<p>Vou começar criando uma tabela para visualizar os dados e utilizando as funções <code>summary</code> e <code>str</code> para obter informações da estrutura dos dados dentro do R e infomrações estatísticas básicas.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_9d59a8f75b063be889c5ed75c407a92b">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gold_data <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="at">cap_tab =</span> <span class="st">"Dados Brutos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Dados Brutos</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">symbol</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">date</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">open</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">high</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">low</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">close</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">volume</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GLD</td>
+<td style="text-align: left;">2013-01-02</td>
+<td style="text-align: right;">163.49</td>
+<td style="text-align: right;">164.14</td>
+<td style="text-align: right;">163.14</td>
+<td style="text-align: right;">163.17</td>
+<td style="text-align: right;">10431800</td>
+<td style="text-align: right;">163.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GLD</td>
+<td style="text-align: left;">2013-01-03</td>
+<td style="text-align: right;">162.48</td>
+<td style="text-align: right;">162.88</td>
+<td style="text-align: right;">160.83</td>
+<td style="text-align: right;">161.20</td>
+<td style="text-align: right;">16117500</td>
+<td style="text-align: right;">161.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GLD</td>
+<td style="text-align: left;">2013-01-04</td>
+<td style="text-align: right;">159.52</td>
+<td style="text-align: right;">160.63</td>
+<td style="text-align: right;">158.89</td>
+<td style="text-align: right;">160.44</td>
+<td style="text-align: right;">19179800</td>
+<td style="text-align: right;">160.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GLD</td>
+<td style="text-align: left;">2013-01-07</td>
+<td style="text-align: right;">159.36</td>
+<td style="text-align: right;">159.96</td>
+<td style="text-align: right;">159.15</td>
+<td style="text-align: right;">159.43</td>
+<td style="text-align: right;">9361800</td>
+<td style="text-align: right;">159.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GLD</td>
+<td style="text-align: left;">2013-01-08</td>
+<td style="text-align: right;">160.46</td>
+<td style="text-align: right;">160.99</td>
+<td style="text-align: right;">160.01</td>
+<td style="text-align: right;">160.56</td>
+<td style="text-align: right;">7694800</td>
+<td style="text-align: right;">160.56</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p><br></p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_4f0fdc810bb98ed700e9de1f3797fa03">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#base::summary(gold_data)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#utils::str(gold_data)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="justify">
+<p>O aspecto mais significativo desses resultados é a irregularidade amostral. Apesar dos resultados da função summary não indicarem a presença de NA’s (valores ausentes), é importante observar que as datas na coluna “date” contêm registros para fins de semana e feriados, que são omitidos pela fonte dos dados. Isso pode resultar em efeitos indesejados e até mesmo tornar inviáveis algumas análises.</p>
+<p>Dentre as diversas abordagens para lidar com essa situação, eu vou optar pelo método da reamostragem, onde converteremos nossos dados que possuem uma frequência amostral diária em mensal.</p>
+<p>Apesar dessa técnica levar a uma perda de resolução, ela pode proporcionar uma simplificação do processamento e análise, além da diminuição do ruido nos dados. Pontos que serão muito positivos levando em conta o propósito demonstrativo deste post. É importante ressaltar que, dependendo do propósito da análise, a melhor opção seria utilizar o máximo de informação possível e optar pelo “descarte” de parte das informações apenas após uma avaliação mais criteriosa.</p>
+</div>
+</section>
+<section id="reamostrando-os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="reamostrando-os-dados">Reamostrando os Dados</h2>
+<div class="justify">
+<p>A realização da reamostragem mencionada implica na criação de médias mensais, o que transformará o conjunto de dados no formato desejado. Os passos necessários para a execução desse procedimento estão explicados nos comentários do código a seguir. A maioria das funções utilizadas a seguir faz parte do pacote <code>dplyr</code>.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_cd3cfa3d8b2d1d1bfe4d8dc75c7e9281">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gold_data <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  gold_data <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># criando variáveis ano e mês para cálculo das médias mensais</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(date),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> lubridate<span class="sc">::</span><span class="fu">month</span>(date)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#agrupando os dados pelas variáveis ano e mês</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year,month) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#calculando as médias mensais</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">month_mean =</span> <span class="fu">mean</span>(close)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">#desagrupando os dados</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">#criando a variável que será usada como index temporal</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">index =</span> tsibble<span class="sc">::</span><span class="fu">make_yearmonth</span>(year,month)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>     ) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#renomeando a coluna dos valores</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> month_mean</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#selecionando apenas as colunas de interesse</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index,value) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transformando os dados em tsibble, formato adequado para os pacotes utilizados</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  tsibble<span class="sc">::</span><span class="fu">tsibble</span>() </span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#head(gold_data)</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#class(gold_data)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_67ac4a9073f6e2f912fbce432ce5e31e">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gold_data <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="at">cap_tab =</span> <span class="st">"Médias mensais"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Médias mensais</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">index</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2013 jan</td>
+<td style="text-align: right;">161.6733</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013 fev</td>
+<td style="text-align: right;">157.6026</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013 mar</td>
+<td style="text-align: right;">154.1335</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013 abr</td>
+<td style="text-align: right;">143.6223</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013 mai</td>
+<td style="text-align: right;">136.9909</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>Pronto, agora os dados estão no formato desejado.</p>
+</section>
+<section id="identificando-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="identificando-outliers">Identificando Outliers</h2>
+<div class="justify">
+<p>Outliers, ou valores atípicos, são observações em uma série temporal que se desviam significativamente do padrão ou comportamento esperado dos dados em um determinado período de tempo. Eles podem ser causados por uma variedade de razões, incluindo erros de medição, eventos incomuns, mudanças no processo subjacente ou simplesmente flutuações aleatórias extremas. Identificar e lidar com outliers é importante na análise de séries temporais, pois podem afetar negativamente a precisão dos modelos e análises. Considerando que esses dados provêm de plataformas que disponibilizam valores oficiais do mercado de ações, a eventual presença de outliers nesses dados provavelmente estará ligada a eventos notáveis, e não a qualquer tipo de erro.</p>
+<p>Há várias abordagens para identificar e tratar outliers em séries temporais. Optei por utilizar o pacote <code>tsoutliers</code>, que oferece uma opção automatizada para identificação desses valores atípicos.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_ef5812bf5a41133dffb59a6cce41297c">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tsoutliers<span class="sc">::</span><span class="fu">tso</span>(<span class="fu">ts</span>(gold_data<span class="sc">$</span>value)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series:  
+ARIMA(0,1,1) 
+
+Coefficients:
+         ma1
+      0.2729
+s.e.  0.0826
+
+sigma^2 = 18.77:  log likelihood = -368.83
+AIC=741.66   AICc=741.76   BIC=747.36
+
+No outliers were detected.</code></pre>
+</div>
+</div>
+<div class="justify">
+<p>Bem, não foi identificado nenhum outlier, o que era esperado, considerando a fonte dos dados e o fato de que eles representam médias mensais, o que implica um certo grau de suavização.</p>
+</div>
+</section>
+</section>
+<section id="análise-exploratória" class="level1">
+<h1>Análise Exploratória</h1>
+<div class="justify">
+<p>Análise exploratória é um processo essencial na compreensão e interpretação de conjuntos de dados, inclusive nos dados que evoluem ao longo do tempo, comumente referidos como séries temporais. Este tipo de informação demanda uma abordagem particular na busca para desvendar padrões, tendências e características intrínsecas presentes nesses dados sequenciais. Ao explorar visualizações, estatísticas descritivas, análise de autocorrelação e decomposição, entre outras técnicas, os analistas podem identificar relações de dependência, sazonalidades e eventos atípicos, contribuindo para uma compreensão mais sólida do comportamento temporal dos dados. Através dessa exploração minuciosa, a análise exploratória de séries temporais desempenha um papel fundamental na construção de modelos de previsão mais precisos e no embasamento da tomada de decisões.</p>
+</div>
+<section id="gráficos-da-série-temporal" class="level2">
+<h2 class="anchored" data-anchor-id="gráficos-da-série-temporal">Gráficos da Série Temporal</h2>
+<p>Com os dados preparados para análise, vou criar as primeiras visualizações gráfica.</p>
+<section id="gráfico-das-médias-mensais" class="level3">
+<h3 class="anchored" data-anchor-id="gráfico-das-médias-mensais">Gráfico das médias mensais</h3>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_8c01070e95def1d647ac16e8cd510f5c">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gold_data <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>index,<span class="at">y=</span>value))<span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">s</span>(x, <span class="at">bs =</span> <span class="st">"cs"</span>), <span class="at">method =</span> <span class="st">'gam'</span>)<span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cotação do Ouro entre 2013-2023"</span>, )<span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"USD por Ação"</span>)<span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>Ao analisar o gráfico das médias mensais, é possível notar que os dados apresentam uma tendência negativa de 2013 a 2016, seguida por um período aparentemente estacionário que se estende até 2019. Após esse período, há uma tendência positiva observada até aproximadamente meados de 2020, seguida por um retorno a uma aparente estacionariedade nos dados. A parte final dos dados parece exibir uma maior volatilidade. Em termos gerais, quando se considera a série temporal como um todo, os dados parecem não ser estacionários. No entanto, esse é um ponto que será discutido e avaliado mais detalhadamente posteriormente.Ao analisar o gráfico das médias mensais, é possível notar que os dados apresentam uma tendência negativa de 2013 a 2016, seguida por um período aparentemente estacionário que se estende até 2019. Após esse período, há uma tendência positiva observada até aproximadamente meados de 2020, seguida por um retorno a uma aparente estacionariedade nos dados. A parte final dos dados parece exibir uma maior volatilidade. Nesta primeira visualização, os dados não apresentam nenhum padrão sazonal ou cíclico evidente. Em termos gerais, quando se considera a série temporal como um todo, os dados parecem não ser estacionários. No entanto, esse é um ponto que será discutido e avaliado mais detalhadamente posteriormente.</p>
+</div>
+</section>
+<section id="gráficos-sazonais" class="level3">
+<h3 class="anchored" data-anchor-id="gráficos-sazonais">Gráficos sazonais</h3>
+<div class="justify">
+<p>Uma representação sazonal é semelhante a um gráfico temporal, exceto que os dados são plotados em relação às “estações” individuais em que os dados foram observados.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_c0c498adf07ae8bff73acdbe1d7871cc">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>feasts<span class="sc">::</span><span class="fu">gg_season</span>(gold_data, <span class="at">labels =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p>Um gráfico sazonal torna o padrão sazonal subjacente mais visível e é especialmente útil para identificar anos em que esse padrão muda. Neste caso, não há um padrão claro de comportamento, já que diferentes anos apresentam comportamentos distintos. No entanto, parece que, em sua maioria, os valores tendem a cescer durante o início do ano e diminuir na parte final. Além disso, o gráfico destaca o rápido declínio dos valores durante o ano de 2013, o crescimento nos anos de 2019 e 2020, e uma relativa estabilidade nos demais anos.</p>
+<p>Uma representação alternativa que enfatiza os padrões sazonais é aquela em que os dados de cada estação são agrupados em mini gráficos temporais separados.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_dde50b0825338b44bfee6f16159806d6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>feasts<span class="sc">::</span><span class="fu">gg_subseries</span>(gold_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p>Por meio deste gráfico, é possível visualizar um padrão sazonal potencial, com um pico observado em agosto, embora esse padrão não seja muito evidente.</p>
+<p>Até o momento, observou-se que os dados apresentam um comportamento complexo e não revelam padrões óbvios, o que torna a construção de modelos preditivos desafiadora e limita sua eficácia, especialmente em projeções de longo prazo.</p>
+<p>A seguir, vou aprofundar a análise na tentativa de compreender as estruturas subjacentes aos dados, buscando informações que possam aprimorar a capacidade preditiva dos modelos futuros.</p>
+</div>
+</section>
+</section>
+<section id="decompondo-a-série-temporal" class="level2">
+<h2 class="anchored" data-anchor-id="decompondo-a-série-temporal">Decompondo a Série Temporal</h2>
+<div class="justify">
+<p>A decomposição de séries temporais é uma técnica fundamental na análise de dados temporais, permitindo separar uma série temporal em seus componentes principais para melhor compreensão e modelagem. Existem várias abordagens para realizar essa decomposição, sendo as mais comuns as seguintes:</p>
+<ul>
+<li><p>Decomposição Aditiva: Nessa abordagem, a série temporal é dividida em três componentes: tendência, sazonalidade e ruído. A tendência representa a evolução de longo prazo da série, a sazonalidade corresponde a padrões repetitivos em intervalos fixos de tempo e o ruído representa as flutuações aleatórias. A decomposição aditiva é útil quando as variações em cada componente são independentes do nível da série.</p></li>
+<li><p>Decomposição Multiplicativa: Na decomposição multiplicativa, a série temporal é dividida em tendência, sazonalidade e ruído, mas em termos multiplicativos. Isso significa que os componentes são representados como proporções do nível da série. Essa abordagem é apropriada quando as variações são proporcionais ao nível da série, como em casos onde o crescimento é exponencial.</p></li>
+<li><p>Decomposição STL (Seasonal and Trend decomposition using LOESS): A decomposição STL é uma técnica avançada que utiliza alisamento local (LOESS) para decompor a série em tendência, sazonalidade e resíduos. Ela é especialmente útil para séries com sazonalidade não constante ao longo do tempo ou com tendências não lineares.</p></li>
+<li><p>Decomposição por Componentes Independentes (ICA): A ICA é uma técnica avançada que busca separar uma série temporal em componentes independentes, cada um representando uma fonte de variação única. Isso pode ser útil quando se deseja identificar e isolar padrões específicos em dados complexos.</p></li>
+</ul>
+<p>A escolha da abordagem de decomposição depende da natureza dos dados e dos objetivos da análise. Devido às características complexas apresentadas pelos dados, a técnica de decomposição escolhida foi o STL, comumente utilizada para identificar tendências de longo prazo e padrões sazonais, inclusive permitindo múltiplos períodos sazonais.</p>
+</div>
+<section id="modelo-stl-seasonal-trend-decomposition-using-loess" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-stl-seasonal-trend-decomposition-using-loess">Modelo STL (Seasonal-Trend Decomposition Using LOESS)</h3>
+<div class="justify">
+<p>Antes de realizar a decomposição dos dados vou apresentar em carater didático o funcionamento do modelo STL.</p>
+<p>O modelo STL desagrega uma série temporal em três componentes principais: tendência (Trend), sazonalidade (Seasonal), e resíduos (Remainder). Ele faz isso separadamente para cada componente, usando suavização LOESS (um método de suavização não paramétrica) para estimar cada parte. Sendo especialmente útil quando a sazonalidade em seus dados varia com o tempo. Isso o torna útil para séries temporais com sazonalidades irregulares ou não lineares. O STL é principalmente usado para entender a estrutura de uma série temporal e não para fazer previsões diretamente. Entretanto existem diferentes técnicas de modelagem voltadas para previsão que utilizam como parte do seu processo a decomposição dos dados através de modelos STL.</p>
+<p>O modelo STL pode ser descrito da seguinte forma:</p>
+<p></p>
+<p>O modelo STL desagrega uma série temporal <span class="math inline">\(y_t\)</span> em três componentes principais: tendência (<span class="math inline">\(T_t\)</span>), sazonalidade (<span class="math inline">\(S_t\)</span>) e resíduos (<span class="math inline">\(R_t\)</span>) usando o método LOESS.</p>
+<p><strong>Equação de Decomposição:</strong><br>
+<span class="math display">\[y_t = T_t + S_t + R_t\]</span></p>
+<p><strong>Equação da Tendência:</strong><br>
+<span class="math display">\[T_t = \mu_t + \mu_{t-1} + \ldots + \mu_{t-d+1}\]</span></p>
+<p><strong>Equação da Sazonalidade:</strong><br>
+<span class="math display">\[S_t = \gamma_{t-m} + \gamma_{t-2m} + \ldots + \gamma_{t-km}\]</span></p>
+<p><strong>Equação dos Resíduos:</strong><br>
+<span class="math display">\[R_t = y_t - T_t - S_t\]</span></p>
+<p><strong>Peso LOESS (w):</strong><br>
+<span class="math display">\[w_i = \begin{cases}
+  (1 - \left(\frac{h}{|t - x_i|}\right)^3)^3 &amp; \text{se } |t - x_i| \leq h \\
+  0 &amp; \text{se } |t - x_i| &gt; h
+\end{cases}\]</span></p>
+<p>onde:</p>
+<ul>
+<li><p><span class="math inline">\(\mu_t\)</span> refere-se à estimativa da tendência na época <span class="math inline">\(t\)</span>.</p></li>
+<li><p><span class="math inline">\(d\)</span> é o parâmetro que determina a largura da janela de suavização usada para estimar a tendência.</p></li>
+<li><p><span class="math inline">\(\gamma_{t-km}\)</span> refere-se à estimativa da sazonalidade na época <span class="math inline">\(t\)</span> com um atraso de <span class="math inline">\(m\)</span>, onde <span class="math inline">\(m\)</span> é a periodicidade sazonal.</p></li>
+<li><p><span class="math inline">\(w_i\)</span> é o peso calculado usando a função de tri-cubo. Esta função atribui pesos próximos a 1 para pontos de dados que estão próximos ao ponto de interesse <span class="math inline">\(t\)</span> (dentro da janela de suavização <span class="math inline">\(h\)</span>) e atribui pesos decrescentes rapidamente para pontos de dados mais distantes.</p></li>
+</ul>
+<p>Após a compreensão do funcionamento, vou processeguir com o ajuste do modelo aos dados e, em seguida, com a criação dos gráficos para visualização dos resultados.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_c171028fcd1f61257c42118280529d07">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ajustando o modelo STL aos dados</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  gold_data <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">model</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    feasts<span class="sc">::</span><span class="fu">STL</span>(value)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">components</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_d77f3cd6efa3270494f7f12840b79b43">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Gerando os gráficos do modelo STL</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> fabletools<span class="sc">::</span><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<p>Os resultados indicam a presença de componentes relacionados a tendência, sazonalidade e ruído. O segundo gráfico (trend) evidencia as alterações de tendência descritas no início da análise exploratória. Já o terceiro gráfico (season_year) apresenta uma aparente mudança no comportamento sazonal, que gradualmente modifica seu padrão. O último gráfico (remainder), que teoricamente deveria representar ruído branco, aparenta conter estruturas potencialmente relevantes para a compreensão dos dados, principalmente em sua parte final.</p>
+<p>O próximo passo nesta Análise Exploratória consistirá na análise espectral, cujo propósito é aprofundar a compreensão do comportamento das potenciais componentes periódicas identificadas nos dados. Contudo, antes de prosseguir com as análises mencionadas, quero verificar se a componente remainder pode ser realmente considerada como ruído branco. Para esta finalidade, farei uso do teste de Ljung-Box, que avalia a existência de correlações significativas nos dados.</p>
+<section id="teste-ljung-box" class="level4">
+<h4 class="anchored" data-anchor-id="teste-ljung-box">Teste Ljung-Box</h4>
+<p>O teste de Ljung-Box é usado para verificar a presença de autocorrelação nos resíduos de um modelo de séries temporais. Matematicamente, o teste pode ser representado da seguinte forma:</p>
+<p>A estatística de teste Q para o teste de Ljung-Box é definida como:</p>
+<p><span class="math display">\[Q = n(n+2) \sum_{k=1}^{h} \frac{\hat{\rho}_k^2}{n-k}\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(Q\)</span> é a estatística de teste.</p></li>
+<li><p><span class="math inline">\(n\)</span> é o número de observações na série temporal.</p></li>
+<li><p><span class="math inline">\(h\)</span> é o número máximo de atrasos considerados.</p></li>
+<li><p><span class="math inline">\(k\)</span> é uma variável que varia de 1 até <span class="math inline">\(h\)</span>.</p></li>
+<li><p><span class="math inline">\(\hat{\rho}_k^2\)</span> representa as estimativas de autocorrelação nos atrasos <span class="math inline">\(h\)</span> nos resíduos.</p></li>
+<li><p>A fórmula calcula a estatística Q como a soma ponderada dos quadrados das autocorrelações estimadas nos atrasos <span class="math inline">\(k\)</span>, onde os pesos são proporcionais a <span class="math inline">\((n-k)^1\)</span>.</p></li>
+</ul>
+<p>O valor de <span class="math inline">\(Q\)</span> segue uma distribuição qui-quadrado com <span class="math inline">\(h\)</span> graus de liberdade sob a hipótese nula de que não há autocorrelação nos resíduos.</p>
+<p>Este teste é amplamente utilizado na análise de séries temporais para garantir que os resíduos de um modelo se comportem como um ruído branco, o que é uma suposição importante para muitos métodos estatísticos e de previsão.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_f48de41607fe5ee81454750d9a5ff899">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(remainder, ljung_box, <span class="at">lag =</span> <span class="dv">18</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="at">cap_tab =</span> <span class="st">"Teste ljung-box"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Teste ljung-box</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lb_stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lb_pvalue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">feasts::STL(value)</td>
+<td style="text-align: right;">145.3812</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>O resultado do teste rejeita a hipótese nula de que não há autocorrelação nos resíduos. Assim, não podemos considerar que a componente não possui informações relevantes.</p>
+<p>Dados os resultados obtidos até o momento, vou realizar análises espectrais nos dados originais, bem como nas componentes sazonais e de ruído identificadas pelo modelo STL. Embora esse processo possa parecer trabalhoso e, à primeira vista, redundante, essa avaliação detalhada pode fornecer informações valiosas sobre os dados.</p>
+</section>
+</div>
+</section>
+</section>
+<section id="análises-espectrais" class="level2">
+<h2 class="anchored" data-anchor-id="análises-espectrais">Análises Espectrais</h2>
+<div class="justify">
+<p>A análise espectral é uma técnica fundamental em processamento de sinais (série temporal) que envolve decompor os dados em suas componentes de frequência. Isso é alcançado por meio da transformada de Fourier ou outras técnicas similares, permitindo que o sinal seja representado no domínio da frequência e não somente no domínio do tempo. A análise espectral é valiosa para identificar padrões periódicos, identificar frequências dominantes, detectar sazonalidades e compreender a estrutura subjacente de um sinal. Em muitos casos, a análise espectral pode revelar informações ocultas nos dados que não são facilmente perceptíveis na forma temporal original.</p>
+<p>Os métodos de análise espectral utilizadas serão a análise de Fourier e de wavelets.</p>
+</div>
+<section id="análise-de-fourier" class="level3">
+<h3 class="anchored" data-anchor-id="análise-de-fourier">Análise de Fourier</h3>
+<div class="justify">
+<p>A análise de Fourier é uma técnica matemática poderosa usada para decompor sinais complexos em suas componentes de frequência, revelando os diversos padrões de oscilação que os compõem. Essa abordagem é fundamentada na transformada de Fourier, cujos resultados são geralmente representados pelo espectro de potência, que descreve a distribuição de energia em diferentes frequências. O resultado é um gráfico de amplitude em função da frequência, de interpretação direta e intuitiva.</p>
+<p><strong>A transformada de Fourier contínua de uma função(t) é dada por:</strong></p>
+<p><span class="math display">\[X(f) = \int_{-\infty}^{\infty} x(t) \cdot e^{-j2\pi ft} \,dt\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(X(f)\)</span> é a Transformada de Fourier do sinal <span class="math inline">\(x(t)\)</span> no domínio da frequência <span class="math inline">\(f\)</span>.</p></li>
+<li><p><span class="math inline">\(x(t)\)</span> é o sinal no domínio do tempo.</p></li>
+<li><p><span class="math inline">\(j\)</span> é a unidade imaginária.</p></li>
+</ul>
+<p>Calculada a tranformada de Fourier <span class="math inline">\(X(f)\)</span> do sinal <span class="math inline">\(x(t)\)</span>, o espectro de potência <span class="math inline">\(P(f)\)</span> é dado como:</p>
+<p><span class="math display">\[P(f) = |X(f)|^2\]</span></p>
+</div>
+</section>
+<section id="análise-wavelets" class="level3">
+<h3 class="anchored" data-anchor-id="análise-wavelets">Análise Wavelets</h3>
+<div class="justify">
+<p>Conforme mencionado anteriormente um dos métodos escolhido para análise espctral foi a análise via wavelets. Baseada em funções wavelets, que são pequenas ondas (ou “wavelets”), essa técnica tem como principal caracteristica uma duração finita no tempo, garantindo sua localizadas no domínio do tempo e da frequência. Uma vantagem em relação a técnica tradicional da transformadas de Fourier, que representam sinais como uma combinação de senos e cossenos com duração infinita no tempo, indicando apenas a presença das componentes periódicas e não o seu comportamento ao decorrer do tempo de registro.</p>
+<p>Semelhante à técnica anterior, a análise via wavelets é baseada na transformada wavelet, cujos resultados são normalmente representados por meio de um “escalograma de wavelets”. Essa técnica é frequentemente empregada na análise wavelet para representar como a energia do sinal varia em diferentes escalas ao longo do tempo. O escalograma é uma representação bidimensional, em que o eixo horizontal denota o tempo, o eixo vertical denota a frequência e a intensidade do sinal é codificada por cores ou tons de cinza.</p>
+<p>A transformada de wavelet contínua pode ser definida como o produto interno entre o sinal original e uma função wavelet mãe que é transladada e escalonada. A fórmula geral para isso é a seguinte:</p>
+<p><span class="math display">\[W(a, b) = \int_{-\infty}^{\infty} x(t) \cdot \psi_{a,b}(t) \, dt\]</span></p>
+<p>onde:</p>
+<ul>
+<li><p><span class="math inline">\(W(a, b)\)</span> é o coeficiente da transformada de wavelet para os parâmetros de escala <span class="math inline">\(a\)</span> e deslocamento <span class="math inline">\(b\)</span>.</p></li>
+<li><p><span class="math inline">\(x(t)\)</span> é o sinal de entrada.</p></li>
+<li><p><span class="math inline">\(\psi_{a,b}(t)\)</span> é a wavelet mãe escalonada e transladada de acordo com os parâmetros <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>. Cada coeficiente do escalograma é calculado como o módulo ao quadrado dos coeficientes da Transformada Wavelet:</p></li>
+</ul>
+<p><span class="math display">\[S(a, b) = |W(a, b)|^2\]</span></p>
+<p>onde:</p>
+<ul>
+<li><p><span class="math inline">\(S(a, b)\)</span> é o escalograma na escala <span class="math inline">\(a\)</span> e posição <span class="math inline">\(b\)</span>.</p></li>
+<li><p><span class="math inline">\(W(a, b)\)</span> são os coeficientes da transformada de wavelet para os parâmetros de escala <span class="math inline">\(a\)</span> e deslocamento <span class="math inline">\(b\)</span>.<br>
+</p></li>
+</ul>
+</div>
+</section>
+<section id="remoção-da-tendência-e-normalização-dos-dados" class="level3">
+<h3 class="anchored" data-anchor-id="remoção-da-tendência-e-normalização-dos-dados">Remoção da Tendência e Normalização dos Dados</h3>
+<div class="justify">
+<p>Antes de avançarmos com a análise espectral, é imprescindível realizar duas etapas cruciais: a remoção da tendência, caso esta esteja presente, e a normalização dos dados. Para atingir esses objetivos, utilizaremos a componente ‘trend’, gerada pelo modelo STL, a qual será subtraída dos dados originais. Posteriormente, empregaremos a função ‘scale’ para centralizar e normalizar os dados, assegurando que estejam preparados de forma adequada para a análise subsequente.</p>
+<p>Lembrando que esses procedimentos serão aplicados apenas para os dados originais. As componentes ‘season’ e ‘remainder’, provenientes do modelos STL, já estão livres de tendência e centrados.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-17_fdd1b20dfd619cafeb11f28cb739b8c3">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>detrend_ts <span class="ot">&lt;-</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  fit <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> value <span class="sc">-</span> trend,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">scale</span>(value)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(index,value) </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>detrend_ts <span class="sc">%&gt;%</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="at">cap_tab =</span> <span class="st">"Dados sem tendência e normalizados"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<caption>Dados sem tendência e normalizados</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">index</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2013 jan</td>
+<td style="text-align: right;">1.93360712</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013 fev</td>
+<td style="text-align: right;">1.67668880</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013 mar</td>
+<td style="text-align: right;">1.53406325</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013 abr</td>
+<td style="text-align: right;">0.05350123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2013 mai</td>
+<td style="text-align: right;">-0.72788956</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>Pronto, os dados estão prontos para as análises espectrais!</p>
+</div>
+</section>
+<section id="resultados-análises-espectrais" class="level3">
+<h3 class="anchored" data-anchor-id="resultados-análises-espectrais">Resultados Análises Espectrais</h3>
+<div class="justify">
+<p>Para realizar as análises descritas será utilizado o pacote <code>WaveletComp</code>. Os códigos usados são os mesmos para todos os dados e serão apresentados apenas para os dados originais.</p>
+<p>Para obtenção do espectro de potência será utilizada a função wt.avg, que retorna as médias da potência de wavelet ao longo do tempo. Equivalente ao espectro de potência obtido através da Transformada de Fourier.</p>
+<p>Os resultados serão apresentados na seguinte ordem: dados originais, componente ‘season’, e componente ‘remainder’ do modelo STL.</p>
+</div>
+<section id="dados-originais" class="level4">
+<h4 class="anchored" data-anchor-id="dados-originais">Dados originais</h4>
+<div class="justify">
+<p>O código abaixo realiza o cálculo da transformada wavelet e salva seus resultados em um objéto, nomeado <code>w.ouro.dt</code>, que será utilizado na criação dos gráficos desejádos.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_ae5842487ce9ada928660a811cd3fc3a">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculando a transformada wavelet dos dados sem o trend</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>w.ouro.dt <span class="ot">&lt;-</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  WaveletComp<span class="sc">::</span><span class="fu">analyze.wavelet</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    detrend_ts,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"value"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">loess.span =</span> <span class="dv">0</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose=</span><span class="cn">FALSE</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">date.format =</span> <span class="st">"%Y-%m-%d"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="justify">
+<p>Uma vez calculada a transformada wavelet, podemos criar os gráficos do espectro de potência e escalograma.</p>
+<p>Para a criação do gráfico do espectro de potência, o pacote <code>WaveletComp</code> possui a função <code>wt.avg</code>.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-21_53a959710fb7444911b32ab68c7961b3">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot do gráfico de espectro de potência ad</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>WaveletComp<span class="sc">::</span><span class="fu">wt.avg</span>(w.ouro.dt, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>O espectro de potência dos dados originais revela dois picos estatisticamente significativos, ocorrendo aproximadamente em 12 meses e 16 meses, enquanto um terceiro pico em torno de 6 meses não alcança significância estatística. No entanto, os resultados apresentam uma resolução limitada.</p>
+<p>Vamos analisar o comportamento dessas componentes ao longo do tempo. Para criar o escalograma, o pacote ‘WaveletComp’ disponibiliza a função <code>wt.image</code>.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-22_9e8476b582472efae32623e4b614245f">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># monthly.ticks &lt;- seq(as_date("2013-01-01", format = "%Y-%m-%d"), </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                      as_date("2023-09-22", format = "%Y-%m-%d"), </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                      by = "month")</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># monthly.labels &lt;- strftime(monthly.ticks, format = "%b %Y")</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot do escalograma de wavelet</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>WaveletComp<span class="sc">::</span><span class="fu">wt.image</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  w.ouro.dt, <span class="at">color.key =</span> <span class="st">"interval"</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.params =</span> <span class="fu">list</span>(<span class="at">lab =</span> <span class="st">"wavelet power levels"</span>),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">periodlab =</span> <span class="st">"periodo (meses)"</span>, </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">show.date =</span> <span class="cn">FALSE</span>, <span class="at">date.format =</span> <span class="st">"%Y-%m-%d"</span><span class="co">#, </span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>   <span class="co"># spec.time.axis = list(at = monthly.ticks, labels = monthly.labels, </span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>   <span class="co">#                       las = 2)</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>O resultado do escalograma apresenta aproximadamente as mesmas componentes espectrais presentes do espectro de potência. A componente de aproximadamente 6 meses aparece fora da faixa de confiabilidade estatística, de modo descontínuo e com baixos valores de escala. As componenetes de aproximadamente 11 meses e 16 meses aparecem dentro da margem de 95% de confiabilidade estatística, contudo os resultados não possuem uma boa resolução. Estas componentes exibem variação em suas faixas de periodicidades e variações nos seus valores de escala. Apresentando seus valores mais expressivos (&gt;0,5) apenas na parte final dos dados.</p>
+</div>
+</section>
+<section id="componente-season" class="level4">
+<h4 class="anchored" data-anchor-id="componente-season">Componente ‘season’</h4>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-23_390f835c2a0e59ebb96baeafe4ce54e8">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>Em contraste aos resultados anteriores, as componentes agora estão definidas com maior clareza e estão concentradas nos períodos de 6 meses e 12 meses. Notavelmente, o modelo STL não conseguiu capturar a componente que ocorre aproximadamente a cada 16 meses, presente nos dados originais.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-24_11e7e035700d9c91a5e9fbdff195ef5c">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>Devido à forma como a componente ‘season’ foi construída, ela não contém o ruído presente nos dados originais, tornando as componentes espectrais muito mais evidentes. A componente anual mantém um comportamento uniforme ao longo de todo o período de registro. Por outro lado, a componente de 6 meses exibe valores elevados até a metade do período de registro, após o qual desaparece do sinal.</p>
+</div>
+</section>
+<section id="componente-remainder" class="level4">
+<h4 class="anchored" data-anchor-id="componente-remainder">Componente ‘remainder’</h4>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-25_f08f46f70de30880e8f8e5fad589f45a">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>Embora seja considerada como resíduo pelo modelo STL, os resultados do espectro de potência são notavelmente semelhantes aos dos dados originais. Eles mostram componentes espectrais em torno de 12 meses e 16 meses, dentro da margem de confiabilidade estatística, enquanto uma componente de aproximadamente 6 meses fica fora dessa margem. Ao contrário dos resultados dos dados originais, as componentes apresentam uma definição mais nítida entre os picos, e a componente de aproximadamente 16 meses exibe uma maior concentração de energia em comparação com as outras componentes.</p>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-26_6ca3b97338552460fee044f0efd7412b">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="justify">
+<p>O escalograma da componente ‘remainder’ é surpreendentemente semelhante ao escalograma dos dados originais. Isso é inesperado, uma vez que teoricamente o modelo STL deveria ter removido não apenas a tendência, mas também a componente sazonal.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
+<div class="justify">
+<p>Na primeira parte, abordamos de maneira simplificada as etapas iniciais de um projeto de ciência de dados, chegando a um ponto crucial, a análise exploratória. Como este post está se tornando extenso, deixarei as análises restantes para uma segunda publicação. Antes disso, vamos recapitular os pontos mais relevantes.</p>
+<p>Após a decomposição dos dados utilizando um modelo STL foi identificado a presença das componentes ‘trend’, ‘season_year’ e ‘remainder’.</p>
+<p>Para aprofundar nosso entendimento dos padrões sazonais, analisamos os dados originais (sem a tendência) juntamente com as componentes geradas pelo modelo STL utilizando métodos de análise espectral. Essa análise revelou evidências da presença de componentes periódicas, o que pode contribuir para uma maior capacidade de previsão e tornar nossos modelos mais eficazes e robustos.</p>
+<p>É importante destacar alguns pontos em relação aos resultados do modelo STL, que, como mencionado anteriormente, serve como base para outros tipos de modelos de previsão. A não captura da componente com cerca de 16 meses e a presença parcial de uma componente periódica de 6 meses devem ser avaliadas com cautela, uma vez que as previsões são geralmente obtidas aplicando um método de previsão não sazonal aos dados ajustados sazonalmente e, em seguida, reintroduzindo a sazonalidade usando apenas o último ano da componente sazonal.</p>
+</div>
+</section>
+<section id="referências" class="level1">
+<h1>Referências</h1>
+<div class="justify">
+<p><a href="https://rdrr.io/cran/feasts/man/gg_subseries.html">gg_subseries: Seasonal subseries plots</a></p>
+<p><a href="https://feasts.tidyverts.org/reference/gg_season.html">Seasonal plot</a></p>
+<p><a href="https://otexts.com/fpp3/decomposition.html">Forecasting: Principles and Practice (3rd ed)/Chapter 3 Time series decomposition</a></p>
+<p><a href="https://www.rdocumentation.org/packages/forecast/versions/8.5/topics/forecast.stl">forecast.stl: Forecasting using stl objects</a></p>
+<p><a href="https://business-science.github.io/modeltime/articles/extending-modeltime.html">Extending Modeltime (Developer Tools)</a></p>
+<p><a href="http://www.hs-stat.com/projects/WaveletComp/WaveletComp_guided_tour.pdf">WaveletComp 1.1:A guided tour through the R package</a></p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
