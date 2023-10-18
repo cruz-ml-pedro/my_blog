@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Lima">
-<meta name="dcterms.date" content="2023-09-22">
+<meta name="dcterms.date" content="2023-10-17">
 
 <title>PeDrOOM Blog - Cotação do ouro - Parte 2</title>
 <style>
@@ -174,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 22, 2023</p>
+        <p class="date">October 17, 2023</p>
       </div>
     </div>
     
@@ -193,8 +193,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
   <li><a href="#estacionariedade-dos-dados" id="toc-estacionariedade-dos-dados" class="nav-link" data-scroll-target="#estacionariedade-dos-dados">Estacionariedade dos Dados</a>
   <ul class="collapse">
-  <li><a href="#dickey-fuller-adf" id="toc-dickey-fuller-adf" class="nav-link" data-scroll-target="#dickey-fuller-adf">Dickey-Fuller (ADF)</a></li>
-  <li><a href="#kwiatkowski-phillips-schmidt-shin-kpss" id="toc-kwiatkowski-phillips-schmidt-shin-kpss" class="nav-link" data-scroll-target="#kwiatkowski-phillips-schmidt-shin-kpss">Kwiatkowski-Phillips-Schmidt-Shin (KPSS)</a></li>
+  <li><a href="#adf" id="toc-adf" class="nav-link" data-scroll-target="#adf">Dickey-Fuller (ADF)</a></li>
+  <li><a href="#kpss" id="toc-kpss" class="nav-link" data-scroll-target="#kpss">Kwiatkowski-Phillips-Schmidt-Shin (KPSS)</a></li>
   </ul></li>
   <li><a href="#transformando-os-dados" id="toc-transformando-os-dados" class="nav-link" data-scroll-target="#transformando-os-dados">Transformando os Dados</a>
   <ul class="collapse">
@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#algumas-aplicações" id="toc-algumas-aplicações" class="nav-link" data-scroll-target="#algumas-aplicações">Algumas Aplicações</a>
   <ul class="collapse">
   <li><a href="#dados-originais" id="toc-dados-originais" class="nav-link" data-scroll-target="#dados-originais">Dados Originais</a></li>
-  <li><a href="#dados-sem-tendência" id="toc-dados-sem-tendência" class="nav-link" data-scroll-target="#dados-sem-tendência">Dados sem Tendência</a></li>
+  <li><a href="#componente-remainder" id="toc-componente-remainder" class="nav-link" data-scroll-target="#componente-remainder">Componente ‘remainder’</a></li>
   <li><a href="#dados-sazonais" id="toc-dados-sazonais" class="nav-link" data-scroll-target="#dados-sazonais">Dados sazonais</a></li>
   <li><a href="#dados-diferenciados" id="toc-dados-diferenciados" class="nav-link" data-scroll-target="#dados-diferenciados">Dados Diferenciados</a></li>
   </ul></li>
@@ -235,19 +235,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
 <div class="justify">
-<p>Nesta segunda e última parte da análise exploratória dos dados da cotação do ouro vou continuar análisando caracteristicas dos dados que possam ser úteis na criação de modelos preditivos. Os dados e pacotes utilizados, assim como o pré-processamentos, podem ser encontrados na <a href="">primeira parte</a> desta análise. O objéto criado na postagem anterior que será utilizado nesta postagem será o <code>fit</code>, que contem os dados originais e as componenete criadas pelo modelo STL.</p>
+<p>Esta é a etapa final da análise exploratória dos dados da cotação do ouro. Para informações detalhadas sobre os dados, pacotes utilizados e o pré-processamento dos dados brutos, consulte a <a href="https://pedroom-blog.netlify.app/posts/serie_ouro/eda/">primeira parte</a> desta série. Os objetos que foram criados na postagem anterior e que serão empregados nesta publicação são “fit”, que contém os resultados do modelo STL, e “set_table”, uma função desenvolvida para a criação e formatação de tabelas.</p>
 </div>
 </section>
 <section id="estacionariedade-dos-dados" class="level1">
 <h1>Estacionariedade dos Dados</h1>
 <div class="justify">
-<p>A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações. Existem testes estatísticos e técnicas de transformação para avaliar e alcançar a estacionariedade em séries temporais, garantindo assim uma base sólida para análises e previsões precisas.</p>
+<p>A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações.</p>
+<p>Conforme veremos adiante, existem testes estatísticos e técnicas de transformação disponíveis para avaliar e alcançar a estacionariedade em séries temporais, o que, por conseguinte, assegura uma base sólida para análises e previsões de alta precisão.</p>
 <p>Para avaliar a estacionariedade dos dados serão utilizados o teste Dickey-Fuller Aumentado (<code>adf.test()</code>) e o teste de Kwiatkowski-Phillips-Schmidt-Shin (<code>unitroot_kpss</code>).</p>
 </div>
-<section id="dickey-fuller-adf" class="level2">
-<h2 class="anchored" data-anchor-id="dickey-fuller-adf">Dickey-Fuller (ADF)</h2>
+<section id="adf" class="level2">
+<h2 class="anchored" data-anchor-id="adf">Dickey-Fuller (ADF)</h2>
 <div class="justify">
-<p>O teste Dickey-Fuller Aumentado (ADF) é usado para verificar a presença de raízes unitárias em uma série temporal univariada. A hipótese nula deste teste é de que a série temporal tem uma raiz unitária, ou seja, que a série não é estacionária. Se o valor-p do teste for menor que um determinado nível de significância, podemos rejeitar a hipótese nula e concluir que a série é estacionária.</p>
+<p>O teste de Dickey-Fuller Aumentado (ADF, na sigla em inglês) é empregado para verificar a existência de raízes unitárias em séries temporais univariadas. A hipótese nula deste teste pressupõe a não estacionariedade; logo, se o valor-p do teste for inferior a um nível de significância especificado, temos base para rejeitar a hipótese nula e inferir que a série é estacionária.</p>
 <p>A equação do teste ADF é dada por:</p>
 <p><span class="math display">\[\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 \Delta y_{t-1} + \delta_2 \Delta y_{t-2} + \ldots + \delta_p \Delta y_{t-p} + \varepsilon_t\]</span></p>
 <p>onde:</p>
@@ -259,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><span class="math inline">\(\delta_1\)</span>, <span class="math inline">\(\delta_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\delta_p\)</span> são os coeficientes das diferenças defasadas de <span class="math inline">\(y_t\)</span>,</p></li>
 <li><p><span class="math inline">\(\varepsilon_t\)</span> é o termo de erro.</p></li>
 </ul>
-<p>Aqui vou utilizar a função <code>adf.test</code> do pacote <code>tseries</code>.</p>
+<p>Para realizar o teste ADF, utilizaremos a função <code>adf.test</code> do pacote <code>tseries</code>.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-7_a4170aa165313ef108cd2db1e70892fa">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tseries<span class="sc">::</span><span class="fu">adf.test</span>(<span class="fu">ts</span>(fit<span class="sc">$</span>value),<span class="at">alternative =</span><span class="st">"stationary"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -271,21 +272,22 @@ Dickey-Fuller = -2.4719, Lag order = 5, p-value = 0.3803
 alternative hypothesis: stationary</code></pre>
 </div>
 </div>
-<p>O teste adf não encontrou evidencia para rejeitar a hipótese nula de não estacionariedade.</p>
+<p>O teste ADF não encontrou evidências que justifiquem a rejeição da hipótese nula de não estacionariedade.</p>
 </div>
 </section>
-<section id="kwiatkowski-phillips-schmidt-shin-kpss" class="level2">
-<h2 class="anchored" data-anchor-id="kwiatkowski-phillips-schmidt-shin-kpss">Kwiatkowski-Phillips-Schmidt-Shin (KPSS)</h2>
+<section id="kpss" class="level2">
+<h2 class="anchored" data-anchor-id="kpss">Kwiatkowski-Phillips-Schmidt-Shin (KPSS)</h2>
 <div class="justify">
-<p>A ideia básica por trás do teste KPSS é verificar se a série temporal é estacionária em torno de uma tendência determinística, em oposição à estacionariedade ao redor de um valor médio constante. A hipótese nula do teste KPSS é que a série é estacionária em torno de uma tendência determinística. A estatística do teste KPSS é calculada para testar essa hipótese, e a interpretação depende do valor-p do teste em relação a um nível de significância escolhido. Se o valor-p for maior que o nível de significância, não podemos rejeitar a hipótese nula, o que sugere que a série é estacionária em torno de uma tendência. Por outro lado, se o valor-p for menor que o nível de significância, podemos rejeitar a hipótese nula e concluir que a série não é estacionária em torno de uma tendência, o que significa que a tendência é estocástica.</p>
+<p>O teste KPSS visa determinar se uma série temporal é estacionária em relação a uma tendência determinística, em contraposição à estacionariedade em torno de um valor médio constante. A hipótese nula do teste KPSS pressupõe que a série é estacionária. Portanto, se o valor-p obtido for superior ao nível de significância, não temos justificativa para rejeitar a hipótese nula, o que indica que a série é estacionária em relação a uma tendência. No entanto, se o valor-p for inferior ao nível de significância, podemos rejeitar a hipótese nula e concluir que a série não é estacionária em relação a uma tendência, implicando que a tendência é estocástica.</p>
 <p>A estatística do teste KPSS é definida da seguinte forma:</p>
 <p><span class="math display">\[KPSS = \frac{T^2 \cdot \hat{\sigma}^2}{\sum_{t=1}^{T} S_t^2}\]</span></p>
 <p>Onde:</p>
 <ul>
 <li><p><span class="math inline">\(T\)</span> é o número de observações na série temporal.</p></li>
 <li><p><span class="math inline">\(S_t\)</span> é a soma cumulativa das diferenças entre as observações e a estimativa da tendência local em cada ponto na série temporal. Calculado como: <span class="math display">\[S_t = \sum_{i=1}^{t} (X_i - \hat{m}_t)\]</span>.</p></li>
+<li><p><span class="math inline">\(\hat{\sigma}^2\)</span> é uma estimativa da variância da série temporal.</p></li>
 </ul>
-<p>Onde <span class="math inline">\(X_i\)</span> é a observação no tempo <span class="math inline">\(i\)</span> e <span class="math inline">\(\hat{m}_t\)</span> é a estimativa da tendência local no tempo <span class="math inline">\(t\)</span>. <span class="math inline">\(\hat{\sigma}^2\)</span> é uma estimativa da variância da série temporal.</p>
+<p>Onde <span class="math inline">\(X_i\)</span> é a observação no tempo <span class="math inline">\(i\)</span> e <span class="math inline">\(\hat{m}_t\)</span> é a estimativa da tendência local no tempo <span class="math inline">\(t\)</span>.</p>
 <p>Para o teste KPSS será usado a função <code>unitroot_kpss</code> do pacote <code>fable</code>.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-8_2489486b4ee3ecfd5e099a593ce62f96">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
@@ -316,19 +318,19 @@ alternative hypothesis: stationary</code></pre>
 </div>
 </div>
 <p>O teste kpss, apresenta evidência para rejeitar a hipótese nula, que nesse caso é de estacionariedade.</p>
-<p>Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável que, em alguns casos, é essencial para certos tipos de modelos. A seguir examinaremos algumas das principais abordagens para transformar os dados em um estado estacionário. É importante ressaltar desde já que a transformação dos dados com o objetivo de torná-los estacionários devem ser revertida durante a fase de previsão.</p>
+<p>Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável que, em alguns casos, é essencial para certos tipos de modelos. A seguir examinaremos algumas das principais abordagens para transformar os dados em um estado estacionário.</p>
 </div>
 </section>
 </section>
 <section id="transformando-os-dados" class="level1">
 <h1>Transformando os Dados</h1>
 <div class="justify">
-<p>Existem diversos métodos para transformar séries temporais a fim de torná-las estacionárias. A escolha do método depende das características da série temporal e dos objetivos da análise e ou modelagem. Às vezes, pode ser necessário experimentar vários métodos para determinar qual é o mais adequado antes de aplicar um modelo de previsão. Aqui estão alguns dos principais métodos de transformação:</p>
+<p>Existem diversos métodos disponíveis para transformar séries temporais a fim de torná-las estacionárias. A seleção do método apropriado depende das características específicas da série temporal em questão e dos objetivos da análise ou modelagem em curso. Por vezes, é necessário experimentar vários métodos para identificar qual deles é o mais adequado para a situação.</p>
+<p>Aqui estão alguns dos principais métodos de transformação:</p>
 <ul>
 <li><p>Diferenciação: A diferenciação é uma técnica simples, ela envolve subtrair cada valor na série pelo valor anterior. Se uma série temporal não for estacionária devido a uma tendência linear, uma diferenciação de primeira ordem geralmente é suficiente.</p></li>
 <li><p>Diferenciação sazonal: Envolve subtrair o valor atual pelo valor do mesmo período sazonal anterior (por exemplo, o valor de um ano atrás, se a sazonalidade for anual).</p></li>
-<li><p>Transformações Logarítmicas: Se a série temporal possui uma tendência exponencial, uma transformação logarítmica pode ser útil. Isso é feito aplicando o logaritmo natural (ln) aos valores da série, tornando a série mais linear.</p></li>
-<li><p>Decomposição: A decomposição é uma técnica que separa uma série temporal em três componentes principais: tendência, sazonalidade e ruído. Uma vez separados, você pode remover a tendência e a sazonalidade, deixando apenas o componente de ruído estacionário. A decomposição de séries temporais pode ser realizada usando métodos como a decomposição de média móvel ou a análise de componentes principais.</p></li>
+<li><p>Decomposição: A decomposição é uma técnica que separa uma série temporal em três componentes principais: tendência, sazonalidade e ruído. Uma vez separados, você pode remover a tendência e a sazonalidade, deixando apenas o componente de ruído estacionário.</p></li>
 <li><p>Suavização exponencial: A suavização exponencial é uma técnica que suaviza os dados, removendo flutuações de curto prazo. Ela pode ser usada para tornar a série mais estável, especialmente se houver ruído aleatório significativo.</p></li>
 <li><p>Box-Cox Transformation: A transformação Box-Cox é uma família de transformações paramétricas que inclui a transformação logarítmica como um caso especial. Ela é usada quando a variância dos dados não é constante ao longo do tempo. A transformação Box-Cox pode ajudar a estabilizar a variância dos dados.</p></li>
 </ul>
@@ -337,13 +339,13 @@ alternative hypothesis: stationary</code></pre>
 <section id="decomposição" class="level2">
 <h2 class="anchored" data-anchor-id="decomposição">Decomposição</h2>
 <div class="justify">
-<p>Após a decomposição dos dados, conforme discutido na <a href="">primeira postagem</a> desta série, obtemos várias versões dos dados originais. Neste ponto, estou examinando a estacionariedade dos dados usados nos testes espectrais, que resultam da remoção da componente ‘tendência’ criada pelo modelo STL dos dados originais. Como já mencionado anteriormente, os dados sem a tendência apresentam o mesmo comportamento da componente residual do modelo STL.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_5beede2123bc5b95738414dc3a7058f0">
+<p>Após a decomposição dos dados, como discutido na <a href="https://pedroom-blog.netlify.app/posts/serie_ouro/eda/">primeira postagem</a> desta série, obtemos várias representações dos dados originais que capturam as estruturas identificadas. Neste ponto, estou examinando a componente ‘remainder’ do modelo STL, que, teoricamente, teve as componentes de tendência e de sazonalidade retiradas. Como mencionei anteriormente, essa componente exibe um comportamento espectral muito semelhante ao dos dados brutos, incluindo elementos cíclicos ou quase cíclicos.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_f5aab8fb1656b4531a0bc268e49c6fff">
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
-<p>Vamos utilizar novamente o test KPSS para verificar a estacionariedade dos dados.</p>
+<p>Vamos usar novamente o teste KPSS para verificar a estacionariedade dos dados.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-10_6600e63bcec8669aa91c37dd9a2c554f">
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -369,34 +371,7 @@ alternative hypothesis: stationary</code></pre>
 
 </div>
 </div>
-<p>O teste não encontrou evidências para rejeitar a hipótese nula de estacionariedade.</p>
-<p>Agora vou aplicar o teste de Ljung-Box, <a href="">que foi introduzido anteriormente</a>, para verificar se as observações na série temporal exibem autocorrelação ou se os valores são aleatórios e independentes.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_31fb44d44cb0ad719b8b5b4249d2e2a0">
-<div class="cell-output-display">
-<div class="table-responsive">
-<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
-<caption>Teste LJUNG-BOX</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">.model</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">lb_stat</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">lb_pvalue</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">feasts::STL(value)</td>
-<td style="text-align: right;">343.7225</td>
-<td style="text-align: right;">0</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-
-</div>
-</div>
-<p>O teste indica a presença de correlação entre as observações. Este resultado era esperado, uma vez que esses são os mesmos dados usados nas análises espectrais que mostraram a presença de componentes periódicas nos dados.</p>
+<p>O teste não apresentou evidências que justificassem a rejeição da hipótese nula de estacionariedade, o que sugere que a abordagem foi eficaz em tornar os dados estacionários. No entanto, como indicado durante a análise espectral e teste Ljung-Box , esses dados não exibem um comportamento de ruído branco e podem conter estruturas significativas.</p>
 </div>
 </section>
 <section id="box-cox" class="level2">
@@ -413,30 +388,30 @@ alternative hypothesis: stationary</code></pre>
 <p>Onde:</p>
 <ul>
 <li><p><span class="math inline">\(y_i\)</span> é o valor transformado do dado <span class="math inline">\(x_i\)</span></p></li>
-<li><p><span class="math inline">\(\lambda\)</span> é um parâmetro que controla o tipo de transformação.</p></li>
+<li><p>O parâmetro <span class="math inline">\(\lambda\)</span> é estimado através da função de verossimilhança e avaliação da adequação do modelo.</p></li>
 </ul>
 <p>Quando <span class="math inline">\(\lambda\)</span> é igual a zero, a transformação se torna uma transformação logarítmica natural (<span class="math inline">\(ln(x_i)\)</span>) Quando <span class="math inline">\(\lambda\)</span> não é igual a zero, a transformação é uma potência do dado original (<span class="math inline">\(x_i^\lambda\)</span>) com uma correção para garantir que a transformação seja bem definida para todos os valores de <span class="math inline">\(x_i\)</span>.</p>
-<p>A escolha do valor ideal de <span class="math inline">\(λ\)</span> geralmente é feita de maneira a maximizar a normalidade ou estabilizar a variância dos dados transformados. É comum testar vários valores em um intervalo, aplicar a transformação a cada valor da série e analisar a normalidade e a homogeneidade da variância dos dados transformados. Para esta tarefa vou utilizando a função <code>forecast::BoxCox.lambda</code> do pacote <code>forecast</code>, que possibilita a seleção automática desse parâmetro. Essa função escolhe o lambda de modo a maximizar o perfil da verossimilhança logarítmica de um modelo linear ajustado aos dados. Para dados não sazonais, é ajustada uma tendência temporal linear, enquanto que para dados sazonais, é usado um modelo linear de tendência temporal com variáveis dummy sazonais</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_ba379b0b96559876fed3ff75948b6994">
+<p>A escolha do valor ideal para λ é geralmente feita visando a maximização da normalidade dos dados transformados ou a estabilização da variância. Uma prática comum envolve testar vários valores dentro de um intervalo específico e aplicar a transformação a cada valor da série. Nessa tarefa, estou utilizando a função <code>forecast::BoxCox.lambda</code> do pacote <code>forecast</code>, que possibilita a seleção automática desse parâmetro. Essa função determina o valor de λ de modo a maximizar o perfil da verossimilhança logarítmica de um modelo linear ajustado aos dados. Para dados não sazonais, é ajustada uma tendência temporal linear, enquanto para dados sazonais, é usado um modelo linear de tendência temporal com variáveis sazonais dummy.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_2f1a220f21ed0d3db59dfcb0be2dd997">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">round</span>(forecast<span class="sc">::</span><span class="fu">BoxCox.lambda</span>(fit<span class="sc">$</span>value), <span class="at">digits =</span> <span class="dv">2</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lambda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.38</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_071de99b33a9c4e543952056c0c1b8d3">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_7ed4ea2ad50a44de81420d1d53f7f112">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">box_cox_close =</span> fabletools<span class="sc">::</span><span class="fu">box_cox</span>(value, <span class="at">lambda=</span>lambda)) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(index,box_cox_close))<span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Transformação Box-Cox"</span>)<span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(index,box_cox_close))<span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggtitle</span>(<span class="st">"Transformação Box Cox"</span>)<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="1440"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_f8abc3ddf6dccfcb213eccf82ef81355">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_f9bd4f6c8f4e0f1b97b9c1723036558c">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">box_cox_close =</span> fabletools<span class="sc">::</span><span class="fu">box_cox</span>(value, <span class="at">lambda=</span>lambda)) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">features</span>(box_cox_close, unitroot_kpss) <span class="sc">%&gt;%</span> </span>
@@ -471,15 +446,16 @@ alternative hypothesis: stationary</code></pre>
 <section id="diferenciação" class="level2">
 <h2 class="anchored" data-anchor-id="diferenciação">Diferenciação</h2>
 <div class="justify">
-<p>A diferenciação em séries temporais é uma técnica comumente usada para transformar dados não estacionários em um formato mais adequado para análise e modelagem. Ela envolve a subtração de valores consecutivos da série, visando remover tendências e padrões de sazonalidade. Ao aplicar diferenciação, a série é transformada em uma nova série de diferenças, que é esperançosamente estacionária. Essa abordagem permite a utilização de modelos estatísticos, como o ARIMA (AutoRegressive Integrated Moving Average), que pressupõem a estacionariedade dos dados.</p>
-<p>Está tecnica pode ser descrita da seguinte forma:</p>
+<p>A diferenciação em séries temporais é uma técnica amplamente empregada para converter dados não estacionários em um formato mais apropriado para análise e modelagem. Essa técnica consiste na subtração dos valores consecutivos na série temporal, com o propósito de eliminar estruturas de tendência e padrões sazonais. Ao aplicar a diferenciação, a série é transformada em uma nova série de diferenças, com a esperança de torná-la estacionária.</p>
+<p>A remoção das estruturas mencionadas é geralmente alcançada por meio das diferenciações de primeira ordem e sazonal, e ou pela combinação e repetição dos procedimentos. A diferenciação de primeira ordem é realizada subtraindo o valor atual pelo valor anterior na série temporal e é eficaz na eliminação de tendências lineares nos dados. Por outro lado, a diferenciação sazonal envolve o cálculo das diferenças entre os valores da série no mesmo período, mas em anos diferentes, o que é útil para eliminar efeitos sazonais. Isso é realizado com o uso do “lag sazonal”, que representa o número de períodos em uma temporada. Por exemplo, se estiver lidando com dados mensais e a sazonalidade for anual, o lag sazonal seria igual a 12.</p>
+<p>Está técnica pode ser descrita da seguinte forma:</p>
 <p><span class="math display">\[\Delta y_t = y_t - y_{t-1}\]</span></p>
 <p>Onde:</p>
 <ul>
 <li><span class="math inline">\(\Delta\)</span> representa a diferença entre o valor atual <span class="math inline">\(y_t\)</span> e o valor anterior <span class="math inline">\(y_{t-1}\)</span> na série tempora.</li>
 </ul>
-<p>Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função unitroot_ndiffs, que tem com base o teste ADF, anteriormente explicado. Lembrando que o termo “unit root” refere-se à raiz unitária, que é uma característica de uma série temporal não estacionária. A presença de uma raiz unitária indica que a série não reverte rapidamente a perturbações, o que pode tornar a análise e a modelagem mais desafiadoras.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_5dd7af013672e725a587f933e282be06">
+<p>Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função <code>unitroot_ndiffs</code>, que tem com base o teste ADF, anteriormente explicado. Lembrando que o termo “unit root” (raiz unitária) se refere a uma característica de séries temporais não estacionárias. A presença de uma raiz unitária indica que a série não reverte rapidamente perturbações, tornando-a menos previsíveis e mais suscetíveis a flutuações, o que, de fato, pode tornar a análise e a modelagem mais desafiadoras.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_feca371a251ac93ad8137c25a917356c">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(value,  unitroot_ndiffs) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="st">"Número de Diferenças"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -505,15 +481,15 @@ alternative hypothesis: stationary</code></pre>
 
 </div>
 </div>
-<p>O teste indica a necessidade de realizar uma diferenciação para tornar a série estacionária.</p>
-<div class="cell" data-hash="index_cache/html/grafico-diff_251552ef2105203b95907924c80aec6b">
+<p>O teste sinaliza a necessidade de realizar uma diferenciação para tornar a série estacionária.</p>
+<div class="cell" data-hash="index_cache/html/grafico-diff_8280b2441d55e3ad927f78d1405ef06f">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">diff_close =</span> tsibble<span class="sc">::</span><span class="fu">difference</span>(value)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(index,diff_close))<span class="sc">+</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Transformação por diferenças"</span>)<span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Dados diferenciados"</span>)<span class="sc">+</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -521,7 +497,7 @@ alternative hypothesis: stationary</code></pre>
 </div>
 </div>
 <p>Após a transformação dos dados, aparentemente, não parece haver nenhuma estrutura remanescente.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_3715cdbdca8aee39574b789cb94b7617">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_3d1bd331381457058b0849790b128a29">
 <div class="cell-output-display">
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
@@ -547,12 +523,12 @@ alternative hypothesis: stationary</code></pre>
 </div>
 </div>
 <p>O teste KPSS apresenta evidências que sustentam a aceitação da hipótese nula de estacionariedade.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-17_29558d2945cb6439d9efe57b4d3c8700">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_d93d728b9375737960b1a44213648fb7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">diff_close =</span> tsibble<span class="sc">::</span><span class="fu">difference</span>(value)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(value, ljung_box, <span class="at">lag =</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(value, ljung_box, <span class="at">lag =</span> <span class="dv">78</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="st">"Teste LJUNG-BOX"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -568,7 +544,7 @@ alternative hypothesis: stationary</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">feasts::STL(value)</td>
-<td style="text-align: right;">2860.319</td>
+<td style="text-align: right;">2768.323</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -585,8 +561,8 @@ alternative hypothesis: stationary</code></pre>
 <section id="funções-de-autocorrelações" class="level1">
 <h1>Funções de Autocorrelações</h1>
 <div class="justify">
-<p>As funções de autocorrelação (do inglês, Autocorrelation Function ACF) e de Autocorrelação Parcial (Partial Autocorrelation Function PACF) são ferramentas muito utilizadas na análise de séries temporais para identificar estruturas dentro dos dados, como sazonalidade, tendência e estacionáriedade.</p>
-<p>Como estas ferramentes são essênciais para diversos tipos de modelos vou detalhar um pouco mais o seu funcionamento e aplicações. Dando um enfoque maior na sua relação como modelos ETS e ARIMA, temas dos próximos posts.</p>
+<p>A Função de Autocorrelação (ACF, do inglês Autocorrelation Function) e a Função de Autocorrelação Parcial (PACF, do inglês Partial Autocorrelation Function) são ferramentas amplamente utilizadas na análise de séries temporais. Elas desempenham um papel importante na exploração da estrutura de dependência entre as observações, o que, por sua vez, facilita a modelagem e previsão desses dados.</p>
+<p>Aqui está uma breve descrição de como essas funções operam e de suas aplicações em várias situações, abrangendo a análise dos dados brutos, as componentes do modelo STL e os dados transformados. Para uma compreensão mais aprofundada, é recomendável consultar as referências mencionadas neste artigo e outras fontes pertinentes.</p>
 </div>
 <section id="função-de-autocorrelação-acf" class="level2">
 <h2 class="anchored" data-anchor-id="função-de-autocorrelação-acf">Função de Autocorrelação (ACF)</h2>
@@ -601,7 +577,7 @@ alternative hypothesis: stationary</code></pre>
 <li><p><span class="math inline">\(σ(X_t)\)</span> é o desvio padrão de <span class="math inline">\(X_t\)</span>, que mede a variabilidade dos valores em <span class="math inline">\(t\)</span>.</p></li>
 <li><p><span class="math inline">\(σ(X_{t-k})\)</span> é o desvio padrão de <span class="math inline">\(X_{t-k}\)</span>, que mede a variabilidade dos valores em <span class="math inline">\(t-k\)</span>.</p></li>
 </ul>
-<p>Em resumo, a autocorrelação para um determinado atraso <span class="math inline">\(k\)</span> é a covariância normalizada pela variabilidade (desvio padrão) das observações separadas por esse atraso. Ela varia de -1 a 1, onde valores próximos de 1 indicam forte autocorrelação positiva, valores próximos de -1 indicam forte autocorrelação negativa e valores próximos de 0 indicam ausência de autocorrelação.</p>
+<p>Em resumo, a autocorrelação para um determinado atraso <span class="math inline">\(k\)</span> é a covariância normalizada pela variabilidade (desvio padrão) das observações separadas por esse atraso. Ela varia de -1 a 1, onde valores próximos de 1 indicam forte correlação positiva, valores próximos de -1 indicam forte correlação negativa e valores próximos de 0 indicam ausência de correlação.</p>
 </div>
 </section>
 <section id="função-de-autocorrelação-parcial-pacf" class="level2">
@@ -615,95 +591,98 @@ alternative hypothesis: stationary</code></pre>
 <li><p><span class="math inline">\(\gamma_{t,t-k}\)</span> é a função de autocovariância entre <span class="math inline">\(x_t\)</span> e <span class="math inline">\(x_t-k\)</span>.</p></li>
 <li><p><span class="math inline">\(\phi_i\)</span> são os coeficientes estimados de um modelo AR de ordem <span class="math inline">\(i\)</span>, onde <span class="math inline">\(i = 1, 2, \ldots, k-1\)</span></p></li>
 </ul>
-<p>A função PACF é calculada iterativamente, começando com <span class="math inline">\(k\)</span> = 1 e progredindo até o atraso máximo desejado. Mede a correlação entre uma observação em um determinado momento e observações em intervalos de tempo anteriores, removendo o efeito de observações em lags intermediários. Isso ajuda a identificar a estrutura de dependência direta, indicando o possível número de termos autorregressivos a serem incluídos em um modelo AR, crucial para fazer previsões precisas.</p>
+<p>A função PACF é calculada iterativamente, começando com <span class="math inline">\(k\)</span> = 1 e progredindo até o atraso máximo desejado. Ela mede a correlação entre uma observação em um determinado momento e observações em intervalos de tempo anteriores, removendo o efeito de observações em lags intermediários. Isso ajuda a identificar a estrutura de dependência direta, indicando o possível número de termos autorregressivos a serem incluídos em um modelo AR.</p>
 </div>
 </section>
 <section id="algumas-aplicações" class="level2">
 <h2 class="anchored" data-anchor-id="algumas-aplicações">Algumas Aplicações</h2>
 <div class="justify">
 <ul>
-<li><p>Avaliação de Estacionariedade:</p>
+<li><p>Modelagem de Séries Temporais: A ACF e a PACF são usadas para identificar a ordem adequada (p, d, q) de modelos da fámilia ARIMA, onde “p” é a ordem do componente AR, “d” é a ordem da diferenciação e “q” é a ordem do componente MA. Lembrando que ACF é usada para evidência de MA(q) e suas sazonalidades e a PACF é usada para identificação de AR(p) e suas sazonalidades.</p></li>
+<li><p>Identificação de Padrões: Além de sua aplicação em modelagem, a ACF e a PACF também são úteis para identificar padrões temporais nas séries temporais, como sazonalidades, e tendências.</p>
 <ul>
-<li><p>A presença de autocorrelação significativa em lags variados nas funções ACF pode sugerir que a série não é estacionária. A estacionariedade é uma condição importante para muitos modelos de séries temporais, como modelos ARMA e modelos de suavização exponencial.</p></li>
-<li><p>Se a série não for estacionária, pode ser necessário aplicar diferenciação para torná-la estacionária antes de modelar.</p></li>
-<li><p>Se após a diferenciação a série parecer ter flutuações constantes em torno de um nível médio, isso sugere uma tendência aditiva. Se as flutuações em torno do nível médio parecem crescer ou diminuir ao longo do tempo, isso sugere uma tendência multiplicativa.</p></li>
-<li><p>Se a ACF apresentar picos em múltiplos do período sazonal, isso sugere que há uma sazonalidade presente na série que precisa ser ajustada por meio da diferenciação sazonal.</p></li>
-<li><p>A PACF é especialmente útil para identificar o número de diferenciações sazonais necessárias. Se houver um componente sazonal na série, você pode observar picos significativos na PACF em lags correspondentes aos múltiplos do período sazonal.</p></li>
+<li><p>A presença de autocorrelação significativa em lags variados nas funções ACF pode sugerir a presença de tendência, e que a série não é estacionária.</p></li>
+<li><p>Se houver sazonalidade, você geralmente verá picos significativos na ACF em múltiplos lags (intervalos de tempo) que correspondem aos períodos sazonais. Por exemplo, em uma série mensal com sazonalidade anual, você esperaria ver picos nas defasagens 12, 24, 36, etc.</p></li>
+<li><p>O comportamento dos picos significativos pode ajudar a indentificar o tipo de sazonalidade (aditiva, multiplicativa) presente nos dados.</p></li>
 </ul></li>
-<li><p>Identificando o componente de sazonalidade:</p>
-<ul>
-<li><p>Identifique picos significativos nas defasagens da ACF. Se esses picos ocorrerem em múltiplos inteiros do período sazonal, é um indício de sazonalidade.</p></li>
-<li><p>Se houver sazonalidade aditiva na série, você geralmente verá picos significativos na ACF em múltiplos lags (intervalos de tempo) que correspondem aos períodos sazonais. Por exemplo, em uma série mensal com sazonalidade anual, você esperaria ver picos nas defasagens 12, 24, 36, etc.</p></li>
-<li><p>Para sazonalidade multiplicativa, os picos na ACF tendem a ser mais espaçados, seguindo os múltiplos do período sazonal, mas podem ser mais fracos em comparação com a sazonalidade aditiva.</p></li>
-<li><p>Novamente, para sazonalidade aditiva, você pode ver picos significativos na PACF em múltiplos do período sazonal. Para sazonalidade multiplicativa, a PACF também pode mostrar picos, mas eles podem ser menos pronunciados que na sazonalidade aditiva.</p></li>
-</ul></li>
-<li><p>Ordem de Modelos ARMA (Autoregressive Moving Average):</p>
-<ul>
-<li><p>A ACF pode ajudar a identificar a ordem dos termos de média móvel (MA) em um modelo ARMA/ARIMA, observando os lags significativos na ACF.</p></li>
-<li><p>A análise da PACF é particularmente útil para determinar a ordem dos termos autorregressivos (AR) em um modelo ARMA. Os lags significativos na PACF indicam quantos lags anteriores devem ser incluídos no modelo.</p></li>
-</ul></li>
+<li><p>Diagnóstico de Resíduos: Após ajustar um modelo a uma série temporal, a ACF e a PACF dos resíduos (diferença entre os valores observados e os valores previstos pelo modelo) podem ser usadas para verificar se há estrutura remanescente nos resíduos.</p></li>
 </ul>
-<p>Para fins didáticos, eu vou aplicar as técnicas mencionadas aos dados em seu estado original, nos dados sem a componente de tendência, mas com as compoentes periódicas. E nos dados após a diferenciação, onde os dados podem resultantes podem ser considerados ruido branco.</p>
+<p>Em resumo, ACF e PACF são ferramentas essenciais na análise de séries temporais, desempenhando um papel fundamental na identificação da estrutura de dependência temporal e na seleção dos parâmetros apropriados para a modelagem de modelos estatísticos.</p>
 </div>
 <section id="dados-originais" class="level3">
 <h3 class="anchored" data-anchor-id="dados-originais">Dados Originais</h3>
 <div class="justify">
-<p>A utilização das funções ACF e PACF pode ser adotada como uma abordagem inicial em uma análise exploratória, visando identificar estruturas de interesse. Minha escolha por iniciar a análise utilizando métodos de decomposição e análises espectrais ocorre porque considero essas técnicas mais robustas e informativas.</p>
-<p>Caso escolhidas como primeira aboragem os resultados a ser interpretados seriam os seguintes.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_ec465393982fd8bcc747a7d946df99bd">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#max_lag &lt;- nrow(fit)-1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As funções ACF e PACF não são geralmente a primeira abordagem quando se suspeita que os dados não sejam estacionários, como neste caso. No entanto, para fins ilustrativos, vou usá-las nos dados brutos.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-17_c74be42e02f2ad868b8c8c1b96e22ef1">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>max_lag <span class="ot">&lt;-</span> <span class="fu">nrow</span>(fit)<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>acf_plot <span class="ot">&lt;-</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">ACF</span>(value, <span class="at">lag_max =</span> max_lag) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-19_62b8540d347829283b0a85a170a5c0fb">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>acf_plot <span class="ot">&lt;-</span> </span>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_835e3384508c2c03a86be1f71f725110">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pacf_plot <span class="ot">&lt;-</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">ACF</span>(value, <span class="at">lag_max =</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">PACF</span>(value, <span class="at">lag_max =</span> max_lag) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-20_1cce3f901a9377182c55b1676ed53a26">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pacf_plot <span class="ot">&lt;-</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">PACF</span>(value, <span class="at">lag_max =</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  feasts<span class="sc">::</span><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-21_14f438ebc83b94e32fe4bb5ba45136a9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(acf_plot,pacf_plot, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-19_aca235400acba18c1894ca54d8159647">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(acf_plot,pacf_plot, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="1440"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
-<p>Os resultados da função ACF exibem um padrão aparentemente senoidal, com valores de correlação que oscilam entre positivos e negativos de forma significativa. Os lags são sequenciais, e a transição entre esses valores ocorre de maneira gradual. Por outro lado, os resultados da função PACF mostram valores significativos apenas no lag zero, enquanto os lags subsequentes não demonstram um comportamento senoidal. Esses resultados, juntamente com a análise visual dos dados brutos, sugerem fortemente a presença de não estacionariedade nos dados. A correlação significativa entre os dados parece ser devido à existência de uma tendência nos mesmos.</p>
-<p><strong>Um aspecto interessante desses resultados é que o último lag (ACF) com valores teoricamente indicativos de boa previsibilidade (&gt;= 0.5) é observado no lag de 19 meses, o que está em linha com as conclusões das análises espectrais realizadas nos dados que não apresentam tendência.</strong></p>
+<p>O Gráfico de ACF revela correlações significativas em lags próximos, com uma diminuição gradual que não se aproxima rapidamente de zero. Esse padrão sugere a presença de tendência nos dados, uma característica geralmente associada à não estacionariedade. A transição das correlações de positivas para negativas parece estar relacionada às mudanças no comportamento da tendência ao longo do tempo.</p>
+<p>Por outro lado, os resultados da função PACF mostram valores significativos apenas nos lags 1 e 2, indicando que os efeitos observados no Gráfico de ACF podem ser atribuídos principalmente à presença de tendência nos dados.</p>
+<p>Em uma série estacionária, é comum que os gráficos de ACF e PACF apresentem uma rápida diminuição após um pequeno número de defasagens, sem exibir padrões significativos. A ocorrência de padrões irregulares nesses gráficos sugere a possibilidade de ruído nos dados ou outros elementos não estacionários, corroborando assim os demais resultados das análises realizadas até o momento.</p>
 </div>
 </section>
-<section id="dados-sem-tendência" class="level3">
-<h3 class="anchored" data-anchor-id="dados-sem-tendência">Dados sem Tendência</h3>
+<section id="componente-remainder" class="level3">
+<h3 class="anchored" data-anchor-id="componente-remainder">Componente ‘remainder’</h3>
 <div class="justify">
-<p>A remoção apenas da tendência dos dados para torná-los estacionários não é uma prática comum quando se trata de modelagem, especialmente em modelos estatísticos. Em geral, esses modelos buscam eliminar tanto a tendência quanto a sazonalidade, pois essas estruturas são mais previsíveis. O foco principal recai sobre a análise da parte residual e aleatória dos dados. No entanto, os dados que foram despojados apenas da componente de tendência podem ser úteis para ilustrar duas situações: a primeira é que os dados não apresentam uma tendência intrínseca; a segunda é que, mesmo após a aplicação da diferenciação para torná-los estacionários, ainda podem persistir indícios de sazonalidade nos dados.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-24_d67854052afdde82309e2f4e1f231f3e">
+<p>Conforme já verificado, a componente ‘remainder’ demonstra estacionariedade de acordo com o teste KPSS, mas não exibe um comportamento de ruído branco conforme indicado pelo teste Ljung-Box. Isso pode ser atribuído, provavelmente, à presença de componentes cíclicas ou quase cíclicas.</p>
+<p>Normalmente, as funções ACF e PACF são utilizadas em dados após a aplicação do operador de diferença. No entanto, a análise dos dados brutos, sem a componente de tendência, pode ser útil para ilustrar várias situações. Por exemplo, pode ajudar a melhorar a compreensão das estruturas cíclicas ou quase cíclicas nos dados. Em casos em que os dados brutos não exibem uma tendência intrínseca e já demonstram estacionariedade. Ou quando mesmo após a aplicação de diferenciação para torná-los estacionários, ainda podem persistir indícios de sazonalidade nos dados, e a estacionariedade pode não ser completamente alcançada.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-22_58507bf8a0887afbf935ab4d64aa3416">
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="1440"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
+<p>Os picos positivos nos dois primeiros lags no gráfico de ACF sugerem uma forte correlação entre os valores no tempo atual e os valores no tempo imediatamente anterior. Essa observação pode ser indicativo de um componente <span class="math inline">\(MA(q)\)</span> em um modelo da família ARIMA.</p>
+<p>Além disso, o gráfico mostra um comportamento senoidal, com picos significativos ou quase significativos em multiplos de cerca de 12 meses. Isso sugere a presença de um componente sazonal nas séries temporais. No entanto, é importante notar que o período não é bem definido, e os picos apresentam rápido decaimento e picos adicionais ao redor do período principal. Os valores dos picos na parte periódica são baixos (menores ou iguais a 0,5), o que pode indicar que a capacidade de previsão do componente sazonal pode ser limitada. A presença de picos negativos entre os picos positivos pode indicar algum tipo de efeito de amortecimento ou compensação nas séries temporais.</p>
+<p>O decaimento e a quase significância de outros picos na ACF podem resultar em raízes do polinômio característico que estão muito próximas do ciclo unitário. indício que os processos autorregressivos ou de média móvel têm dificuldade em convergir, o que pode resultar em previsões imprecisas e modelos instáveis.</p>
+<p>Para lidar com raízes próximas ao ciclo unitário em modelos ARIMA, é fundamental considerar alternativas, como a adoção de um modelo SARIMA (Seasonal ARIMA), a fim de eficazmente incorporar a sazonalidade e aprimorar a estabilidade das previsões. Além disso, é apropriado realizar uma diferenciação sazonal, com o período identificado, para tornar a série temporal mais estacionária. Recomenda-se, também, conduzir uma análise minuciosa dos resultados do modelo para assegurar sua adequação aos dados específicos em questão. Isso envolve a validação dos resíduos do modelo, que por sua vez requer o uso da ACF e PACF.</p>
+<p>A PACF indica que há significância até a segunda repetição do ciclo de 12 meses. No entanto, a natureza exata desse comportamento não é clara, e os valores, com exceção do primeiro pico, são baixos. Em resumo, os dados apresentam um comportamento complexo e ruidoso, como já evidenciado em resultados anteriores.</p>
+<p>Com base nas análises da ACF e PACF, é razoável suspeitar que um modelo SARIMA com termos <span class="math inline">\(MA(q)(Q)\)</span>, onde <span class="math inline">\(q=1, 2\)</span> e <span class="math inline">\(Q=1\)</span>, com uma componente sazonal de 12 meses, e <span class="math inline">\(AR(p)(P)\)</span> onde <span class="math inline">\(p=1, 2, 4, 5\)</span> e <span class="math inline">\(P=1\)</span> com a mesma componente sazonal de 12 meses, podem ser apropriados para modelar essa série temporal. No entanto, a escolha final do modelo SARIMA dependerá de testes de diagnóstico adicionais e validação cruzada para garantir a precisão das previsões e a adequação do modelo aos dados.</p>
 </div>
 </section>
 <section id="dados-sazonais" class="level3">
 <h3 class="anchored" data-anchor-id="dados-sazonais">Dados sazonais</h3>
 <div class="justify">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-27_7bb4a5069648b7f35d058cd798e3dfb5">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-25_87ec8640d1ee2051cf66be43741cb053">
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="1440"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
+<p>A componente ‘sazonal’ criada pelo modelo STL é livres de ruído, tornando mais simples a visualização do padrão cíclico presente neles. Comparando os resultados dos dados brutos com os atuais, observamos que tanto a ACF quanto a PACF são semelhantes, aparentemente o modelo STL emulou o comportamento periódico dos dados brutos, mas “corrigindo” os picos para os lags múltiplos de 12.</p>
+<p>Em resumo, a análise dessa componente sazonal pode contribuir para uma identificação mais nítida do comportamento dos dados brutos através das caracteristicas da sazonalidade identificada pelo modelo STL ao construir essa componente.</p>
+<p>Lembrando que existem dois tipos de sazonalidade, a aditiva e a multiplicativa. A sazonalidade aditiva inclui componentes <span class="math inline">\(AR(.)\)</span> e <span class="math inline">\(MA(.)\)</span> degenerados, o que resulta em picos de significância estatística isolados na ACF e PACF. Por outro lado, a sazonalidade multiplicativa causa significância não apenas no “coeficiente principal”, mas também em períodos próximos a ele, como ilustrado no exemplo atual.</p>
+<p>A PACF mostra significância até a primeira repetição do ciclo de 12 meses. É bastante provável que esse <span class="math inline">\(AR(p)(1)_{12}\)</span> seja invertível e esteja causando o <span class="math inline">\(MA(q)(Q)_{12}\)</span> com alta persistência nos lags múltiplos de 12, como indicado na ACF.</p>
 </div>
 </section>
 <section id="dados-diferenciados" class="level3">
 <h3 class="anchored" data-anchor-id="dados-diferenciados">Dados Diferenciados</h3>
 <div class="justify">
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-30_d282386488a57b3c64917edbec730ec1">
+<p>Como mencionado <a href="../../../posts/serie_ouro/EDA2/index.html#diferenciação">anteriormente</a>, uma diferenciação foi suficiente para tornar os dados estacionários, e agora eles exibem um comportamento semelhante ao de um ruído branco, como indicado pelo teste de Box-Cox. Em um contexto de modelagem ARIMA, uma vez que a estacionariedade é alcançada, o próximo passo é aplicar as funções de autocorrelação e autocorrelação parcial para determinar os parâmetros do modelo.</p>
+<p>Além disso, esse comportamento é um indicativo de que a tendência pode ser de natureza aditiva.</p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-28_0e81f7ab524f2f032cd74d6093c8c382">
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="1440"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="1440"></p>
 </div>
 </div>
+<p>Quando os gráficos ACF e PACF apresentam resultados significativos apenas no lag 1, isso geralmente indica uma estrutura de série temporal simples e sugere que os valores da série temporal estão fortemente correlacionados apenas com seus valores imediatamente anteriores, um indicativo comum de que um modelo autorregressivo de primeira ordem, AR(1), pode ser apropriado para modelar os dados.</p>
+<p>Portanto, neste cenário podemos começar considerando um modelo ARIMA com <span class="math inline">\(p=1\)</span> (ordem autoregressiva) e d=1 (uma diferenciação).</p>
+<p>No entanto, é importante notar que essa é apenas uma primeira aproximação na escolha dos parâmetros do modelo ARIMA. A seleção final dos parâmetros geralmente envolve tentativa e erro, além de critérios de seleção de modelos, como AIC (Akaike Information Criterion) ou BIC (Bayesian Information Criterion), para escolher o modelo que melhor se ajusta aos dados.</p>
 </div>
 </section>
 </section>
@@ -711,24 +690,34 @@ alternative hypothesis: stationary</code></pre>
 <section id="conclusão" class="level1">
 <h1>Conclusão</h1>
 <div class="justify">
-<p>Uma vez que já apresentamos e testamos a diferenciação dos dados, temos conhecimento de que a aplicação dessa técnica se mostra eficaz na transformação dos dados em uma forma estacionária. É importante mencionar isso, pois este é o próximo passo após a identificação de tendências e não estacionariedade. Ao analisarmos o gráfico resultante da diferenciação, que exibe um comportamento aproximadamente constante, sugere-se a presença de uma tendência aditiva.</p>
-<p>Existem evidências para rejeitar a hipótese nula de que não há autocorrelação. Assim como nos dados originais e na transformação box_cox, os dados apresentam correlação com seus atrasos de modo significativo. Porém a caracteristica da curva de correlção com a remoção do trend é bem diferente, sugerindo a existência de um padrão ciclico nos dados. Isso vai de encontro as componetes encontradas pelo modelo STL, que indica a existência de componetes sazonais nos dados. Contudo, os lags com valore de até 0.5 vão até o lag 35.</p>
-<p>Até o momento, as informações-chave que podem orientar a etapa de modelagem são as seguintes:</p>
-<p>A série não é estacionária, o que aponta para a necessidade de aplicar alguma forma de transformação nos dados. Opções incluem a transformação Box-Cox, raiz quadrada, diferenciação, remoção de tendência, entre outras.</p>
-<p>O resultado da análise de autocorrelação reforça os resultados encontrados pelas análises espctrais. Apesar dos resultados de correlação apresentarem valores acima da faixa de significância para lags além de 18 meses, os valores são todos inferiores a 0.5. Além disso nenhuma periodicidade muito maior que 18 meses aparece nos testes espectrais.</p>
-<p>Conforme evidenciado pelo gráfico da série temporal, esses resultados apontam para a não estacionariedade dos dados.</p>
-<p>Após a modelagem, é necessário reverter a diferenciação para realizar previsões na escala original da série temporal. Isso envolve somar as diferenças previstas aos valores anteriores da série (ou ao último valor conhecido da série original). Ao realizar esse processo, estamos extrapolando as mudanças previstas para os próximos períodos e adicionando-as aos valores anteriores para obter as previsões finais. Isso pressupõe que as mudanças esperadas no período futuro sejam semelhantes às mudanças observadas no período de treinamento do modelo.</p>
-<p>Aqui está uma fórmula geral para ilustrar o processo de reversão da diferenciação:</p>
-<p>Seja <span class="math inline">\(y_t\)</span> o valor original na época <span class="math inline">\(t\)</span> e <span class="math inline">\(y'_t\)</span> a série temporal diferenciada na época <span class="math inline">\(t\)</span>. Seja <span class="math inline">\(y'_t+1\)</span> a previsão diferenciada para o período <span class="math inline">\(t+1\)</span>. Então, a previsão final <span class="math inline">\(y'_{t+1}\)</span> na escala original é calculada da seguinte forma:</p>
-<p><span class="math display">\[y_{t+1} = y_t + y'_{t+1}\]</span></p>
+<p>Nesta segunda parte da análise exploratória, abordamos os seguintes tópicos: a questão da estacionariedade dos dados, algumas das técnicas empregadas para corrigir ou atenuar os efeitos da não estacionariedade nos dados e, por fim, exploramos o uso das funções de autocorrelação e autocorrelação parcial como ferramentas adicionais para identificar e caracterizar as estruturas subjacentes nos dados.</p>
+<p>Por meio dos testes <a href="../../../posts/serie_ouro/EDA2/index.html#adf">ADF</a> e <a href="../../../posts/serie_ouro/EDA2/index.html#kpss">KPSS</a> foi verificado que os dados não possuem estacionariedade, confirmando os indícios observados nos gráficos dos dados brutos. Vale ressaltar que existem outros testes com a mesma finalidade.</p>
+<p>Dentre as abordagens empregadas para tornar os dados estacionários, apenas a transformação de Box-Cox não se mostrou eficaz. No entanto, a escolha da transformação adequada depende das características dos dados e do modelo que será atulizado. É importante lembrar que após a modelagem, é necessário reverter a transformação para realizar previsões na escala original dos dados.</p>
+<p>A utilização das funções ACF e PACF se destacou como uma abordagem mais relevante na identificação de parâmetros potenciais em modelos ARIMA (Média Móvel Integrada de AutoRegressão) e ETS (Erro, Tendência, Sazonalidade) em comparação com outras técnicas empregadas, que se mostraram mais eficazes na detecção de estruturas intrínsecas nos dados. Vale ressaltar que essa perspectiva reflete apenas minha opinião pessoal em relação às técnicas empregadas.</p>
+<p>Os pontos mais relevantes identificados durante esta análise exploratória, em relação à modelagem são:</p>
+<ul>
+<li><p>Os dados podem ser desagregados em tendência, sazonalidade e resíduo, conforme sugerido pelo modelo STL.</p></li>
+<li><p>As componentes periódicas identificadas nas análises espectrais exibem um comportamento complexo que varia ao longo do tempo, corroborando a indicação observada nos gráficos de sazonalidade e gráficos de ACF e PACF.</p></li>
+<li><p>A utilização de uma única diferença para tornar os dados estacionários e aparência dos dados após a transformação, apresentando flutuações aproximadamente constantes, indica a utilização de uma tendência aditiva.</p></li>
+<li><p>Os gráficos de ACF e PACF da componente ‘remainder’ do modelo STL reforçam a presença de estruturas periódica/quase periódica. Além disso os resultados apontam para a utilização de sazonalidade multiplicativa nos modelos.</p></li>
+</ul>
+<p>Na próxima postagem, iniciarei a construção dos modelos preditivos, começando com os modelos “clássicos” e, posteriormente, os modelos de IA.</p>
 </div>
 </section>
 <section id="referências" class="level1">
 <h1>Referências</h1>
-<p><a href="https://otexts.com/fpp3/decomposition.html">Forecasting: Principles and Practice (3rd ed)/Chapter 4 Time series features</a></p>
-<p><a href="https://www.rdocumentation.org/packages/tseries/versions/0.10-54/topics/adf.test">adf.test: Augmented Dickey–Fuller Test</a></p>
-<p><a href="https://www.rdocumentation.org/packages/tsfeatures/versions/1.1/topics/unitroot_kpss">unitroot_kpss: Unit Root Test Statistics</a></p>
+<div class="justify">
+<p><a href="https://pt.wikipedia.org/wiki/Autocorrela%C3%A7%C3%A3o">Autocorrelação</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Augmented_Dickey%E2%80%93Fuller_test">Augmented Dickey–Fuller test</a></p>
 <p><a href="https://www.rdocumentation.org/packages/forecast/versions/8.21.1/topics/BoxCox.lambda">BoxCox.lambda: Automatic selection of Box Cox transformation parameter</a></p>
+<p><a href="https://rpubs.com/hudsonchavs/fac_facp">Correlação, Autocorrelação e Autocorrelação Parcial</a></p>
+<p><a href="https://pt.wikipedia.org/wiki/Correla%C3%A7%C3%A3o_parcial">Correlação parcial</a></p>
+<p><a href="https://www.rdocumentation.org/packages/tseries/versions/0.10-54/topics/adf.test">adf.test: Augmented Dickey-Fuller Test</a></p>
+<p><a href="https://otexts.com/fpp3/decomposition.html">Forecasting: Principles and Practice (3rd ed)/Chapter 4 Time series features</a></p>
+<p><a href="https://en.wikipedia.org/wiki/KPSS_test">KPSS test</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Power_transform">Power transform</a></p>
+<p><a href="https://www.rdocumentation.org/packages/tsfeatures/versions/1.1/topics/unitroot_kpss">unitroot_kpss: Unit Root Test Statistics</a></p>
+</div>
 
 
 </section>

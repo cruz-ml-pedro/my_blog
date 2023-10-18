@@ -2,7 +2,7 @@
 title: "Cotação do ouro - Parte 3"
 subtitle: "Suavização Exponencial"
 author: "Pedro Lima"
-date: "2023-10-02"
+date: "2023-10-25"
 categories: [Modelos Estatísticos, Série-Temporal,R]
 toc: true
 toc-depth: 3
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
                       message = FALSE, echo = TRUE, dpi = 180,
                       fig.width = 8, fig.height = 5)
 
-pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime, xgboost,
+pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime,
                modeltime.resample)
 
 # This toggles plots from plotly (interactive) to ggplot (static)
@@ -45,9 +45,9 @@ gold_mean <-
 # Introdução
 
 ::: justify
-Nessa segunda post sobre a cotação do ouro, vou criar o primeiro modelo para realizar previsão dos valores de interesse. Os dados utilizados, assim como a escolha dos parâmetros utilizados para criar os modelos a seguir foram, respectivamente, adiquridos e escolhidos na [parte um]() e [dois]() dessa série de postos.
+Nessa segunda post sobre a cotação do ouro, vou criar o primeiro modelo para realizar previsão dos valores de interesse. Os dados utilizados, assim como a escolha dos parâmetros utilizados para criar os modelos a seguir foram, respectivamente, adiquridos e escolhidos na [parte um](https://pedroom-blog.netlify.app/posts/serie_ouro/eda/) e [dois]() dessa série de postos.
 
-Nesta terceira postagem sobre a cotação do ouro será empregada a mesma estratégia de validação cruzada comparação dos modelos, usadas na [postagem anterior](). Assim, os procedimentos e funções adotados nestas etapas não serão novamentes descritos.
+Nesta terceira postagem sobre a cotação do ouro será empregada a mesma estratégia de validação cruzada comparação dos modelos. Assim, os procedimentos e funções adotados nestas etapas não serão novamentes descritos.
 :::
 
 # Suavização Exponencial
@@ -100,6 +100,8 @@ Cada um desses modelos de suavização exponencial é adequado para diferentes t
 ::: jistify
 Os modelos ETS, "Error, Trend, and Seasonality" (Erro, Tendência e Sazonalidade, em português), são usados para analisar e prever dados de séries temporais que exibem tendências e padrões sazonais, descrevendo a estrutura subjacente dos dados em termos desses três componentes principais. Existem diferentes variações de modelos ETS, como ETS(AAA), ETS(MAM), ETS(ANN), entre outros, que especificam como os componentes de erro, tendência e sazonalidade são modelados e combinados. Cada variação é adequada para diferentes tipos de séries temporais, dependendo das características dos dados. Esses modelos são amplamente utilizados em estatísticas e análise de séries temporais para fins de previsão e modelagem.
 
+Forecasts of STL objects are obtained by applying a non-seasonal forecasting method to the seasonally adjusted data and re-seasonalizing using the last year of the seasonal component.
+
 Modelo ETS:
 
 \textbf{Decomposição ETS:}
@@ -133,6 +135,22 @@ $\alpha$, $\beta$ e $\gamma$ são os parâmetros de suavização
 $m$ é a periodicidade sazonal
 
 $L_{t-1}$ é uma correção de tendência sazonal
+
+A identificação do tipo de sazonalidade, tendência e erro em modelos ETS (Erro, Tendência e Sazonalidade) envolve uma análise cuidadosa dos dados da série temporal e a escolha de uma combinação adequada desses componentes com base em evidências estatísticas e conhecimento do domínio. Vou explicar como você pode identificar cada um desses componentes e os tipos possíveis em um modelo ETS:
+
+Tipo de Sazonalidade:
+
+Aditivo: A sazonalidade é aditiva quando as variações sazonais têm a mesma magnitude ao longo do tempo, independentemente do nível da série temporal. Isso significa que as oscilações sazonais são adicionadas ao nível da série temporal. Multiplicativo: A sazonalidade é multiplicativa quando as variações sazonais aumentam ou diminuem em relação ao nível da série temporal. Isso significa que as oscilações sazonais são multiplicadas pelo nível da série temporal. Para identificar o tipo de sazonalidade, você pode plotar a série temporal e observar se as variações sazonais parecem aditivas ou multiplicativas. Se as variações parecerem constantes em termos de amplitude em toda a série, é provável que seja um componente aditivo. Se as variações sazonais parecerem aumentar ou diminuir em relação ao nível da série, é provável que seja um componente multiplicativo.
+
+Tipo de Tendência:
+
+Aditivo: A tendência é aditiva quando a magnitude da mudança na série temporal é constante ao longo do tempo. Isso significa que a tendência é uma adição constante ao nível da série. Multiplicativo: A tendência é multiplicativa quando a magnitude da mudança na série temporal aumenta ou diminui ao longo do tempo em relação ao nível da série. Isso significa que a tendência é uma multiplicação constante pelo nível da série. Para identificar o tipo de tendência, você pode plotar a série temporal e observar se as mudanças na série parecem constantes ou se aumentam/diminuem em relação ao nível da série.
+
+Tipo de Erro:
+
+Erro Aditivo: Os erros são aditivos quando a magnitude dos erros é constante ao longo do tempo. Erro Multiplicativo: Os erros são multiplicativos quando a magnitude dos erros aumenta ou diminui em relação ao nível da série. A identificação do tipo de erro geralmente envolve a análise dos resíduos de um modelo ETS ajustado. Você pode ajustar um modelo ETS aos seus dados e examinar os resíduos para verificar se eles exibem uma variação constante ou uma variação que aumenta ou diminui com o tempo.
+
+É importante notar que, em muitos casos, a identificação do tipo de componentes (sazonalidade, tendência e erro) é uma combinação de análise visual, conhecimento do domínio e testes estatísticos. Você pode ajustar vários modelos ETS com diferentes configurações de componentes e selecionar o modelo que melhor se ajusta aos seus dados com base em critérios como o critério de informação de Akaike (AIC) ou o critério de informação bayesiano (BIC).
 :::
 
 ### STL + ETS
@@ -162,7 +180,7 @@ Combinar as previsões individuais dos três componentes para obter a previsão 
 
 Essa abordagem é especialmente útil quando a série temporal possui tendência e sazonalidade que variam ao longo do tempo, pois permite adaptar o modelo de suavização exponencial a essas mudanças.
 
-Assim como o método STL, [explicado anteriormente](). Em resumo, a principal diferença entre os modelos STL e ETS está na abordagem de decomposição e na ênfase em previsões. O STL é mais flexível em relação à sazonalidade variável, enquanto o ETS assume uma sazonalidade constante e é mais voltado para previsões.
+Assim como o método STL, [explicado anteriormente](https://pedroom-blog.netlify.app/posts/serie_ouro/eda/). Em resumo, a principal diferença entre os modelos STL e ETS está na abordagem de decomposição e na ênfase em previsões. O STL é mais flexível em relação à sazonalidade variável, enquanto o ETS assume uma sazonalidade constante e é mais voltado para previsões.
 :::
 
 ### Exponential Smoothing in SSOE state space model
@@ -285,14 +303,6 @@ stl_season <- seasonal_reg(
   set_engine("stlm_ets") %>% 
   fit(media ~ mes, training(cv$splits[[1]]))
 ```
-
-```{r}
-stl_season2 <- seasonal_reg(
-    seasonal_period_1 = 16
-  ) %>% 
-  set_engine("stlm_ets") %>% 
-  fit(media ~ mes, training(cv$splits[[1]]))
-```
 :::
 
 # Comparando os modelos
@@ -306,8 +316,7 @@ modeltime_table(
   es_auto,
   es,
   stl_auto,
-  stl_season,
-  stl_season2
+  stl_season
   )
 ```
 :::
@@ -339,15 +348,6 @@ calib_table %>%
   modeltime_residuals() %>% 
   plot_modeltime_residuals(
      .type = "acf",
-     .interactive = FALSE
-     )
-```
-
-```{r, message=FALSE}
-calib_table %>% 
-  modeltime_residuals() %>% 
-  plot_modeltime_residuals(
-     .type = "seasonality",
      .interactive = FALSE
      )
 ```
@@ -425,29 +425,35 @@ future_forecast_tbl %>%
 
 # Salvando o modelo
 
+::: justify
 ```{r}
 #Engine es_smoooth
 #Período de 16 meses
 #Erro multiplicativo
 #Trend aditivo
 #Sazonalidade aditivo
-saveRDS(es, file = "eng-es-16period-MAA.rds")
+
+#saveRDS(es, file = "eng-es-16period-MAA.rds")
+
 ```
+:::
 
 # Referências
 
-[General Interface for Exponential Smoothing State Space Models](https://business-science.github.io/modeltime/reference/exp_smoothing.html)
-
-[General Interface for Multiple Seasonality Regression Models (TBATS, STLM)](https://business-science.github.io/modeltime/reference/seasonal_reg.html)
-
-[Forecasting using stl objects](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.html)
-
+::: justify
 [Automatic Time Series Forecasting: the forecast Package for R](https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf)
 
 [Extending Modeltime (Developer Tools)](https://business-science.github.io/modeltime/articles/extending-modeltime.html)
 
-[ets: Exponential smoothing state space model](https://pkg.robjhyndman.com/forecast/reference/ets.html)
-
 [es: Exponential Smoothing in SSOE state space model](https://rdrr.io/cran/smooth/man/es.html)
 
-[TBATS model (Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal components)](https://pkg.robjhyndman.com/forecast/reference/tbats.html)
+[ets: Exponential smoothing state space model](https://pkg.robjhyndman.com/forecast/reference/ets.html)
+
+[Forecasting: Principles and Practice (3rd ed)-Chapter 8 Exponential smoothing](https://otexts.com/fpp3/expsmooth.html)
+
+[Forecasting using stl objects](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.html)
+
+[General Interface for Exponential Smoothing State Space Models](https://business-science.github.io/modeltime/reference/exp_smoothing.html)
+
+[General Interface for Multiple Seasonality Regression Models (TBATS, STLM)](https://business-science.github.io/modeltime/reference/seasonal_reg.html)
+:::

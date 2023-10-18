@@ -2,11 +2,11 @@
 title: "Cotação do ouro - Parte 2"
 subtitle: "Análise Exploratória - Parte 2"
 author: "Pedro Lima"
-date: "2023-09-22"
+date: "2023-10-17"
 categories: [EDA, Série-Temporal,R]
 toc: true
 toc-depth: 3
-draft: true
+draft: false
 ---
 
 ```{r, echo=FALSE}
@@ -88,23 +88,24 @@ set_tab <- function(dados_tab, cap_tab){
 ```
 
 # Introdução
-
 ::: justify
-Nesta segunda e última parte da análise exploratória dos dados da cotação do ouro vou continuar análisando caracteristicas dos dados que possam ser úteis na criação de modelos preditivos. Os dados e pacotes utilizados, assim como o pré-processamentos, podem ser encontrados na [primeira parte]() desta análise. O objéto criado na postagem anterior que será utilizado nesta postagem será o `fit`, que contem os dados originais e as componenete criadas pelo modelo STL.
+Esta é a etapa final da análise exploratória dos dados da cotação do ouro. Para informações detalhadas sobre os dados, pacotes utilizados e o pré-processamento dos dados brutos, consulte a [primeira parte](https://pedroom-blog.netlify.app/posts/serie_ouro/eda/) desta série. Os objetos que foram criados na postagem anterior e que serão empregados nesta publicação são "fit", que contém os resultados do modelo STL, e "set_table", uma função desenvolvida para a criação e formatação de tabelas.
 :::
 
 # Estacionariedade dos Dados
 
 ::: justify
-A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações. Existem testes estatísticos e técnicas de transformação para avaliar e alcançar a estacionariedade em séries temporais, garantindo assim uma base sólida para análises e previsões precisas.
+A estacionariedade é um conceito fundamental na análise de séries temporais e processos estocásticos. Uma série temporal é considerada estacionária quando suas propriedades estatísticas, como a média e a variância, permanecem constantes ao longo do tempo. Isso implica que os padrões e as relações entre os dados não mudam com o tempo. A estacionariedade é crucial para muitas técnicas de modelagem e previsão, pois muitos métodos assumem que os dados exibem essa propriedade para produzir resultados precisos. Caso contrário, a falta de estacionariedade pode levar a resultados enganosos, uma vez que os padrões flutuantes nos dados podem obscurecer tendências reais e criar falsas correlações.
+
+Conforme veremos adiante, existem testes estatísticos e técnicas de transformação disponíveis para avaliar e alcançar a estacionariedade em séries temporais, o que, por conseguinte, assegura uma base sólida para análises e previsões de alta precisão.
 
 Para avaliar a estacionariedade dos dados serão utilizados o teste Dickey-Fuller Aumentado (`adf.test()`) e o teste de Kwiatkowski-Phillips-Schmidt-Shin (`unitroot_kpss`).
 :::
 
-## Dickey-Fuller (ADF)
+## Dickey-Fuller (ADF) {#adf}
 
 ::: justify
-O teste Dickey-Fuller Aumentado (ADF) é usado para verificar a presença de raízes unitárias em uma série temporal univariada. A hipótese nula deste teste é de que a série temporal tem uma raiz unitária, ou seja, que a série não é estacionária. Se o valor-p do teste for menor que um determinado nível de significância, podemos rejeitar a hipótese nula e concluir que a série é estacionária.
+O teste de Dickey-Fuller Aumentado (ADF, na sigla em inglês) é empregado para verificar a existência de raízes unitárias em séries temporais univariadas. A hipótese nula deste teste pressupõe a não estacionariedade; logo, se o valor-p do teste for inferior a um nível de significância especificado, temos base para rejeitar a hipótese nula e inferir que a série é estacionária.
 
 A equação do teste ADF é dada por:
 
@@ -124,19 +125,19 @@ onde:
 
 -   $\varepsilon_t$ é o termo de erro.
 
-Aqui vou utilizar a função `adf.test` do pacote `tseries`.
+Para realizar o teste ADF, utilizaremos a função `adf.test` do pacote `tseries`.
 
 ```{r}
 tseries::adf.test(ts(fit$value),alternative ="stationary") 
 ```
 
-O teste adf não encontrou evidencia para rejeitar a hipótese nula de não estacionariedade.
+O teste ADF não encontrou evidências que justifiquem a rejeição da hipótese nula de não estacionariedade.
 :::
 
-## Kwiatkowski-Phillips-Schmidt-Shin (KPSS)
+## Kwiatkowski-Phillips-Schmidt-Shin (KPSS) {#kpss}
 
 ::: justify
-A ideia básica por trás do teste KPSS é verificar se a série temporal é estacionária em torno de uma tendência determinística, em oposição à estacionariedade ao redor de um valor médio constante. A hipótese nula do teste KPSS é que a série é estacionária em torno de uma tendência determinística. A estatística do teste KPSS é calculada para testar essa hipótese, e a interpretação depende do valor-p do teste em relação a um nível de significância escolhido. Se o valor-p for maior que o nível de significância, não podemos rejeitar a hipótese nula, o que sugere que a série é estacionária em torno de uma tendência. Por outro lado, se o valor-p for menor que o nível de significância, podemos rejeitar a hipótese nula e concluir que a série não é estacionária em torno de uma tendência, o que significa que a tendência é estocástica.
+O teste KPSS visa determinar se uma série temporal é estacionária em relação a uma tendência determinística, em contraposição à estacionariedade em torno de um valor médio constante. A hipótese nula do teste KPSS pressupõe que a série é estacionária. Portanto, se o valor-p obtido for superior ao nível de significância, não temos justificativa para rejeitar a hipótese nula, o que indica que a série é estacionária em relação a uma tendência. No entanto, se o valor-p for inferior ao nível de significância, podemos rejeitar a hipótese nula e concluir que a série não é estacionária em relação a uma tendência, implicando que a tendência é estocástica.
 
 A estatística do teste KPSS é definida da seguinte forma:
 
@@ -148,7 +149,9 @@ Onde:
 
 -   $S_t$ é a soma cumulativa das diferenças entre as observações e a estimativa da tendência local em cada ponto na série temporal. Calculado como: $$S_t = \sum_{i=1}^{t} (X_i - \hat{m}_t)$$.
 
-Onde $X_i$ é a observação no tempo $i$ e $\hat{m}_t$ é a estimativa da tendência local no tempo $t$. $\hat{\sigma}^2$ é uma estimativa da variância da série temporal.
+-  $\hat{\sigma}^2$ é uma estimativa da variância da série temporal.
+
+Onde $X_i$ é a observação no tempo $i$ e $\hat{m}_t$ é a estimativa da tendência local no tempo $t$. 
 
 Para o teste KPSS será usado a função `unitroot_kpss` do pacote `fable`.
 
@@ -160,21 +163,21 @@ fit %>%
 
 O teste kpss, apresenta evidência para rejeitar a hipótese nula, que nesse caso é de estacionariedade.
 
-Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável que, em alguns casos, é essencial para certos tipos de modelos. A seguir examinaremos algumas das principais abordagens para transformar os dados em um estado estacionário. É importante ressaltar desde já que a transformação dos dados com o objetivo de torná-los estacionários devem ser revertida durante a fase de previsão.
+Os dois testes indicam a não estacionariedade dos dados, uma característica desfavorável que, em alguns casos, é essencial para certos tipos de modelos. A seguir examinaremos algumas das principais abordagens para transformar os dados em um estado estacionário. 
 :::
 
 # Transformando os Dados
 
 ::: justify
-Existem diversos métodos para transformar séries temporais a fim de torná-las estacionárias. A escolha do método depende das características da série temporal e dos objetivos da análise e ou modelagem. Às vezes, pode ser necessário experimentar vários métodos para determinar qual é o mais adequado antes de aplicar um modelo de previsão. Aqui estão alguns dos principais métodos de transformação:
+Existem diversos métodos disponíveis para transformar séries temporais a fim de torná-las estacionárias. A seleção do método apropriado depende das características específicas da série temporal em questão e dos objetivos da análise ou modelagem em curso. Por vezes, é necessário experimentar vários métodos para identificar qual deles é o mais adequado para a situação.
+
+Aqui estão alguns dos principais métodos de transformação:
 
 -   Diferenciação: A diferenciação é uma técnica simples, ela envolve subtrair cada valor na série pelo valor anterior. Se uma série temporal não for estacionária devido a uma tendência linear, uma diferenciação de primeira ordem geralmente é suficiente.
 
 -   Diferenciação sazonal: Envolve subtrair o valor atual pelo valor do mesmo período sazonal anterior (por exemplo, o valor de um ano atrás, se a sazonalidade for anual).
 
--   Transformações Logarítmicas: Se a série temporal possui uma tendência exponencial, uma transformação logarítmica pode ser útil. Isso é feito aplicando o logaritmo natural (ln) aos valores da série, tornando a série mais linear.
-
--   Decomposição: A decomposição é uma técnica que separa uma série temporal em três componentes principais: tendência, sazonalidade e ruído. Uma vez separados, você pode remover a tendência e a sazonalidade, deixando apenas o componente de ruído estacionário. A decomposição de séries temporais pode ser realizada usando métodos como a decomposição de média móvel ou a análise de componentes principais.
+-   Decomposição: A decomposição é uma técnica que separa uma série temporal em três componentes principais: tendência, sazonalidade e ruído. Uma vez separados, você pode remover a tendência e a sazonalidade, deixando apenas o componente de ruído estacionário. 
 
 -   Suavização exponencial: A suavização exponencial é uma técnica que suaviza os dados, removendo flutuações de curto prazo. Ela pode ser usada para tornar a série mais estável, especialmente se houver ruído aleatório significativo.
 
@@ -186,18 +189,18 @@ A seguir vou verificar a eficácia de três métodos aos dados da cotação do o
 ## Decomposição
 
 ::: justify
-Após a decomposição dos dados, conforme discutido na [primeira postagem]() desta série, obtemos várias versões dos dados originais. Neste ponto, estou examinando a estacionariedade dos dados usados nos testes espectrais, que resultam da remoção da componente 'tendência' criada pelo modelo STL dos dados originais. Como já mencionado anteriormente, os dados sem a tendência apresentam o mesmo comportamento da componente residual do modelo STL.
+Após a decomposição dos dados, como discutido na [primeira postagem](https://pedroom-blog.netlify.app/posts/serie_ouro/eda/) desta série, obtemos várias representações dos dados originais que capturam as estruturas identificadas. Neste ponto, estou examinando a componente 'remainder' do modelo STL, que, teoricamente, teve as componentes de tendência e de sazonalidade retiradas. Como mencionei anteriormente, essa componente exibe um comportamento espectral muito semelhante ao dos dados brutos, incluindo elementos cíclicos ou quase cíclicos.
 
 ```{r, echo=FALSE}
 fit %>%
   ggplot(aes(index,remainder))+
   geom_line()+
-  ggtitle("Dados - Trend Removido")+
+  ggtitle("Componente 'remainder'")+
   xlab("")+
   ylab("")
 ```
 
-Vamos utilizar novamente o test KPSS para verificar a estacionariedade dos dados.
+Vamos usar novamente o teste KPSS para verificar a estacionariedade dos dados.
 
 ```{r, echo=FALSE}
 fit %>%
@@ -205,21 +208,10 @@ fit %>%
   set_tab("Teste KPSS")
 ```
 
-O teste não encontrou evidências para rejeitar a hipótese nula de estacionariedade.
-
-Agora vou aplicar o teste de Ljung-Box, [que foi introduzido anteriormente](), para verificar se as observações na série temporal exibem autocorrelação ou se os valores são aleatórios e independentes.
-
-```{r, echo=FALSE}
-fit %>% 
-  fabletools::features(remainder, ljung_box, lag = 80) %>% 
-  set_tab("Teste LJUNG-BOX")
-```
-
-O teste indica a presença de correlação entre as observações. Este resultado era esperado, uma vez que esses são os mesmos dados usados nas análises espectrais que mostraram a presença de componentes periódicas nos dados.
+O teste não apresentou evidências que justificassem a rejeição da hipótese nula de estacionariedade, o que sugere que a abordagem foi eficaz em tornar os dados estacionários. No entanto, como indicado durante a análise espectral e teste Ljung-Box , esses dados não exibem um comportamento de ruído branco e podem conter estruturas significativas.
 :::
 
 ## Box Cox
-
 ::: justify
 A transformação de Box-Cox é uma técnica estatística usada para estabilizar a variância e tornar uma distribuição mais próxima da normalidade. Ela é frequentemente aplicada em séries temporais ou outras análises estatísticas quando os dados exibem heteroscedasticidade (variação não constante) ou não seguem uma distribuição normal.
 
@@ -237,11 +229,11 @@ Onde:
 
 -   $y_i$ é o valor transformado do dado $x_i$
 
--   $\lambda$ é um parâmetro que controla o tipo de transformação.
+-  O parâmetro $\lambda$ é estimado através da função de verossimilhança e avaliação da adequação do modelo.
 
 Quando $\lambda$ é igual a zero, a transformação se torna uma transformação logarítmica natural ($ln(x_i)$) Quando $\lambda$ não é igual a zero, a transformação é uma potência do dado original ($x_i^\lambda$) com uma correção para garantir que a transformação seja bem definida para todos os valores de $x_i$.
 
-A escolha do valor ideal de $λ$ geralmente é feita de maneira a maximizar a normalidade ou estabilizar a variância dos dados transformados. É comum testar vários valores em um intervalo, aplicar a transformação a cada valor da série e analisar a normalidade e a homogeneidade da variância dos dados transformados. Para esta tarefa vou utilizando a função `forecast::BoxCox.lambda` do pacote `forecast`, que possibilita a seleção automática desse parâmetro. Essa função escolhe o lambda de modo a maximizar o perfil da verossimilhança logarítmica de um modelo linear ajustado aos dados. Para dados não sazonais, é ajustada uma tendência temporal linear, enquanto que para dados sazonais, é usado um modelo linear de tendência temporal com variáveis dummy sazonais
+A escolha do valor ideal para λ é geralmente feita visando a maximização da normalidade dos dados transformados ou a estabilização da variância. Uma prática comum envolve testar vários valores dentro de um intervalo específico e aplicar a transformação a cada valor da série. Nessa tarefa, estou utilizando a função `forecast::BoxCox.lambda` do pacote `forecast`, que possibilita a seleção automática desse parâmetro. Essa função determina o valor de λ de modo a maximizar o perfil da verossimilhança logarítmica de um modelo linear ajustado aos dados. Para dados não sazonais, é ajustada uma tendência temporal linear, enquanto para dados sazonais, é usado um modelo linear de tendência temporal com variáveis sazonais dummy.
 
 ```{r}
 lambda <- round(forecast::BoxCox.lambda(fit$value), digits = 2)
@@ -251,11 +243,11 @@ lambda
 ```{r}
 fit %>%
    mutate(box_cox_close = fabletools::box_cox(value, lambda=lambda)) %>% 
-ggplot(aes(index,box_cox_close))+
-  geom_line()+
-  ggtitle("Transformação Box-Cox")+
-  xlab("")+
-  ylab("")
+   ggplot(aes(index,box_cox_close))+
+   geom_line()+
+   ggtitle("Transformação Box Cox")+
+   xlab("")+
+   ylab("")
 ```
 
 ```{r}
@@ -268,20 +260,22 @@ fit %>%
 A transformação não modificou a forma dos dados, apenas o range de valores do eixo y. Entretanto, como o teste KPSS indicou isso não foi o suficiente para tornar os dados estacionários.
 :::
 
-## Diferenciação
+## Diferenciação {#diferenciação}
 
 ::: justify
-A diferenciação em séries temporais é uma técnica comumente usada para transformar dados não estacionários em um formato mais adequado para análise e modelagem. Ela envolve a subtração de valores consecutivos da série, visando remover tendências e padrões de sazonalidade. Ao aplicar diferenciação, a série é transformada em uma nova série de diferenças, que é esperançosamente estacionária. Essa abordagem permite a utilização de modelos estatísticos, como o ARIMA (AutoRegressive Integrated Moving Average), que pressupõem a estacionariedade dos dados.
+A diferenciação em séries temporais é uma técnica amplamente empregada para converter dados não estacionários em um formato mais apropriado para análise e modelagem. Essa técnica consiste na subtração dos valores consecutivos na série temporal, com o propósito de eliminar estruturas de tendência e padrões sazonais. Ao aplicar a diferenciação, a série é transformada em uma nova série de diferenças, com a esperança de torná-la estacionária.
 
-Está tecnica pode ser descrita da seguinte forma:
+A remoção das estruturas mencionadas é geralmente alcançada por meio das diferenciações de primeira ordem e sazonal, e ou pela combinação e repetição dos procedimentos. A diferenciação de primeira ordem é realizada subtraindo o valor atual pelo valor anterior na série temporal e é eficaz na eliminação de tendências lineares nos dados. Por outro lado, a diferenciação sazonal envolve o cálculo das diferenças entre os valores da série no mesmo período, mas em anos diferentes, o que é útil para eliminar efeitos sazonais. Isso é realizado com o uso do "lag sazonal", que representa o número de períodos em uma temporada. Por exemplo, se estiver lidando com dados mensais e a sazonalidade for anual, o lag sazonal seria igual a 12.
+
+Está técnica pode ser descrita da seguinte forma:
 
 $$\Delta y_t = y_t - y_{t-1}$$
 
 Onde:
 
--   $\Delta$ representa a diferença entre o valor atual $y_t$ e o valor anterior $y_{t-1}$ na série tempora.
+-   $\Delta$ representa a diferença entre o valor atual $y_t$ e o valor anterior $y_{t-1}$ na série tempora. 
 
-Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função unitroot_ndiffs, que tem com base o teste ADF, anteriormente explicado. Lembrando que o termo "unit root" refere-se à raiz unitária, que é uma característica de uma série temporal não estacionária. A presença de uma raiz unitária indica que a série não reverte rapidamente a perturbações, o que pode tornar a análise e a modelagem mais desafiadoras.
+Para se determinar o número de diferenças necessárias para tornar os dados estacionários usaremos a função `unitroot_ndiffs`, que tem com base o teste ADF, anteriormente explicado. Lembrando que o termo "unit root" (raiz unitária) se refere a uma característica de séries temporais não estacionárias. A presença de uma raiz unitária indica que a série não reverte rapidamente perturbações, tornando-a menos previsíveis e mais suscetíveis a flutuações, o que, de fato, pode tornar a análise e a modelagem mais desafiadoras. 
 
 ```{r}
 fit %>% 
@@ -289,7 +283,7 @@ fit %>%
   set_tab("Número de Diferenças")
 ```
 
-O teste indica a necessidade de realizar uma diferenciação para tornar a série estacionária.
+O teste sinaliza a necessidade de realizar uma diferenciação para tornar a série estacionária.
 
 ```{r, grafico-diff}
 fit %>% 
@@ -298,7 +292,7 @@ fit %>%
     ) %>% 
   ggplot(aes(index,diff_close))+
   geom_line()+
-  ggtitle("Transformação por diferenças")+
+  ggtitle("Dados diferenciados")+
   xlab("")+
   ylab("")
 
@@ -322,7 +316,7 @@ fit %>%
    mutate(
      diff_close = tsibble::difference(value)
      ) %>%
-  fabletools::features(value, ljung_box, lag = 80) %>% 
+  fabletools::features(value, ljung_box, lag = 78) %>% 
   set_tab("Teste LJUNG-BOX")
 ```
 
@@ -332,12 +326,12 @@ O teste Ljung-Box indica que a série se comporta como um ruído branco, ou seja
 # Funções de Autocorrelações
 
 ::: justify
-As funções de autocorrelação ACF (do inglês, Autocorrelation Function) e de Autocorrelação Parcial PACF (Partial Autocorrelation Function) são ferramentas muito utilizadas na análise de séries temporais para identificar estruturas dentro dos dados, como sazonalidade, tendência e estacionáriedade.
+A Função de Autocorrelação (ACF, do inglês Autocorrelation Function) e a Função de Autocorrelação Parcial (PACF, do inglês Partial Autocorrelation Function) são ferramentas amplamente utilizadas na análise de séries temporais. Elas desempenham um papel importante na exploração da estrutura de dependência entre as observações, o que, por sua vez, facilita a modelagem e previsão desses dados.
 
-Como estas ferramentes são essênciais para diversos tipos de modelos vou detalhar um pouco mais o seu funcionamento e aplicações. Dando um enfoque maior na sua relação como modelos ETS e ARIMA, temas dos próximos posts.
+Aqui está uma breve descrição de como essas funções operam e de suas aplicações em várias situações, abrangendo a análise dos dados brutos, as componentes do modelo STL e os dados transformados. Para uma compreensão mais aprofundada, é recomendável consultar as referências mencionadas neste artigo e outras fontes pertinentes.
 :::
 
-## Função de Autocorrelação (ACF)
+## Função de Autocorrelação (ACF) 
 
 ::: justify
 A ACF pode ser representada da seguinte forma:
@@ -356,7 +350,7 @@ Onde:
 
 -   $σ(X_{t-k})$ é o desvio padrão de $X_{t-k}$, que mede a variabilidade dos valores em $t-k$.
 
-Em resumo, a autocorrelação para um determinado atraso $k$ é a covariância normalizada pela variabilidade (desvio padrão) das observações separadas por esse atraso. Ela varia de -1 a 1, onde valores próximos de 1 indicam forte autocorrelação positiva, valores próximos de -1 indicam forte autocorrelação negativa e valores próximos de 0 indicam ausência de autocorrelação.
+Em resumo, a autocorrelação para um determinado atraso $k$ é a covariância normalizada pela variabilidade (desvio padrão) das observações separadas por esse atraso. Ela varia de -1 a 1, onde valores próximos de 1 indicam forte correlação positiva, valores próximos de -1 indicam forte correlação negativa e valores próximos de 0 indicam ausência de correlação.
 :::
 
 ## Função de Autocorrelação Parcial (PACF)
@@ -374,66 +368,45 @@ onde:
 
 -   $\phi_i$ são os coeficientes estimados de um modelo AR de ordem $i$, onde $i = 1, 2, \ldots, k-1$
 
-A função PACF é calculada iterativamente, começando com $k$ = 1 e progredindo até o atraso máximo desejado. Mede a correlação entre uma observação em um determinado momento e observações em intervalos de tempo anteriores, removendo o efeito de observações em lags intermediários. Isso ajuda a identificar a estrutura de dependência direta, indicando o possível número de termos autorregressivos a serem incluídos em um modelo AR, crucial para fazer previsões precisas.
+A função PACF é calculada iterativamente, começando com $k$ = 1 e progredindo até o atraso máximo desejado. Ela mede a correlação entre uma observação em um determinado momento e observações em intervalos de tempo anteriores, removendo o efeito de observações em lags intermediários. Isso ajuda a identificar a estrutura de dependência direta, indicando o possível número de termos autorregressivos a serem incluídos em um modelo AR.
 :::
 
 ## Algumas Aplicações
 
 ::: justify
--   Avaliação de Estacionariedade:
+-  Modelagem de Séries Temporais: A ACF e a PACF são usadas para identificar a ordem adequada (p, d, q) de modelos da fámilia ARIMA, onde "p" é a ordem do componente AR, "d" é a ordem da diferenciação e "q" é a ordem do componente MA. Lembrando que ACF é usada para evidência de MA(q) e suas sazonalidades e a PACF é usada para identificação de AR(p) e suas sazonalidades.
 
-    -   A presença de autocorrelação significativa em lags variados nas funções ACF pode sugerir que a série não é estacionária. A estacionariedade é uma condição importante para muitos modelos de séries temporais, como modelos ARMA e modelos de suavização exponencial.
+-  Identificação de Padrões: Além de sua aplicação em modelagem, a ACF e a PACF também são úteis para identificar padrões temporais nas séries temporais, como sazonalidades, e tendências.
 
-    -   Se a série não for estacionária, pode ser necessário aplicar diferenciação para torná-la estacionária antes de modelar.
+    - A presença de autocorrelação significativa em lags variados nas funções ACF pode sugerir a presença de tendência, e que a série não é estacionária.
 
-    -   Se após a diferenciação a série parecer ter flutuações constantes em torno de um nível médio, isso sugere uma tendência aditiva. Se as flutuações em torno do nível médio parecem crescer ou diminuir ao longo do tempo, isso sugere uma tendência multiplicativa.
+    - Se houver sazonalidade, você geralmente verá picos significativos na ACF em múltiplos lags (intervalos de tempo) que correspondem aos períodos sazonais. Por exemplo, em uma série mensal com sazonalidade anual, você esperaria ver picos nas defasagens 12, 24, 36, etc.
 
-    -   Se a ACF apresentar picos em múltiplos do período sazonal, isso sugere que há uma sazonalidade presente na série que precisa ser ajustada por meio da diferenciação sazonal.
+    - O comportamento dos picos significativos pode ajudar a indentificar o tipo de sazonalidade (aditiva, multiplicativa) presente nos dados. 
 
-    -   A PACF é especialmente útil para identificar o número de diferenciações sazonais necessárias. Se houver um componente sazonal na série, você pode observar picos significativos na PACF em lags correspondentes aos múltiplos do período sazonal.
+-  Diagnóstico de Resíduos: Após ajustar um modelo a uma série temporal, a ACF e a PACF dos resíduos (diferença entre os valores observados e os valores previstos pelo modelo) podem ser usadas para verificar se há estrutura remanescente nos resíduos.
 
--   Identificando o componente de sazonalidade:
-
-    -   Identifique picos significativos nas defasagens da ACF. Se esses picos ocorrerem em múltiplos inteiros do período sazonal, é um indício de sazonalidade.
-
-    -   Se houver sazonalidade aditiva na série, você geralmente verá picos significativos na ACF em múltiplos lags (intervalos de tempo) que correspondem aos períodos sazonais. Por exemplo, em uma série mensal com sazonalidade anual, você esperaria ver picos nas defasagens 12, 24, 36, etc.
-
-    -   Para sazonalidade multiplicativa, os picos na ACF tendem a ser mais espaçados, seguindo os múltiplos do período sazonal, mas podem ser mais fracos em comparação com a sazonalidade aditiva.
-
-    -   Novamente, para sazonalidade aditiva, você pode ver picos significativos na PACF em múltiplos do período sazonal. Para sazonalidade multiplicativa, a PACF também pode mostrar picos, mas eles podem ser menos pronunciados que na sazonalidade aditiva.
-
--   Ordem de Modelos ARMA (Autoregressive Moving Average):
-
-    -   A ACF pode ajudar a identificar a ordem dos termos de média móvel (MA) em um modelo ARMA/ARIMA, observando os lags significativos na ACF.
-
-    -   A análise da PACF é particularmente útil para determinar a ordem dos termos autorregressivos (AR) em um modelo ARMA. Os lags significativos na PACF indicam quantos lags anteriores devem ser incluídos no modelo.
-
-Para fins didáticos, eu vou aplicar as técnicas mencionadas aos dados em seu estado original, nos dados sem a componente de tendência, mas com as compoentes periódicas. E nos dados após a diferenciação, onde os dados podem resultantes podem ser considerados ruido branco.
+Em resumo, ACF e PACF são ferramentas essenciais na análise de séries temporais, desempenhando um papel fundamental na identificação da estrutura de dependência temporal e na seleção dos parâmetros apropriados para a modelagem de modelos estatísticos.
 :::
 
 ### Dados Originais
-
 ::: justify
-A utilização das funções ACF e PACF pode ser adotada como uma abordagem inicial em uma análise exploratória, visando identificar estruturas de interesse. Minha escolha por iniciar a análise utilizando métodos de decomposição e análises espectrais ocorre porque considero essas técnicas mais robustas e informativas.
-
-Caso escolhidas como primeira aboragem os resultados a ser interpretados seriam os seguintes.
+As funções ACF e PACF não são geralmente a primeira abordagem quando se suspeita que os dados não sejam estacionários, como neste caso. No entanto, para fins ilustrativos, vou usá-las nos dados brutos.
 
 ```{r}
-#max_lag <- nrow(fit)-1
-```
 
+max_lag <- nrow(fit)-1
 
-```{r}
 acf_plot <- 
 fit %>% 
-  feasts::ACF(value, lag_max = 80) %>% 
+  feasts::ACF(value, lag_max = max_lag) %>% 
   feasts::autoplot()
 ```
 
 ```{r}
 pacf_plot <- 
 fit %>% 
-  feasts::PACF(value, lag_max = 80) %>% 
+  feasts::PACF(value, lag_max = max_lag) %>% 
   feasts::autoplot()
 ```
 
@@ -441,67 +414,93 @@ fit %>%
 ggpubr::ggarrange(acf_plot,pacf_plot, ncol=2)
 ```
 
-Os resultados da função ACF exibem um padrão aparentemente senoidal, com valores de correlação que oscilam entre positivos e negativos de forma significativa. Os lags são sequenciais, e a transição entre esses valores ocorre de maneira gradual. Por outro lado, os resultados da função PACF mostram valores significativos apenas no lag zero, enquanto os lags subsequentes não demonstram um comportamento senoidal. Esses resultados, juntamente com a análise visual dos dados brutos, sugerem fortemente a presença de não estacionariedade nos dados. A correlação significativa entre os dados parece ser devido à existência de uma tendência nos mesmos.
+O Gráfico de ACF revela correlações significativas em lags próximos, com uma diminuição gradual que não se aproxima rapidamente de zero. Esse padrão sugere a presença de tendência nos dados, uma característica geralmente associada à não estacionariedade. A transição das correlações de positivas para negativas parece estar relacionada às mudanças no comportamento da tendência ao longo do tempo.
 
-**Um aspecto interessante desses resultados é que o último lag (ACF) com valores teoricamente indicativos de boa previsibilidade (\>= 0.5) é observado no lag de 19 meses, o que está em linha com as conclusões das análises espectrais realizadas nos dados que não apresentam tendência.**
+Por outro lado, os resultados da função PACF mostram valores significativos apenas nos lags 1 e 2, indicando que os efeitos observados no Gráfico de ACF podem ser atribuídos principalmente à presença de tendência nos dados.
+
+Em uma série estacionária, é comum que os gráficos de ACF e PACF apresentem uma rápida diminuição após um pequeno número de defasagens, sem exibir padrões significativos. A ocorrência de padrões irregulares nesses gráficos sugere a possibilidade de ruído nos dados ou outros elementos não estacionários, corroborando assim os demais resultados das análises realizadas até o momento.
 :::
 
-### Dados sem Tendência
-
+### Componente 'remainder'
 ::: justify
-A remoção apenas da tendência dos dados para torná-los estacionários não é uma prática comum quando se trata de modelagem, especialmente em modelos estatísticos. Em geral, esses modelos buscam eliminar tanto a tendência quanto a sazonalidade, pois essas estruturas são mais previsíveis. O foco principal recai sobre a análise da parte residual e aleatória dos dados. No entanto, os dados que foram despojados apenas da componente de tendência podem ser úteis para ilustrar duas situações: a primeira é que os dados não apresentam uma tendência intrínseca; a segunda é que, mesmo após a aplicação da diferenciação para torná-los estacionários, ainda podem persistir indícios de sazonalidade nos dados.
+
+Conforme já verificado, a componente 'remainder' demonstra estacionariedade de acordo com o teste KPSS, mas não exibe um comportamento de ruído branco conforme indicado pelo teste Ljung-Box. Isso pode ser atribuído, provavelmente, à presença de componentes cíclicas ou quase cíclicas.
+
+Normalmente, as funções ACF e PACF são utilizadas em dados após a aplicação do operador de diferença. No entanto, a análise dos dados brutos, sem a componente de tendência, pode ser útil para ilustrar várias situações. Por exemplo, pode ajudar a melhorar a compreensão das estruturas cíclicas ou quase cíclicas nos dados. Em casos em que os dados brutos não exibem uma tendência intrínseca e já demonstram estacionariedade. Ou quando mesmo após a aplicação de diferenciação para torná-los estacionários, ainda podem persistir indícios de sazonalidade nos dados, e a estacionariedade pode não ser completamente alcançada.
 
 ```{r, echo=FALSE}
 acf_plot <- 
 fit %>% 
-  feasts::ACF(remainder, lag_max = 80) %>% 
+  feasts::ACF(remainder, lag_max = 64) %>% 
   feasts::autoplot()
 ```
 
 ```{r, echo=FALSE}
 pacf_plot <- 
 fit %>% 
-  feasts::PACF(remainder, lag_max = 80) %>% 
+  feasts::PACF(remainder, lag_max = 64) %>% 
   feasts::autoplot()
 ```
 
 ```{r, echo=FALSE}
 ggpubr::ggarrange(acf_plot,pacf_plot, ncol=2)
 ```
+
+Os picos positivos nos dois primeiros lags no gráfico de ACF sugerem uma forte correlação entre os valores no tempo atual e os valores no tempo imediatamente anterior. Essa observação pode ser indicativo de um componente $MA(q)$ em um modelo da família ARIMA. 
+
+Além disso, o gráfico mostra um comportamento senoidal, com picos significativos ou quase significativos em multiplos de cerca de 12 meses. Isso sugere a presença de um componente sazonal nas séries temporais. No entanto, é importante notar que o período não é bem definido, e os picos apresentam rápido decaimento e picos adicionais ao redor do período principal. Os valores dos picos na parte periódica são baixos (menores ou iguais a 0,5), o que pode indicar que a capacidade de previsão do componente sazonal pode ser limitada. A presença de picos negativos entre os picos positivos pode indicar algum tipo de efeito de amortecimento ou compensação nas séries temporais. 
+
+O decaimento e a quase significância de outros picos na ACF podem resultar em raízes do polinômio característico que estão muito próximas do ciclo unitário. indício que os processos autorregressivos ou de média móvel têm dificuldade em convergir, o que pode resultar em previsões imprecisas e modelos instáveis.
+
+Para lidar com raízes próximas ao ciclo unitário em modelos ARIMA, é fundamental considerar alternativas, como a adoção de um modelo SARIMA (Seasonal ARIMA), a fim de eficazmente incorporar a sazonalidade e aprimorar a estabilidade das previsões. Além disso, é apropriado realizar uma diferenciação sazonal, com o período identificado, para tornar a série temporal mais estacionária. Recomenda-se, também, conduzir uma análise minuciosa dos resultados do modelo para assegurar sua adequação aos dados específicos em questão. Isso envolve a validação dos resíduos do modelo, que por sua vez requer o uso da ACF e PACF.
+
+A PACF indica que há significância até a segunda repetição do ciclo de 12 meses. No entanto, a natureza exata desse comportamento não é clara, e os valores, com exceção do primeiro pico, são baixos. Em resumo, os dados apresentam um comportamento complexo e ruidoso, como já evidenciado em resultados anteriores.
+
+Com base nas análises da ACF e PACF, é razoável suspeitar que um modelo SARIMA com termos $MA(q)(Q)$, onde $q=1, 2$ e $Q=1$, com uma componente sazonal de 12 meses, e $AR(p)(P)$ onde $p=1, 2, 4, 5$ e $P=1$ com a mesma componente sazonal de 12 meses, podem ser apropriados para modelar essa série temporal. No entanto, a escolha final do modelo SARIMA dependerá de testes de diagnóstico adicionais e validação cruzada para garantir a precisão das previsões e a adequação do modelo aos dados.
 :::
 
 ### Dados sazonais
-
 ::: justify
 ```{r, echo=FALSE}
 acf_plot <- 
 fit %>% 
-  feasts::ACF(season_year, lag_max = 80) %>% 
+  feasts::ACF(season_year, lag_max = 64) %>% 
   feasts::autoplot()
 ```
 
 ```{r, echo=FALSE}
 pacf_plot <- 
 fit %>% 
-  feasts::PACF(season_year, lag_max = 80) %>% 
+  feasts::PACF(season_year, lag_max = 64) %>% 
   feasts::autoplot()
 ```
 
 ```{r, echo=FALSE}
 ggpubr::ggarrange(acf_plot,pacf_plot, ncol=2)
 ```
+
+A componente 'sazonal' criada pelo modelo STL é livres de ruído, tornando mais simples a visualização do padrão cíclico presente neles. Comparando os resultados dos dados brutos com os atuais, observamos que tanto a ACF quanto a PACF são semelhantes, aparentemente o modelo STL emulou o comportamento periódico dos dados brutos, mas "corrigindo" os picos para os lags múltiplos de 12. 
+
+Em resumo, a análise dessa componente sazonal pode contribuir para uma identificação mais nítida do comportamento dos dados brutos através das caracteristicas da sazonalidade identificada pelo modelo STL ao construir essa componente.
+
+Lembrando que existem dois tipos de sazonalidade, a aditiva e a multiplicativa. A sazonalidade aditiva inclui componentes $AR(.)$ e $MA(.)$ degenerados, o que resulta em picos de significância estatística isolados na ACF e PACF. Por outro lado, a sazonalidade multiplicativa causa significância não apenas no "coeficiente principal", mas também em períodos próximos a ele, como ilustrado no exemplo atual.
+
+A PACF mostra significância até a primeira repetição do ciclo de 12 meses. É bastante provável que esse $AR(p)(1)_{12}$ seja invertível e esteja causando o $MA(q)(Q)_{12}$ com alta persistência nos lags múltiplos de 12, como indicado na ACF.
 :::
 
 ### Dados Diferenciados
-
 ::: justify
+Como mencionado [anteriormente](index.qmd#diferenciação), uma diferenciação foi suficiente para tornar os dados estacionários, e agora eles exibem um comportamento semelhante ao de um ruído branco, como indicado pelo teste de Box-Cox. Em um contexto de modelagem ARIMA, uma vez que a estacionariedade é alcançada, o próximo passo é aplicar as funções de autocorrelação e autocorrelação parcial para determinar os parâmetros do modelo.
+
+Além disso, esse comportamento é um indicativo de que a tendência pode ser de natureza aditiva.
+
 ```{r, echo=FALSE}
 acf_plot <- 
 fit %>%
   mutate(
     close_diff = tsibble::difference(value)
   ) %>% 
-  feasts::ACF(close_diff, lag_max = 80) %>% 
+  feasts::ACF(close_diff, lag_max = 64) %>% 
   feasts::autoplot()
 ```
 
@@ -511,45 +510,63 @@ fit %>%
   mutate(
     close_diff = tsibble::difference(value)
   ) %>% 
-  feasts::PACF(close_diff, lag_max = 80) %>% 
+  feasts::PACF(close_diff, lag_max = 64) %>% 
   feasts::autoplot()
 ```
 
 ```{r, echo=FALSE}
 ggpubr::ggarrange(acf_plot,pacf_plot, ncol=2)
 ```
+
+Quando os gráficos ACF e PACF apresentam resultados significativos apenas no lag 1, isso geralmente indica uma estrutura de série temporal simples e sugere que os valores da série temporal estão fortemente correlacionados apenas com seus valores imediatamente anteriores, um indicativo comum de que um modelo autorregressivo de primeira ordem, AR(1), pode ser apropriado para modelar os dados.
+
+Portanto, neste cenário podemos começar considerando um modelo ARIMA com $p=1$ (ordem autoregressiva) e d=1 (uma diferenciação). 
+
+No entanto, é importante notar que essa é apenas uma primeira aproximação na escolha dos parâmetros do modelo ARIMA. A seleção final dos parâmetros geralmente envolve tentativa e erro, além de critérios de seleção de modelos, como AIC (Akaike Information Criterion) ou BIC (Bayesian Information Criterion), para escolher o modelo que melhor se ajusta aos dados.
 :::
 
 # Conclusão
-
 ::: justify
-Uma vez que já apresentamos e testamos a diferenciação dos dados, temos conhecimento de que a aplicação dessa técnica se mostra eficaz na transformação dos dados em uma forma estacionária. É importante mencionar isso, pois este é o próximo passo após a identificação de tendências e não estacionariedade. Ao analisarmos o gráfico resultante da diferenciação, que exibe um comportamento aproximadamente constante, sugere-se a presença de uma tendência aditiva.
+Nesta segunda parte da análise exploratória, abordamos os seguintes tópicos: a questão da estacionariedade dos dados, algumas das técnicas empregadas para corrigir ou atenuar os efeitos da não estacionariedade nos dados e, por fim, exploramos o uso das funções de autocorrelação e autocorrelação parcial como ferramentas adicionais para identificar e caracterizar as estruturas subjacentes nos dados.
 
-Existem evidências para rejeitar a hipótese nula de que não há autocorrelação. Assim como nos dados originais e na transformação box_cox, os dados apresentam correlação com seus atrasos de modo significativo. Porém a caracteristica da curva de correlção com a remoção do trend é bem diferente, sugerindo a existência de um padrão ciclico nos dados. Isso vai de encontro as componetes encontradas pelo modelo STL, que indica a existência de componetes sazonais nos dados. Contudo, os lags com valore de até 0.5 vão até o lag 35.
+Por meio dos testes [ADF](index.qmd#adf) e [KPSS](index.qmd#kpss) foi verificado que os dados não possuem estacionariedade, confirmando os indícios observados nos gráficos dos dados brutos. Vale ressaltar que existem outros testes com a mesma finalidade.
 
-Até o momento, as informações-chave que podem orientar a etapa de modelagem são as seguintes:
+Dentre as abordagens empregadas para tornar os dados estacionários, apenas a transformação de Box-Cox não se mostrou eficaz. No entanto, a escolha da transformação adequada depende das características dos dados e do modelo que será atulizado. É importante lembrar que após a modelagem, é necessário reverter a transformação para realizar previsões na escala original dos dados.
 
-A série não é estacionária, o que aponta para a necessidade de aplicar alguma forma de transformação nos dados. Opções incluem a transformação Box-Cox, raiz quadrada, diferenciação, remoção de tendência, entre outras.
+A utilização das funções ACF e PACF se destacou como uma abordagem mais relevante na identificação de parâmetros potenciais em modelos ARIMA (Média Móvel Integrada de AutoRegressão) e ETS (Erro, Tendência, Sazonalidade) em comparação com outras técnicas empregadas, que se mostraram mais eficazes na detecção de estruturas intrínsecas nos dados. Vale ressaltar que essa perspectiva reflete apenas minha opinião pessoal em relação às técnicas empregadas.
 
-O resultado da análise de autocorrelação reforça os resultados encontrados pelas análises espctrais. Apesar dos resultados de correlação apresentarem valores acima da faixa de significância para lags além de 18 meses, os valores são todos inferiores a 0.5. Além disso nenhuma periodicidade muito maior que 18 meses aparece nos testes espectrais.
+Os pontos mais relevantes identificados durante esta análise exploratória, em relação à modelagem são:
 
-Conforme evidenciado pelo gráfico da série temporal, esses resultados apontam para a não estacionariedade dos dados.
+-  Os dados podem ser desagregados em tendência, sazonalidade e resíduo, conforme sugerido pelo modelo STL.
 
-Após a modelagem, é necessário reverter a diferenciação para realizar previsões na escala original da série temporal. Isso envolve somar as diferenças previstas aos valores anteriores da série (ou ao último valor conhecido da série original). Ao realizar esse processo, estamos extrapolando as mudanças previstas para os próximos períodos e adicionando-as aos valores anteriores para obter as previsões finais. Isso pressupõe que as mudanças esperadas no período futuro sejam semelhantes às mudanças observadas no período de treinamento do modelo.
+-  As componentes periódicas identificadas nas análises espectrais exibem um comportamento complexo que varia ao longo do tempo, corroborando a indicação observada nos gráficos de sazonalidade e gráficos de ACF e PACF.
 
-Aqui está uma fórmula geral para ilustrar o processo de reversão da diferenciação:
+-  A utilização de uma única diferença para tornar os dados estacionários e aparência dos dados após a transformação, apresentando flutuações aproximadamente constantes, indica a utilização de uma tendência aditiva.
 
-Seja $y_t$ o valor original na época $t$ e $y'_t$ a série temporal diferenciada na época $t$. Seja $y'_t+1$ a previsão diferenciada para o período $t+1$. Então, a previsão final $y'_{t+1}$ na escala original é calculada da seguinte forma:
+-  Os gráficos de ACF e PACF da componente 'remainder' do modelo STL reforçam a presença de estruturas periódica/quase periódica. Além disso os resultados apontam para a utilização de sazonalidade multiplicativa nos modelos.
 
-$$y_{t+1} = y_t + y'_{t+1}$$
+Na próxima postagem, iniciarei a construção dos modelos preditivos, começando com os modelos "clássicos" e, posteriormente, os modelos de IA.
 :::
 
 # Referências
+::: justify
+[Autocorrelação](https://pt.wikipedia.org/wiki/Autocorrela%C3%A7%C3%A3o)
+
+[Augmented Dickey–Fuller test](https://en.wikipedia.org/wiki/Augmented_Dickey%E2%80%93Fuller_test)
+
+[BoxCox.lambda: Automatic selection of Box Cox transformation parameter](https://www.rdocumentation.org/packages/forecast/versions/8.21.1/topics/BoxCox.lambda)
+
+[Correlação, Autocorrelação e Autocorrelação Parcial](https://rpubs.com/hudsonchavs/fac_facp)
+
+[Correlação parcial](https://pt.wikipedia.org/wiki/Correla%C3%A7%C3%A3o_parcial)
+
+[adf.test: Augmented Dickey-Fuller Test](https://www.rdocumentation.org/packages/tseries/versions/0.10-54/topics/adf.test)
 
 [Forecasting: Principles and Practice (3rd ed)/Chapter 4 Time series features](https://otexts.com/fpp3/decomposition.html)
 
-[adf.test: Augmented Dickey--Fuller Test](https://www.rdocumentation.org/packages/tseries/versions/0.10-54/topics/adf.test)
+[KPSS test](https://en.wikipedia.org/wiki/KPSS_test)
+
+[Power transform](https://en.wikipedia.org/wiki/Power_transform)
 
 [unitroot_kpss: Unit Root Test Statistics](https://www.rdocumentation.org/packages/tsfeatures/versions/1.1/topics/unitroot_kpss)
-
-[BoxCox.lambda: Automatic selection of Box Cox transformation parameter](https://www.rdocumentation.org/packages/forecast/versions/8.21.1/topics/BoxCox.lambda)
+:::

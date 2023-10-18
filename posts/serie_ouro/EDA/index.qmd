@@ -2,10 +2,10 @@
 title: "Cotação do ouro - Parte 1"
 subtitle: "Análise Exploratória - Parte 1"
 author: "Pedro Lima"
-date: "2023-08-25"
+date: "2023-09-25"
 categories: [EDA, Série-Temporal,R]
 toc: true
-toc-depth: 4
+toc-depth: 3
 draft: false
 ---
 
@@ -327,7 +327,8 @@ Os resultados indicam a presença de componentes relacionados a tendência, sazo
 
 O próximo passo nesta Análise Exploratória consistirá na análise espectral, cujo propósito é aprofundar a compreensão do comportamento das potenciais componentes periódicas identificadas nos dados. Contudo, antes de prosseguir com as análises mencionadas, quero verificar se a componente remainder pode ser realmente considerada como ruído branco. Para esta finalidade, farei uso do teste de Ljung-Box, que avalia a existência de correlações significativas nos dados.
 
-#### Teste Ljung-Box
+### Teste Ljung-Box
+
 O teste de Ljung-Box é usado para verificar a presença de autocorrelação nos resíduos de um modelo de séries temporais. Matematicamente, o teste pode ser representado da seguinte forma:
 
 A estatística de teste Q para o teste de Ljung-Box é definida como:
@@ -354,7 +355,7 @@ Este teste é amplamente utilizado na análise de séries temporais para garanti
 
 ```{r}
 fit %>% 
-  fabletools::features(remainder, ljung_box, lag = 18) %>% 
+  fabletools::features(remainder, ljung_box, lag = 48) %>% 
   set_tab(cap_tab = "Teste ljung-box")
 ```
 
@@ -598,15 +599,15 @@ Para aprofundar nosso entendimento dos padrões sazonais, analisamos os dados or
 # Referências
 
 ::: justify
-[gg_subseries: Seasonal subseries plots](https://rdrr.io/cran/feasts/man/gg_subseries.html)
-
-[Seasonal plot](https://feasts.tidyverts.org/reference/gg_season.html)
-
-[Forecasting: Principles and Practice (3rd ed)/Chapter 3 Time series decomposition](https://otexts.com/fpp3/decomposition.html)
+[Extending Modeltime (Developer Tools)](https://business-science.github.io/modeltime/articles/extending-modeltime.html)
 
 [forecast.stl: Forecasting using stl objects](https://www.rdocumentation.org/packages/forecast/versions/8.5/topics/forecast.stl)
 
-[Extending Modeltime (Developer Tools)](https://business-science.github.io/modeltime/articles/extending-modeltime.html)
+[Forecasting: Principles and Practice (3rd ed)/Chapter 3 Time series decomposition](https://otexts.com/fpp3/decomposition.html)
+
+[gg_subseries: Seasonal subseries plots](https://rdrr.io/cran/feasts/man/gg_subseries.html)
+
+[Seasonal plot](https://feasts.tidyverts.org/reference/gg_season.html)
 
 [WaveletComp 1.1:A guided tour through the R package](http://www.hs-stat.com/projects/WaveletComp/WaveletComp_guided_tour.pdf)
 :::

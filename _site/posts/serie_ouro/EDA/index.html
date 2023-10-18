@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Lima">
-<meta name="dcterms.date" content="2023-08-25">
+<meta name="dcterms.date" content="2023-09-25">
 
 <title>PeDrOOM Blog - Cotação do ouro - Parte 1</title>
 <style>
@@ -174,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 25, 2023</p>
+        <p class="date">September 25, 2023</p>
       </div>
     </div>
     
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#definição-do-problema" id="toc-definição-do-problema" class="nav-link" data-scroll-target="#definição-do-problema">Definição do Problema</a></li>
   <li><a href="#carregando-os-pacotes-utilizados" id="toc-carregando-os-pacotes-utilizados" class="nav-link" data-scroll-target="#carregando-os-pacotes-utilizados">Carregando os Pacotes Utilizados</a></li>
   <li><a href="#aquisição-dos-dados" id="toc-aquisição-dos-dados" class="nav-link" data-scroll-target="#aquisição-dos-dados">Aquisição dos Dados</a></li>
@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#identificando-outliers" id="toc-identificando-outliers" class="nav-link" data-scroll-target="#identificando-outliers">Identificando Outliers</a></li>
   </ul></li>
   <li><a href="#análise-exploratória" id="toc-análise-exploratória" class="nav-link" data-scroll-target="#análise-exploratória">Análise Exploratória</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#gráficos-da-série-temporal" id="toc-gráficos-da-série-temporal" class="nav-link" data-scroll-target="#gráficos-da-série-temporal">Gráficos da Série Temporal</a>
   <ul class="collapse">
   <li><a href="#gráfico-das-médias-mensais" id="toc-gráfico-das-médias-mensais" class="nav-link" data-scroll-target="#gráfico-das-médias-mensais">Gráfico das médias mensais</a></li>
@@ -216,12 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#análise-de-fourier" id="toc-análise-de-fourier" class="nav-link" data-scroll-target="#análise-de-fourier">Análise de Fourier</a></li>
   <li><a href="#análise-wavelets" id="toc-análise-wavelets" class="nav-link" data-scroll-target="#análise-wavelets">Análise Wavelets</a></li>
   <li><a href="#remoção-da-tendência-e-normalização-dos-dados" id="toc-remoção-da-tendência-e-normalização-dos-dados" class="nav-link" data-scroll-target="#remoção-da-tendência-e-normalização-dos-dados">Remoção da Tendência e Normalização dos Dados</a></li>
-  <li><a href="#resultados-análises-espectrais" id="toc-resultados-análises-espectrais" class="nav-link" data-scroll-target="#resultados-análises-espectrais">Resultados Análises Espectrais</a>
-  <ul class="collapse">
-  <li><a href="#dados-originais" id="toc-dados-originais" class="nav-link" data-scroll-target="#dados-originais">Dados originais</a></li>
-  <li><a href="#componente-season" id="toc-componente-season" class="nav-link" data-scroll-target="#componente-season">Componente ‘season’</a></li>
-  <li><a href="#componente-remainder" id="toc-componente-remainder" class="nav-link" data-scroll-target="#componente-remainder">Componente ‘remainder’</a></li>
-  </ul></li>
+  <li><a href="#resultados-análises-espectrais" id="toc-resultados-análises-espectrais" class="nav-link" data-scroll-target="#resultados-análises-espectrais">Resultados Análises Espectrais</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a></li>
@@ -631,8 +626,8 @@ No outliers were detected.</code></pre>
 </div>
 <p>Os resultados indicam a presença de componentes relacionados a tendência, sazonalidade e ruído. O segundo gráfico (trend) evidencia as alterações de tendência descritas no início da análise exploratória. Já o terceiro gráfico (season_year) apresenta uma aparente mudança no comportamento sazonal, que gradualmente modifica seu padrão. O último gráfico (remainder), que teoricamente deveria representar ruído branco, aparenta conter estruturas potencialmente relevantes para a compreensão dos dados, principalmente em sua parte final.</p>
 <p>O próximo passo nesta Análise Exploratória consistirá na análise espectral, cujo propósito é aprofundar a compreensão do comportamento das potenciais componentes periódicas identificadas nos dados. Contudo, antes de prosseguir com as análises mencionadas, quero verificar se a componente remainder pode ser realmente considerada como ruído branco. Para esta finalidade, farei uso do teste de Ljung-Box, que avalia a existência de correlações significativas nos dados.</p>
-<section id="teste-ljung-box" class="level4">
-<h4 class="anchored" data-anchor-id="teste-ljung-box">Teste Ljung-Box</h4>
+<section id="teste-ljung-box" class="level3">
+<h3 class="anchored" data-anchor-id="teste-ljung-box">Teste Ljung-Box</h3>
 <p>O teste de Ljung-Box é usado para verificar a presença de autocorrelação nos resíduos de um modelo de séries temporais. Matematicamente, o teste pode ser representado da seguinte forma:</p>
 <p>A estatística de teste Q para o teste de Ljung-Box é definida como:</p>
 <p><span class="math display">\[Q = n(n+2) \sum_{k=1}^{h} \frac{\hat{\rho}_k^2}{n-k}\]</span></p>
@@ -647,9 +642,9 @@ No outliers were detected.</code></pre>
 </ul>
 <p>O valor de <span class="math inline">\(Q\)</span> segue uma distribuição qui-quadrado com <span class="math inline">\(h\)</span> graus de liberdade sob a hipótese nula de que não há autocorrelação nos resíduos.</p>
 <p>Este teste é amplamente utilizado na análise de séries temporais para garantir que os resíduos de um modelo se comportem como um ruído branco, o que é uma suposição importante para muitos métodos estatísticos e de previsão.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_f48de41607fe5ee81454750d9a5ff899">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_1924a617503269a947bd479203e931b3">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(remainder, ljung_box, <span class="at">lag =</span> <span class="dv">18</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  fabletools<span class="sc">::</span><span class="fu">features</span>(remainder, ljung_box, <span class="at">lag =</span> <span class="dv">48</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_tab</span>(<span class="at">cap_tab =</span> <span class="st">"Teste ljung-box"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="table-responsive">
@@ -665,7 +660,7 @@ No outliers were detected.</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">feasts::STL(value)</td>
-<td style="text-align: right;">145.3812</td>
+<td style="text-align: right;">248.7254</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -897,11 +892,11 @@ No outliers were detected.</code></pre>
 <section id="referências" class="level1">
 <h1>Referências</h1>
 <div class="justify">
+<p><a href="https://business-science.github.io/modeltime/articles/extending-modeltime.html">Extending Modeltime (Developer Tools)</a></p>
+<p><a href="https://www.rdocumentation.org/packages/forecast/versions/8.5/topics/forecast.stl">forecast.stl: Forecasting using stl objects</a></p>
+<p><a href="https://otexts.com/fpp3/decomposition.html">Forecasting: Principles and Practice (3rd ed)/Chapter 3 Time series decomposition</a></p>
 <p><a href="https://rdrr.io/cran/feasts/man/gg_subseries.html">gg_subseries: Seasonal subseries plots</a></p>
 <p><a href="https://feasts.tidyverts.org/reference/gg_season.html">Seasonal plot</a></p>
-<p><a href="https://otexts.com/fpp3/decomposition.html">Forecasting: Principles and Practice (3rd ed)/Chapter 3 Time series decomposition</a></p>
-<p><a href="https://www.rdocumentation.org/packages/forecast/versions/8.5/topics/forecast.stl">forecast.stl: Forecasting using stl objects</a></p>
-<p><a href="https://business-science.github.io/modeltime/articles/extending-modeltime.html">Extending Modeltime (Developer Tools)</a></p>
 <p><a href="http://www.hs-stat.com/projects/WaveletComp/WaveletComp_guided_tour.pdf">WaveletComp 1.1:A guided tour through the R package</a></p>
 </div>
 
