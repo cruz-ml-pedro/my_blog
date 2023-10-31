@@ -29,8 +29,5 @@ workflowsets
 yardstick
 timetk
 modeltime
-xgboost
 modeltime.resample
 forecast
-greybox
-smooth

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Lima">
-<meta name="dcterms.date" content="2023-08-03">
+<meta name="dcterms.date" content="2023-10-30">
 
 <title>PeDrOOM Blog - Cotação do ouro - Parte 4</title>
 <style>
@@ -148,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Cotação do ouro - Parte 2</h1>
+      <h1 class="title">Cotação do ouro - Parte 4</h1>
             <p class="subtitle lead">Modelos ARIMA</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Modelos Estatísticos</div>
@@ -171,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 3, 2023</p>
+        <p class="date">October 30, 2023</p>
       </div>
     </div>
     
@@ -188,8 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
-  <li><a href="#modelos-arima-sarima" id="toc-modelos-arima-sarima" class="nav-link" data-scroll-target="#modelos-arima-sarima">Modelos ARIMA-SARIMA</a>
-  <ul class="collapse">
+  <li><a href="#modelos-arima-sarima" id="toc-modelos-arima-sarima" class="nav-link" data-scroll-target="#modelos-arima-sarima">Modelos ARIMA-SARIMA</a></li>
   <li><a href="#validação-cruzada" id="toc-validação-cruzada" class="nav-link" data-scroll-target="#validação-cruzada">Validação cruzada</a></li>
   <li><a href="#modelos" id="toc-modelos" class="nav-link" data-scroll-target="#modelos">Modelos</a>
   <ul class="collapse">
@@ -206,13 +205,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#validação-cruzada---k-fold" id="toc-validação-cruzada---k-fold" class="nav-link" data-scroll-target="#validação-cruzada---k-fold">Validação Cruzada - K-fold</a>
   <ul class="collapse">
   <li><a href="#ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds." id="toc-ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds." class="nav-link" data-scroll-target="#ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds.">Ajustando os modelos aos diferentes conjuntos de dados (folds).</a></li>
+  </ul></li>
   <li><a href="#visualizando-o-desempenho-dos-modelos-nos-diferentes-conjuntos-de-dados-folds" id="toc-visualizando-o-desempenho-dos-modelos-nos-diferentes-conjuntos-de-dados-folds" class="nav-link" data-scroll-target="#visualizando-o-desempenho-dos-modelos-nos-diferentes-conjuntos-de-dados-folds">Visualizando o desempenho dos modelos nos diferentes conjuntos de dados (folds)</a></li>
   <li><a href="#tabela-com-o-desempenho-médios-dos-modelos" id="toc-tabela-com-o-desempenho-médios-dos-modelos" class="nav-link" data-scroll-target="#tabela-com-o-desempenho-médios-dos-modelos">Tabela com o desempenho médios dos modelos</a></li>
-  </ul></li>
   <li><a href="#criando-as-previsões" id="toc-criando-as-previsões" class="nav-link" data-scroll-target="#criando-as-previsões">Criando as previsões</a></li>
   <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -224,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
-<p>Nessa segunda post sobre o valor da cotação do ouro, vou criar o primeiro modelo para realizar previsão dos valores de interesse. Os dados utilizados, assim como a escolha dos parâmetros utilizados para criar os modelos a seguir foram, respectivamente, adiquridos e escolhidos na <a href="">parte um</a> dessa série de postos.</p>
+<p>Nessa segunda post sobre a cotação do ouro, vou criar o primeiro modelo para realizar previsão dos valores de interesse. Os dados utilizados, assim como a escolha dos parâmetros utilizados para criar os modelos a seguir foram, respectivamente, adiquridos e escolhidos na <a href="">parte um</a> dessa série de postos.</p>
 </section>
 <section id="modelos-arima-sarima" class="level1">
 <h1>Modelos ARIMA-SARIMA</h1>
@@ -268,8 +266,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><span class="math inline">\((\varepsilon_t)\)</span> são erros aleatórios.</li>
 </ul>
 <p>Ambos os modelos exigem a escolha adequada das ordens dos componentes (p, d, q) e (P, D, Q, S), respectivamente, O que pode ser realizado por meio de <a href="">análise exploratória</a> dos dados. Uma vez ajustados, esses componentes permitem modelar e prever uma ampla variedade de padrões em séries temporais univariadas.</p>
-<section id="validação-cruzada" class="level2">
-<h2 class="anchored" data-anchor-id="validação-cruzada">Validação cruzada</h2>
+</section>
+<section id="validação-cruzada" class="level1">
+<h1>Validação cruzada</h1>
 <p>Antes de iniciarmos a construção do modelo vamos estabelecer um plano de validação cruzada.</p>
 <p>A validação cruzada é uma técnica fundamental em aprendizado de máquina e estatística. Ela ajuda a avaliar o desempenho de modelos ao dividir os dados em conjuntos de treinamento e teste múltiplos, mitigando o viés de seleção do conjunto de teste e fornecendo uma estimativa mais confiável do desempenho do modelo em dados não vistos. Isso é essencial para escolher e ajustar modelos de maneira adequada e geralmente envolve k-folds, onde o conjunto de dados é dividido em k partes iguais, alternando entre treinamento e teste para cada iteração.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-4_3461f924a5ee9cede3abb9ff8379713f">
@@ -292,11 +291,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="modelos" class="level2">
-<h2 class="anchored" data-anchor-id="modelos">Modelos</h2>
+<section id="modelos" class="level1">
+<h1>Modelos</h1>
 <p>A seguir, serão criados diversos modelos, todos eles pertencentes à família ARIMA, e, posteriormente, serão comparados. Para a criação desses modelos, diferentes funções e “motores” serão empregados, e estes serão melhor explicados nos próximos tópicos. É importante destacar que a mesma função pode ser utilizada com diferentes “motores”. A escolha dos “motores” é sempre feita por meio da função <code>set_engine()</code>.</p>
-<section id="auto-arima" class="level3">
-<h3 class="anchored" data-anchor-id="auto-arima">Auto ARIMA</h3>
+<section id="auto-arima" class="level2">
+<h2 class="anchored" data-anchor-id="auto-arima">Auto ARIMA</h2>
 <p>A função auto_arima foi projetada para facilitar a modelagem e previsão de séries temporais, automatizando o processo de seleção do melhor modelo ARIMA. A função utiliza critérios de avaliação estatística, como o Critério de Informação de Akaike (AIC) e o Critério de Informação Bayesiano (BIC), para avaliar e comparar o ajuste de diferentes modelos. Além dos parâmetros ARIMA, a função também pode lidar com modelos SARIMA e selecionar automaticamente os parâmetros sazonais (P, D, Q, S) quando a série apresenta sazonalidade.</p>
 <p>Apesar da automação também é permitido que você insira algumas restrições ou diretrizes para o processo de seleção, como limitar os valores máximos de p, d e q, ou forçar a inclusão de sazonalidade. Contudo a função será utilizado apenas em sua forma automática, deixando os parametros identificados durante a EDA para os demais modelos.</p>
 <p>O código a seguir faz a seleção automática do melhor modelo ARIMA através da função <code>arima_reg()</code> e do “motor” <code>auto_arima</code>.</p>
@@ -307,13 +306,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sarima" class="level3">
-<h3 class="anchored" data-anchor-id="sarima">SARIMA</h3>
+<section id="sarima" class="level2">
+<h2 class="anchored" data-anchor-id="sarima">SARIMA</h2>
 <p>Para ajustar o modelo SARIMA, será utilizada a mesma função anterior, <code>arima_reg()</code>, mas com a ‘engine’ arima. Neste modelo, todos os parâmetros (p, d, q) e (P, D, Q, S) serão empregados. Para fins de comparação, serão criados dois modelos SARIMA, um com um componente S de 18 meses e outro com um componente S de 12 meses.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_3ea46f11b56db709184528926aba07ff">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_8526b5a71319b644b01e5381ac8e94c7">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_arima <span class="ot">&lt;-</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arima_reg</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">18</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">16</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ar =</span> <span class="dv">1</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_differences =</span> <span class="dv">1</span>,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ma          =</span> <span class="dv">0</span>,</span>
@@ -339,23 +338,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sarima-com-multiplas-periodicidades" class="level3">
-<h3 class="anchored" data-anchor-id="sarima-com-multiplas-periodicidades">SARIMA com multiplas periodicidades</h3>
+<section id="sarima-com-multiplas-periodicidades" class="level2">
+<h2 class="anchored" data-anchor-id="sarima-com-multiplas-periodicidades">SARIMA com multiplas periodicidades</h2>
 <p>Trata-se de uma extensão do modelo SARIMA tradicional, que possibilita a incorporação de múltiplas sazonalidades em uma série temporal. Este modelo é especialmente útil quando os dados apresentam padrões sazonais em diferentes escalas de tempo.</p>
 <p>Para a criação desse modelo foi utilizada a função <code>season_reg()</code> e a ‘engine’ <code>stlm_arima</code>. Uma aordagem que combina a decomposição de sazonalidade e tendência usando STLM (Seasonal and Trend decomposition using Loess) com a modelagem ARIMA para fazer previsões em séries temporais. Isso é comum ao usar a decomposição STLM para entender a estrutura da série temporal e, em seguida, aplicar modelos ARIMA ajustados aos dados decompostos para fazer previsões mais precisas.</p>
 <p>Serão consideradas apenas as componentes de 18 e 12 meses, uma vez que a componente de 6 meses não se mostrou consistente ao longo dos dados.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_b8b253c799755bfb775972eb61f99211">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_4638342f85410503776da0350411ad1c">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>arima_m_season <span class="ot">&lt;-</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">seasonal_reg</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period_1 =</span> <span class="dv">18</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period_1 =</span> <span class="dv">16</span>,</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period_2 =</span> <span class="dv">12</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"stlm_arima"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="arima-xgboost-dos-erros" class="level3">
-<h3 class="anchored" data-anchor-id="arima-xgboost-dos-erros">ARIMA + XGBOOST dos erros</h3>
+<section id="arima-xgboost-dos-erros" class="level2">
+<h2 class="anchored" data-anchor-id="arima-xgboost-dos-erros">ARIMA + XGBOOST dos erros</h2>
 <p>A combinação de modelos SARIMA com algoritmos de machine learning, como o XGBoost (Extreme Gradient Boosting), é uma abordagem útil para melhorar a previsão de séries temporais, especialmente quando os dados exibem padrões complexos e não lineares. A ideia principal é aproveitar a capacidade de ambos os modelos para capturar diferentes aspectos da série temporal.</p>
 <p>A função aqui utilizada, arima_boost(), é uma maneira de gerar uma especificação de um modelo de série temporal que utiliza o boosting para melhorar a modelagem de erros (residuais) em Regressores Exógenos. Funciona tanto com o ARIMA “automático” (auto_arima) quanto com o ARIMA padrão (arima). Os principais algoritmos são:</p>
 <ul>
@@ -363,10 +362,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>ngine = arima_xgboost</p></li>
 </ul>
 <p>Esta função permite não apenas a seleção dos parâmetros comuns aos modelos SARIMA, mas também a seleção dos parâmetros associados ao modelo XGBoost. Como mencionado, essa abordagem tem como foco a melhoria dos resultados relacionados aos regressores exógenos, que são criados no seguinte trecho de código: <code>media ~ mes + as.numeric(mes) + factor(month(mes, label = TRUE), ordered = F)</code>.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_cef07b624da4acb602f08162d8909cdb">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_5ea4bf549ec43b4eddb468de54e7d688">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_fit_arima_boosted <span class="ot">&lt;-</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arima_boost</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">18</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">16</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ar =</span> <span class="dv">1</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_differences =</span> <span class="dv">1</span>,</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ma =</span> <span class="dv">0</span>,</span>
@@ -384,8 +383,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="comparando-os-modelos" class="level2">
-<h2 class="anchored" data-anchor-id="comparando-os-modelos">Comparando os modelos</h2>
+<section id="comparando-os-modelos" class="level1">
+<h1>Comparando os modelos</h1>
 <p>Para realizar a comparação dos modelos ajustados, o pacote <code>modeltime</code> disponibiliza a função <code>model_table()</code>, que permite a aplicação de diferentes procedimentos a todos os modelos de uma só vez.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-11_1bd60c0fd6c1f276f117ef016f4db3be">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model_table <span class="ot">&lt;-</span> </span>
@@ -398,8 +397,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="calibrando" class="level2">
-<h2 class="anchored" data-anchor-id="calibrando">Calibrando</h2>
+<section id="calibrando" class="level1">
+<h1>Calibrando</h1>
 <p>A seguir, iremos calibrar os modelos usando os dados de teste. A calibração estabelece os fundamentos para a criação dos resultados de acurácia, resíduos dos modelos, e dos intervalos de confiança nas previsões.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-12_ff993982f82befff4d60dea8e2311e84">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>calib_table <span class="ot">&lt;-</span> </span>
@@ -407,8 +406,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_calibrate</span>(<span class="fu">testing</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="residual" class="level2">
-<h2 class="anchored" data-anchor-id="residual">Residual</h2>
+<section id="residual" class="level1">
+<h1>Residual</h1>
 <p>Com os modelos calibrados, podemos avaliar os resíduos dos modelos. A função <code>modeltime_residuals()</code>, em conjunto com a função <code>plot_modeltime_residuals()</code>, oferece diversas opções de visualização dos resíduos, que incluem:</p>
 <ul>
 <li>timeplot</li>
@@ -428,8 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="acurácia" class="level2">
-<h2 class="anchored" data-anchor-id="acurácia">Acurácia</h2>
+<section id="acurácia" class="level1">
+<h1>Acurácia</h1>
 <p>Operando da mesma forma que as funções relacionadas aos resíduos dos modelos, o código a seguir gera uma tabela com os valores das métricas usadas para avaliar a qualidade dos modelos.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-14_232d548f1e2fdf9f9c9f6656cd5a6d75">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>calib_table <span class="sc">%&gt;%</span> </span>
@@ -437,23 +436,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table_modeltime_accuracy</span>(<span class="at">.interactive =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="duolrxldmw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#duolrxldmw table {
+<div id="swmgsjztja" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#swmgsjztja table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#duolrxldmw thead, #duolrxldmw tbody, #duolrxldmw tfoot, #duolrxldmw tr, #duolrxldmw td, #duolrxldmw th {
+#swmgsjztja thead, #swmgsjztja tbody, #swmgsjztja tfoot, #swmgsjztja tr, #swmgsjztja td, #swmgsjztja th {
   border-style: none;
 }
 
-#duolrxldmw p {
+#swmgsjztja p {
   margin: 0;
   padding: 0;
 }
 
-#duolrxldmw .gt_table {
+#swmgsjztja .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -479,12 +478,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_caption {
+#swmgsjztja .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#duolrxldmw .gt_title {
+#swmgsjztja .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -496,7 +495,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#duolrxldmw .gt_subtitle {
+#swmgsjztja .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -508,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#duolrxldmw .gt_heading {
+#swmgsjztja .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -520,13 +519,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_bottom_border {
+#swmgsjztja .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_col_headings {
+#swmgsjztja .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -541,7 +540,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_col_heading {
+#swmgsjztja .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -561,7 +560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#duolrxldmw .gt_column_spanner_outer {
+#swmgsjztja .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -573,15 +572,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#duolrxldmw .gt_column_spanner_outer:first-child {
+#swmgsjztja .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#duolrxldmw .gt_column_spanner_outer:last-child {
+#swmgsjztja .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#duolrxldmw .gt_column_spanner {
+#swmgsjztja .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -593,11 +592,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#duolrxldmw .gt_spanner_row {
+#swmgsjztja .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#duolrxldmw .gt_group_heading {
+#swmgsjztja .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -623,7 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#duolrxldmw .gt_empty_group_heading {
+#swmgsjztja .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -638,15 +637,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#duolrxldmw .gt_from_md > :first-child {
+#swmgsjztja .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#duolrxldmw .gt_from_md > :last-child {
+#swmgsjztja .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#duolrxldmw .gt_row {
+#swmgsjztja .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -665,7 +664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#duolrxldmw .gt_stub {
+#swmgsjztja .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -678,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#duolrxldmw .gt_stub_row_group {
+#swmgsjztja .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -692,15 +691,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#duolrxldmw .gt_row_group_first td {
+#swmgsjztja .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#duolrxldmw .gt_row_group_first th {
+#swmgsjztja .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#duolrxldmw .gt_summary_row {
+#swmgsjztja .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -710,16 +709,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#duolrxldmw .gt_first_summary_row {
+#swmgsjztja .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_first_summary_row.thick {
+#swmgsjztja .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#duolrxldmw .gt_last_summary_row {
+#swmgsjztja .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -729,7 +728,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_grand_summary_row {
+#swmgsjztja .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -739,7 +738,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#duolrxldmw .gt_first_grand_summary_row {
+#swmgsjztja .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -749,7 +748,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_last_grand_summary_row_top {
+#swmgsjztja .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -759,11 +758,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_striped {
+#swmgsjztja .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#duolrxldmw .gt_table_body {
+#swmgsjztja .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -772,7 +771,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_footnotes {
+#swmgsjztja .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -786,7 +785,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_footnote {
+#swmgsjztja .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -795,7 +794,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#duolrxldmw .gt_sourcenotes {
+#swmgsjztja .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -809,7 +808,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#duolrxldmw .gt_sourcenote {
+#swmgsjztja .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -817,63 +816,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#duolrxldmw .gt_left {
+#swmgsjztja .gt_left {
   text-align: left;
 }
 
-#duolrxldmw .gt_center {
+#swmgsjztja .gt_center {
   text-align: center;
 }
 
-#duolrxldmw .gt_right {
+#swmgsjztja .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#duolrxldmw .gt_font_normal {
+#swmgsjztja .gt_font_normal {
   font-weight: normal;
 }
 
-#duolrxldmw .gt_font_bold {
+#swmgsjztja .gt_font_bold {
   font-weight: bold;
 }
 
-#duolrxldmw .gt_font_italic {
+#swmgsjztja .gt_font_italic {
   font-style: italic;
 }
 
-#duolrxldmw .gt_super {
+#swmgsjztja .gt_super {
   font-size: 65%;
 }
 
-#duolrxldmw .gt_footnote_marks {
+#swmgsjztja .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#duolrxldmw .gt_asterisk {
+#swmgsjztja .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#duolrxldmw .gt_indent_1 {
+#swmgsjztja .gt_indent_1 {
   text-indent: 5px;
 }
 
-#duolrxldmw .gt_indent_2 {
+#swmgsjztja .gt_indent_2 {
   text-indent: 10px;
 }
 
-#duolrxldmw .gt_indent_3 {
+#swmgsjztja .gt_indent_3 {
   text-indent: 15px;
 }
 
-#duolrxldmw .gt_indent_4 {
+#swmgsjztja .gt_indent_4 {
   text-indent: 20px;
 }
 
-#duolrxldmw .gt_indent_5 {
+#swmgsjztja .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -899,39 +898,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <tr><td headers=".model_id" class="gt_row gt_right">1</td>
 <td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)</td>
 <td headers=".type" class="gt_row gt_left">Test</td>
-<td headers="mae" class="gt_row gt_right">21.70</td>
-<td headers="mape" class="gt_row gt_right">12.13</td>
-<td headers="mase" class="gt_row gt_right">4.63</td>
-<td headers="smape" class="gt_row gt_right">13.06</td>
-<td headers="rmse" class="gt_row gt_right">23.61</td>
-<td headers="rsq" class="gt_row gt_right">0.66</td></tr>
+<td headers="mae" class="gt_row gt_right">21.82</td>
+<td headers="mape" class="gt_row gt_right">12.22</td>
+<td headers="mase" class="gt_row gt_right">5.16</td>
+<td headers="smape" class="gt_row gt_right">13.09</td>
+<td headers="rmse" class="gt_row gt_right">22.86</td>
+<td headers="rsq" class="gt_row gt_right">0.64</td></tr>
     <tr><td headers=".model_id" class="gt_row gt_right">2</td>
-<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[18]</td>
+<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[16]</td>
 <td headers=".type" class="gt_row gt_left">Test</td>
-<td headers="mae" class="gt_row gt_right">9.88</td>
-<td headers="mape" class="gt_row gt_right">5.54</td>
-<td headers="mase" class="gt_row gt_right">2.11</td>
-<td headers="smape" class="gt_row gt_right">5.73</td>
-<td headers="rmse" class="gt_row gt_right">11.44</td>
-<td headers="rsq" class="gt_row gt_right">0.36</td></tr>
+<td headers="mae" class="gt_row gt_right">13.06</td>
+<td headers="mape" class="gt_row gt_right">7.36</td>
+<td headers="mase" class="gt_row gt_right">3.09</td>
+<td headers="smape" class="gt_row gt_right">7.67</td>
+<td headers="rmse" class="gt_row gt_right">13.64</td>
+<td headers="rsq" class="gt_row gt_right">0.67</td></tr>
     <tr><td headers=".model_id" class="gt_row gt_right">3</td>
-<td headers=".model_desc" class="gt_row gt_left">SEASONAL DECOMP: ARIMA(1,1,0)</td>
+<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[12]</td>
 <td headers=".type" class="gt_row gt_left">Test</td>
-<td headers="mae" class="gt_row gt_right">20.05</td>
-<td headers="mape" class="gt_row gt_right">11.23</td>
-<td headers="mase" class="gt_row gt_right">4.28</td>
-<td headers="smape" class="gt_row gt_right">12.04</td>
-<td headers="rmse" class="gt_row gt_right">22.01</td>
-<td headers="rsq" class="gt_row gt_right">0.07</td></tr>
+<td headers="mae" class="gt_row gt_right">23.67</td>
+<td headers="mape" class="gt_row gt_right">13.27</td>
+<td headers="mase" class="gt_row gt_right">5.60</td>
+<td headers="smape" class="gt_row gt_right">14.34</td>
+<td headers="rmse" class="gt_row gt_right">25.11</td>
+<td headers="rsq" class="gt_row gt_right">0.00</td></tr>
     <tr><td headers=".model_id" class="gt_row gt_right">4</td>
-<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[18] W/ XGBOOST ERRORS</td>
+<td headers=".model_desc" class="gt_row gt_left">SEASONAL DECOMP: ARIMA(0,1,1)</td>
 <td headers=".type" class="gt_row gt_left">Test</td>
-<td headers="mae" class="gt_row gt_right">9.87</td>
-<td headers="mape" class="gt_row gt_right">5.53</td>
-<td headers="mase" class="gt_row gt_right">2.11</td>
-<td headers="smape" class="gt_row gt_right">5.72</td>
-<td headers="rmse" class="gt_row gt_right">11.38</td>
-<td headers="rsq" class="gt_row gt_right">0.36</td></tr>
+<td headers="mae" class="gt_row gt_right">14.29</td>
+<td headers="mape" class="gt_row gt_right">8.04</td>
+<td headers="mase" class="gt_row gt_right">3.38</td>
+<td headers="smape" class="gt_row gt_right">8.40</td>
+<td headers="rmse" class="gt_row gt_right">14.86</td>
+<td headers="rsq" class="gt_row gt_right">0.66</td></tr>
+    <tr><td headers=".model_id" class="gt_row gt_right">5</td>
+<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[16] W/ XGBOOST ERRORS</td>
+<td headers=".type" class="gt_row gt_left">Test</td>
+<td headers="mae" class="gt_row gt_right">12.53</td>
+<td headers="mape" class="gt_row gt_right">7.07</td>
+<td headers="mase" class="gt_row gt_right">2.97</td>
+<td headers="smape" class="gt_row gt_right">7.35</td>
+<td headers="rmse" class="gt_row gt_right">13.13</td>
+<td headers="rsq" class="gt_row gt_right">0.67</td></tr>
   </tbody>
   
   
@@ -940,8 +948,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="visualização-do-conjunto-de-testes" class="level2">
-<h2 class="anchored" data-anchor-id="visualização-do-conjunto-de-testes">Visualização do conjunto de testes</h2>
+<section id="visualização-do-conjunto-de-testes" class="level1">
+<h1>Visualização do conjunto de testes</h1>
 <p>Vamos agora avaliar o desempenho dos modelos em relação aos dados de teste. É importante lembrar que os modelos não foram treinados com o conjunto de dados completo, que abrange aproximadamente 10 anos, mas sim com um intervalo de 7 anos, conforme explicado durante o planejamento da validação cruzada.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-15_073d2e0f67f684536bde65b80650fd36">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>calib_table <span class="sc">%&gt;%</span> </span>
@@ -955,12 +963,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="validação-cruzada---k-fold" class="level2">
-<h2 class="anchored" data-anchor-id="validação-cruzada---k-fold">Validação Cruzada - K-fold</h2>
+<section id="validação-cruzada---k-fold" class="level1">
+<h1>Validação Cruzada - K-fold</h1>
 <p>Até o momento utilizamos apenas o primeiro folder criado para realização da validação cruzada. Vamos agora varificar o desempenho médio em todos folders criados. A principal vantagem dessa abordagem é fornecer uma avaliação robusta e imparcial do desempenho de um modelo, mitigando problemas como overfitting (ajuste excessivo) e subajuste (underfitting).</p>
 <p>Para realizar essa etapa é necessário a utilização do pacote <code>modeltime.resample</code>, uma extenção do pacote <code>modeltime</code>.</p>
-<section id="ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds." class="level3">
-<h3 class="anchored" data-anchor-id="ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds.">Ajustando os modelos aos diferentes conjuntos de dados (folds).</h3>
+<section id="ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds." class="level2">
+<h2 class="anchored" data-anchor-id="ajustando-os-modelos-aos-diferentes-conjuntos-de-dados-folds.">Ajustando os modelos aos diferentes conjuntos de dados (folds).</h2>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-16_257d643eae6a10a79967dcabb27ef690">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>resamples_fitted <span class="ot">&lt;-</span> model_table <span class="sc">%&gt;%</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">modeltime_fit_resamples</span>(</span>
@@ -971,18 +979,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>resamples_fitted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Modeltime Table
-# A tibble: 4 × 4
+# A tibble: 5 × 4
   .model_id .model   .model_desc                               .resample_results
       &lt;int&gt; &lt;list&gt;   &lt;chr&gt;                                     &lt;list&gt;           
 1         1 &lt;fit[+]&gt; ARIMA(1,1,0)                              &lt;rsmp[+]&gt;        
-2         2 &lt;fit[+]&gt; ARIMA(1,1,0)(1,1,0)[18]                   &lt;rsmp[+]&gt;        
-3         3 &lt;fit[+]&gt; SEASONAL DECOMP: ARIMA(1,1,0)             &lt;rsmp[+]&gt;        
-4         4 &lt;fit[+]&gt; ARIMA(1,1,0)(1,1,0)[18] W/ XGBOOST ERRORS &lt;lgl [1]&gt;        </code></pre>
+2         2 &lt;fit[+]&gt; ARIMA(1,1,0)(1,1,0)[16]                   &lt;rsmp[+]&gt;        
+3         3 &lt;fit[+]&gt; ARIMA(1,1,0)(1,1,0)[12]                   &lt;rsmp[+]&gt;        
+4         4 &lt;fit[+]&gt; SEASONAL DECOMP: ARIMA(0,1,1)             &lt;rsmp[+]&gt;        
+5         5 &lt;fit[+]&gt; ARIMA(1,1,0)(1,1,0)[16] W/ XGBOOST ERRORS &lt;lgl [1]&gt;        </code></pre>
 </div>
 </div>
 </section>
-<section id="visualizando-o-desempenho-dos-modelos-nos-diferentes-conjuntos-de-dados-folds" class="level3">
-<h3 class="anchored" data-anchor-id="visualizando-o-desempenho-dos-modelos-nos-diferentes-conjuntos-de-dados-folds">Visualizando o desempenho dos modelos nos diferentes conjuntos de dados (folds)</h3>
+</section>
+<section id="visualizando-o-desempenho-dos-modelos-nos-diferentes-conjuntos-de-dados-folds" class="level1">
+<h1>Visualizando o desempenho dos modelos nos diferentes conjuntos de dados (folds)</h1>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-17_94e6fe3a8deb54257b760d365c5e39a1">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>resamples_fitted <span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_modeltime_resamples</span>(</span>
@@ -995,31 +1005,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="tabela-com-o-desempenho-médios-dos-modelos" class="level3">
-<h3 class="anchored" data-anchor-id="tabela-com-o-desempenho-médios-dos-modelos">Tabela com o desempenho médios dos modelos</h3>
+<section id="tabela-com-o-desempenho-médios-dos-modelos" class="level1">
+<h1>Tabela com o desempenho médios dos modelos</h1>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-18_d11360c61c6716f19fe9608660f97cac">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>resamples_fitted <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">modeltime_resample_accuracy</span>(<span class="at">summary_fns =</span> mean) <span class="sc">%&gt;%</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">table_modeltime_accuracy</span>(<span class="at">.interactive =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="aeybxuleqx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aeybxuleqx table {
+<div id="agzlvvbraw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#agzlvvbraw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aeybxuleqx thead, #aeybxuleqx tbody, #aeybxuleqx tfoot, #aeybxuleqx tr, #aeybxuleqx td, #aeybxuleqx th {
+#agzlvvbraw thead, #agzlvvbraw tbody, #agzlvvbraw tfoot, #agzlvvbraw tr, #agzlvvbraw td, #agzlvvbraw th {
   border-style: none;
 }
 
-#aeybxuleqx p {
+#agzlvvbraw p {
   margin: 0;
   padding: 0;
 }
 
-#aeybxuleqx .gt_table {
+#agzlvvbraw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1045,12 +1055,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_caption {
+#agzlvvbraw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aeybxuleqx .gt_title {
+#agzlvvbraw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1062,7 +1072,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#aeybxuleqx .gt_subtitle {
+#agzlvvbraw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1074,7 +1084,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#aeybxuleqx .gt_heading {
+#agzlvvbraw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1086,13 +1096,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_bottom_border {
+#agzlvvbraw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_col_headings {
+#agzlvvbraw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1107,7 +1117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_col_heading {
+#agzlvvbraw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1127,7 +1137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#aeybxuleqx .gt_column_spanner_outer {
+#agzlvvbraw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1139,15 +1149,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#aeybxuleqx .gt_column_spanner_outer:first-child {
+#agzlvvbraw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aeybxuleqx .gt_column_spanner_outer:last-child {
+#agzlvvbraw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aeybxuleqx .gt_column_spanner {
+#agzlvvbraw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1159,11 +1169,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#aeybxuleqx .gt_spanner_row {
+#agzlvvbraw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aeybxuleqx .gt_group_heading {
+#agzlvvbraw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1189,7 +1199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#aeybxuleqx .gt_empty_group_heading {
+#agzlvvbraw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1204,15 +1214,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#aeybxuleqx .gt_from_md > :first-child {
+#agzlvvbraw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aeybxuleqx .gt_from_md > :last-child {
+#agzlvvbraw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aeybxuleqx .gt_row {
+#agzlvvbraw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1231,7 +1241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#aeybxuleqx .gt_stub {
+#agzlvvbraw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1244,7 +1254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#aeybxuleqx .gt_stub_row_group {
+#agzlvvbraw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1258,15 +1268,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#aeybxuleqx .gt_row_group_first td {
+#agzlvvbraw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aeybxuleqx .gt_row_group_first th {
+#agzlvvbraw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aeybxuleqx .gt_summary_row {
+#agzlvvbraw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1276,16 +1286,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#aeybxuleqx .gt_first_summary_row {
+#agzlvvbraw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_first_summary_row.thick {
+#agzlvvbraw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aeybxuleqx .gt_last_summary_row {
+#agzlvvbraw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1295,7 +1305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_grand_summary_row {
+#agzlvvbraw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1305,7 +1315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#aeybxuleqx .gt_first_grand_summary_row {
+#agzlvvbraw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1315,7 +1325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_last_grand_summary_row_top {
+#agzlvvbraw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1325,11 +1335,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_striped {
+#agzlvvbraw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aeybxuleqx .gt_table_body {
+#agzlvvbraw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1338,7 +1348,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_footnotes {
+#agzlvvbraw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1352,7 +1362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_footnote {
+#agzlvvbraw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1361,7 +1371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#aeybxuleqx .gt_sourcenotes {
+#agzlvvbraw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1375,7 +1385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#aeybxuleqx .gt_sourcenote {
+#agzlvvbraw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1383,63 +1393,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#aeybxuleqx .gt_left {
+#agzlvvbraw .gt_left {
   text-align: left;
 }
 
-#aeybxuleqx .gt_center {
+#agzlvvbraw .gt_center {
   text-align: center;
 }
 
-#aeybxuleqx .gt_right {
+#agzlvvbraw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aeybxuleqx .gt_font_normal {
+#agzlvvbraw .gt_font_normal {
   font-weight: normal;
 }
 
-#aeybxuleqx .gt_font_bold {
+#agzlvvbraw .gt_font_bold {
   font-weight: bold;
 }
 
-#aeybxuleqx .gt_font_italic {
+#agzlvvbraw .gt_font_italic {
   font-style: italic;
 }
 
-#aeybxuleqx .gt_super {
+#agzlvvbraw .gt_super {
   font-size: 65%;
 }
 
-#aeybxuleqx .gt_footnote_marks {
+#agzlvvbraw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aeybxuleqx .gt_asterisk {
+#agzlvvbraw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aeybxuleqx .gt_indent_1 {
+#agzlvvbraw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aeybxuleqx .gt_indent_2 {
+#agzlvvbraw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aeybxuleqx .gt_indent_3 {
+#agzlvvbraw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aeybxuleqx .gt_indent_4 {
+#agzlvvbraw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aeybxuleqx .gt_indent_5 {
+#agzlvvbraw .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1467,32 +1477,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)</td>
 <td headers=".type" class="gt_row gt_left">Resamples</td>
 <td headers="n" class="gt_row gt_right">6</td>
-<td headers="mae" class="gt_row gt_right">11.04</td>
-<td headers="mape" class="gt_row gt_right">6.86</td>
-<td headers="mase" class="gt_row gt_right">2.50</td>
-<td headers="smape" class="gt_row gt_right">6.99</td>
-<td headers="rmse" class="gt_row gt_right">12.40</td>
+<td headers="mae" class="gt_row gt_right">13.18</td>
+<td headers="mape" class="gt_row gt_right">7.71</td>
+<td headers="mase" class="gt_row gt_right">3.40</td>
+<td headers="smape" class="gt_row gt_right">7.60</td>
+<td headers="rmse" class="gt_row gt_right">15.01</td>
 <td headers="rsq" class="gt_row gt_right">NA</td></tr>
     <tr><td headers=".model_id" class="gt_row gt_right">2</td>
-<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[18]</td>
+<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[16]</td>
 <td headers=".type" class="gt_row gt_left">Resamples</td>
 <td headers="n" class="gt_row gt_right">6</td>
-<td headers="mae" class="gt_row gt_right">12.56</td>
-<td headers="mape" class="gt_row gt_right">7.67</td>
-<td headers="mase" class="gt_row gt_right">3.15</td>
-<td headers="smape" class="gt_row gt_right">7.60</td>
-<td headers="rmse" class="gt_row gt_right">14.46</td>
-<td headers="rsq" class="gt_row gt_right">0.73</td></tr>
+<td headers="mae" class="gt_row gt_right">11.70</td>
+<td headers="mape" class="gt_row gt_right">6.89</td>
+<td headers="mase" class="gt_row gt_right">3.07</td>
+<td headers="smape" class="gt_row gt_right">6.72</td>
+<td headers="rmse" class="gt_row gt_right">13.57</td>
+<td headers="rsq" class="gt_row gt_right">0.22</td></tr>
     <tr><td headers=".model_id" class="gt_row gt_right">3</td>
-<td headers=".model_desc" class="gt_row gt_left">SEASONAL DECOMP: ARIMA(1,1,0)</td>
+<td headers=".model_desc" class="gt_row gt_left">ARIMA(1,1,0)(1,1,0)[12]</td>
 <td headers=".type" class="gt_row gt_left">Resamples</td>
 <td headers="n" class="gt_row gt_right">6</td>
-<td headers="mae" class="gt_row gt_right">9.45</td>
-<td headers="mape" class="gt_row gt_right">5.83</td>
-<td headers="mase" class="gt_row gt_right">2.31</td>
-<td headers="smape" class="gt_row gt_right">5.78</td>
-<td headers="rmse" class="gt_row gt_right">11.03</td>
-<td headers="rsq" class="gt_row gt_right">0.57</td></tr>
+<td headers="mae" class="gt_row gt_right">16.55</td>
+<td headers="mape" class="gt_row gt_right">9.72</td>
+<td headers="mase" class="gt_row gt_right">4.22</td>
+<td headers="smape" class="gt_row gt_right">9.53</td>
+<td headers="rmse" class="gt_row gt_right">18.81</td>
+<td headers="rsq" class="gt_row gt_right">0.16</td></tr>
+    <tr><td headers=".model_id" class="gt_row gt_right">4</td>
+<td headers=".model_desc" class="gt_row gt_left">SEASONAL DECOMP: ARIMA(0,1,1)</td>
+<td headers=".type" class="gt_row gt_left">Resamples</td>
+<td headers="n" class="gt_row gt_right">6</td>
+<td headers="mae" class="gt_row gt_right">11.86</td>
+<td headers="mape" class="gt_row gt_right">6.96</td>
+<td headers="mase" class="gt_row gt_right">3.17</td>
+<td headers="smape" class="gt_row gt_right">6.80</td>
+<td headers="rmse" class="gt_row gt_right">13.66</td>
+<td headers="rsq" class="gt_row gt_right">0.32</td></tr>
   </tbody>
   
   
@@ -1501,9 +1521,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-</section>
-<section id="criando-as-previsões" class="level2">
-<h2 class="anchored" data-anchor-id="criando-as-previsões">Criando as previsões</h2>
+<section id="criando-as-previsões" class="level1">
+<h1>Criando as previsões</h1>
 <p>Por último vamos criar previsões futuras dos diferentes modelo que foram ajustados. Para isso vamos reajustar os modelos, desta vez no conjunto de dados completo.</p>
 <div class="cell" data-hash="index_cache/html/unnamed-chunk-19_17495263b7bb9d4fbbfa4886ea1bc840">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>future_forecast_tbl <span class="ot">&lt;-</span> </span>
@@ -1522,11 +1541,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="conclusão" class="level2">
-<h2 class="anchored" data-anchor-id="conclusão">Conclusão</h2>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
 </section>
-<section id="referências" class="level2">
-<h2 class="anchored" data-anchor-id="referências">Referências</h2>
+<section id="referências" class="level1">
+<h1>Referências</h1>
 <ul>
 <li><p><a href="https://otexts.com/fpp3/arima.html">Forecasting: Principles and Practice (3rd ed)/Chapter 9 ARIMA models</a></p></li>
 <li><p><a href="https://business-science.github.io/modeltime/articles/getting-started-with-modeltime.html">Getting Started with Modeltime</a></p></li>
@@ -1535,7 +1554,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

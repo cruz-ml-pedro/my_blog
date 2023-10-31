@@ -2,7 +2,7 @@
 title: "Cotação do ouro - Parte 4"
 subtitle: "Modelos ARIMA"
 author: "Pedro Lima"
-date: "2023-08-14"
+date: "2023-10-30"
 categories: [Modelos Estatísticos, Série-Temporal,R]
 toc: true
 toc-depth: 3
@@ -91,7 +91,7 @@ Onde:
 
 Ambos os modelos exigem a escolha adequada das ordens dos componentes (p, d, q) e (P, D, Q, S), respectivamente, O que pode ser realizado por meio de [análise exploratória]() dos dados. Uma vez ajustados, esses componentes permitem modelar e prever uma ampla variedade de padrões em séries temporais univariadas.
 
-## Validação cruzada
+# Validação cruzada
 
 Antes de iniciarmos a construção do modelo vamos estabelecer um plano de validação cruzada.
 
@@ -116,11 +116,11 @@ cv %>%
   plot_time_series_cv_plan(mes,media, .facet_ncol = 2, .interactive = FALSE)
 ```
 
-## Modelos
+# Modelos
 
 A seguir, serão criados diversos modelos, todos eles pertencentes à família ARIMA, e, posteriormente, serão comparados. Para a criação desses modelos, diferentes funções e "motores" serão empregados, e estes serão melhor explicados nos próximos tópicos. É importante destacar que a mesma função pode ser utilizada com diferentes "motores". A escolha dos "motores" é sempre feita por meio da função `set_engine()`.
 
-### Auto ARIMA
+## Auto ARIMA
 
 A função auto_arima foi projetada para facilitar a modelagem e previsão de séries temporais, automatizando o processo de seleção do melhor modelo ARIMA. A função utiliza critérios de avaliação estatística, como o Critério de Informação de Akaike (AIC) e o Critério de Informação Bayesiano (BIC), para avaliar e comparar o ajuste de diferentes modelos. Além dos parâmetros ARIMA, a função também pode lidar com modelos SARIMA e selecionar automaticamente os parâmetros sazonais (P, D, Q, S) quando a série apresenta sazonalidade.
 
@@ -135,14 +135,14 @@ auto_arima <-
   fit(media ~ mes, training(cv$splits[[1]]))
 ```
 
-### SARIMA
+## SARIMA
 
 Para ajustar o modelo SARIMA, será utilizada a mesma função anterior, `arima_reg()`, mas com a 'engine' arima. Neste modelo, todos os parâmetros (p, d, q) e (P, D, Q, S) serão empregados. Para fins de comparação, serão criados dois modelos SARIMA, um com um componente S de 18 meses e outro com um componente S de 12 meses.
 
 ```{r}
 model_arima <- 
   arima_reg(
-    seasonal_period = 18,
+    seasonal_period = 16,
     non_seasonal_ar = 1,
         non_seasonal_differences = 1,
         non_seasonal_ma          = 0,
@@ -169,7 +169,7 @@ model_arima2 <-
   fit(media ~ mes, training(cv$splits[[1]]))
 ```
 
-### SARIMA com multiplas periodicidades
+## SARIMA com multiplas periodicidades
 
 Trata-se de uma extensão do modelo SARIMA tradicional, que possibilita a incorporação de múltiplas sazonalidades em uma série temporal. Este modelo é especialmente útil quando os dados apresentam padrões sazonais em diferentes escalas de tempo.
 
@@ -180,14 +180,14 @@ Serão consideradas apenas as componentes de 18 e 12 meses, uma vez que a compon
 ```{r}
 arima_m_season <- 
   seasonal_reg(
-    seasonal_period_1 = 18,
+    seasonal_period_1 = 16,
     seasonal_period_2 = 12
   ) %>% 
   set_engine("stlm_arima") %>% 
   fit(media ~ mes, training(cv$splits[[1]]))
 ```
 
-### ARIMA + XGBOOST dos erros
+## ARIMA + XGBOOST dos erros
 
 A combinação de modelos SARIMA com algoritmos de machine learning, como o XGBoost (Extreme Gradient Boosting), é uma abordagem útil para melhorar a previsão de séries temporais, especialmente quando os dados exibem padrões complexos e não lineares. A ideia principal é aproveitar a capacidade de ambos os modelos para capturar diferentes aspectos da série temporal.
 
@@ -202,7 +202,7 @@ Esta função permite não apenas a seleção dos parâmetros comuns aos modelos
 ```{r}
 model_fit_arima_boosted <- 
   arima_boost(
-    seasonal_period = 18,
+    seasonal_period = 16,
     non_seasonal_ar = 1,
     non_seasonal_differences = 1,
     non_seasonal_ma = 0,
@@ -219,7 +219,7 @@ model_fit_arima_boosted <-
         data = training(cv$splits[[1]]))
 ```
 
-## Comparando os modelos
+# Comparando os modelos
 
 Para realizar a comparação dos modelos ajustados, o pacote `modeltime` disponibiliza a função `model_table()`, que permite a aplicação de diferentes procedimentos a todos os modelos de uma só vez.
 
@@ -234,7 +234,7 @@ modeltime_table(
 )
 ```
 
-## Calibrando
+# Calibrando
 
 A seguir, iremos calibrar os modelos usando os dados de teste. A calibração estabelece os fundamentos para a criação dos resultados de acurácia, resíduos dos modelos, e dos intervalos de confiança nas previsões.
 
@@ -244,7 +244,7 @@ calib_table <-
   modeltime_calibrate(testing(cv$splits[[1]]))
 ```
 
-## Residual
+# Residual
 
 Com os modelos calibrados, podemos avaliar os resíduos dos modelos. A função `modeltime_residuals()`, em conjunto com a função `plot_modeltime_residuals()`, oferece diversas opções de visualização dos resíduos, que incluem:
 
@@ -263,7 +263,7 @@ calib_table %>%
      )
 ```
 
-## Acurácia
+# Acurácia
 
 Operando da mesma forma que as funções relacionadas aos resíduos dos modelos, o código a seguir gera uma tabela com os valores das métricas usadas para avaliar a qualidade dos modelos.
 
@@ -273,7 +273,7 @@ calib_table %>%
   table_modeltime_accuracy(.interactive = FALSE)
 ```
 
-## Visualização do conjunto de testes
+# Visualização do conjunto de testes
 
 Vamos agora avaliar o desempenho dos modelos em relação aos dados de teste. É importante lembrar que os modelos não foram treinados com o conjunto de dados completo, que abrange aproximadamente 10 anos, mas sim com um intervalo de 7 anos, conforme explicado durante o planejamento da validação cruzada.
 
@@ -286,13 +286,13 @@ calib_table %>%
   plot_modeltime_forecast(.interactive = FALSE)
 ```
 
-## Validação Cruzada - K-fold
+# Validação Cruzada - K-fold
 
 Até o momento utilizamos apenas o primeiro folder criado para realização da validação cruzada. Vamos agora varificar o desempenho médio em todos folders criados. A principal vantagem dessa abordagem é fornecer uma avaliação robusta e imparcial do desempenho de um modelo, mitigando problemas como overfitting (ajuste excessivo) e subajuste (underfitting).
 
 Para realizar essa etapa é necessário a utilização do pacote `modeltime.resample`, uma extenção do pacote `modeltime`.
 
-### Ajustando os modelos aos diferentes conjuntos de dados (folds).
+## Ajustando os modelos aos diferentes conjuntos de dados (folds).
 
 ```{r}
 resamples_fitted <- model_table %>%
@@ -304,7 +304,7 @@ resamples_fitted <- model_table %>%
 resamples_fitted
 ```
 
-### Visualizando o desempenho dos modelos nos diferentes conjuntos de dados (folds)
+# Visualizando o desempenho dos modelos nos diferentes conjuntos de dados (folds)
 
 ```{r}
 resamples_fitted %>%
@@ -315,7 +315,7 @@ resamples_fitted %>%
     )
 ```
 
-### Tabela com o desempenho médios dos modelos
+# Tabela com o desempenho médios dos modelos
 
 ```{r}
 resamples_fitted %>%
@@ -323,7 +323,7 @@ resamples_fitted %>%
     table_modeltime_accuracy(.interactive = FALSE)
 ```
 
-## Criando as previsões
+# Criando as previsões
 
 Por último vamos criar previsões futuras dos diferentes modelo que foram ajustados. Para isso vamos reajustar os modelos, desta vez no conjunto de dados completo.
 
@@ -342,9 +342,9 @@ future_forecast_tbl %>%
   plot_modeltime_forecast(.interactive = FALSE)
 ```
 
-## Conclusão
+# Conclusão
 
-## Referências
+# Referências
 
 -   [Forecasting: Principles and Practice (3rd ed)/Chapter 9 ARIMA models](https://otexts.com/fpp3/arima.html)
 
