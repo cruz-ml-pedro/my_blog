@@ -242,11 +242,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="suavização-exponencial-simples" class="level2">
 <h2 class="anchored" data-anchor-id="suavização-exponencial-simples">Suavização Exponencial Simples</h2>
 <p>Podendo ser entendida como um “meio termo” entre o método de Naïve, onde só a medida mais próxima teria inportância <span class="math inline">\((\hat{y}_{T+h|T} = y_T)\)</span>, e uma média simples, onde todas as medidas tem a mesma importância <span class="math inline">\((\hat{y}_{T+h|T} = \frac{1}{T} \sum_{t=1}^{T} y_t)\)</span>. A suavização exponencial simples tem os seus valores calculados usando médias ponderadas, onde os pesos diminuem exponencialmente à medida que as observações “envelhecem”. Assim o valor suavizado da série é dado por:</p>
-<p><span class="math display">\[y_{T+1|T} = \alpha y_T + \alpha (1 - \alpha) y_{T-1} + \alpha (1 - \alpha)^2 y_{T-2} + \ldots\]</span>,</p>
+<p><span class="math display">\[y_{T+1|T} = \alpha y_T + \alpha (1 - \alpha) y_{T-1} + \alpha (1 - \alpha)^2 y_{T-2} + \ldots,\]</span></p>
 <p>Equação de Previsão</p>
-<p><span class="math display">\[\hat{y}_{t+h|t} = \ell_t\]</span></p>
+<p><span class="math display">\[\hat{y}_{t+h|t} = \ell_t,\]</span></p>
 <p>Equação de Suavização</p>
-<p><span class="math display">\[\ell_t = \alpha y_t + (1 - \alpha) \ell_{t-1}\]</span>.</p>
+<p><span class="math display">\[\ell_t = \alpha y_t + (1 - \alpha) \ell_{t-1},\]</span></p>
 <p>onde <span class="math inline">\(0 \leq \alpha \leq 1\)</span> é o parâmetro de suavização. A previsão de um passo à frente para o tempo T+1 é uma média ponderada de todas as observações na série <span class="math inline">\(y_1, \ldots, y_T\)</span>. A taxa pela qual os pesos diminuem é controlada pelo parâmetro <span class="math inline">\(\alpha\)</span>. E <span class="math inline">\((\ell_t)\)</span> representa o nível (ou o valor suavizado) da série no tempo <span class="math inline">\((t)\)</span>.</p>
 </section>
 <section id="suavização-exponencial-com-tendência" class="level2">
