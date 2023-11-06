@@ -366,11 +366,11 @@ s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \a
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ets"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_25b28b0c68020e6e9b272b2750adf1fc">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_190fea644ba231c7cfd13d905d85d076">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo com gamma = 0.1</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Maior relavância para valores mais distantes</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Maior suavização da curva</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ets_b01 <span class="ot">&lt;-</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ets_g01 <span class="ot">&lt;-</span> </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">exp_smoothing</span>(</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">seasonal_period  =</span> <span class="dv">16</span>,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">error            =</span> <span class="st">"multiplicative"</span>,</span>
@@ -383,9 +383,9 @@ s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \a
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ets"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_a6bfdeae977a70fc6d04543864ecf50d">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_af600677e41d681d03679c34d5b1e451">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo com gamma = 0.5</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ets_b05 <span class="ot">&lt;-</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ets_g05 <span class="ot">&lt;-</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">exp_smoothing</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">seasonal_period  =</span> <span class="dv">16</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">error            =</span> <span class="st">"multiplicative"</span>,</span>
@@ -393,16 +393,16 @@ s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \a
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">season           =</span> <span class="st">"additive"</span>,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">smooth_level =</span> <span class="fl">0.3</span>,<span class="co">#alpha,</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">smooth_trend =</span> <span class="fl">0.01</span>,<span class="co">#beta</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">smooth_seasonal =</span><span class="fl">0.5</span><span class="co">#gamma</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">smooth_seasonal =</span> <span class="fl">0.5</span><span class="co">#gamma</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ets"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_6e79bf3014cb47c3b94d867fdef97408">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_a0ee7e491676bd8bf565d4344e50d9b0">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo com gamma = 0.7</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Menor relavância para valores mais distantes</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Menor suavização da curva</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ets_b07 <span class="ot">&lt;-</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ets_g07 <span class="ot">&lt;-</span> </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">exp_smoothing</span>(</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">seasonal_period  =</span> <span class="dv">16</span>,</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">error            =</span> <span class="st">"multiplicative"</span>,</span>
@@ -421,15 +421,15 @@ s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \a
 <h1>Comparando os Modelos</h1>
 <div class="justify">
 <p>Para comparar o desempenho dos modelos em relação ao conjunto de teste o pacote <code>modeltime</code> possui a função <code>modeltime_table</code>, projetada para realizar previsões em larga escala utilizando modelos criados com <code>modeltime</code>, <code>parsnip</code>, <code>workflows</code> e outras extensões do ecossistema <code>tidymodels</code>.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_f735d06b6099d4d6e68f996210577eda">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_7b704005a4eeceec9426c9cd0f00db67">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model_table <span class="ot">&lt;-</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  modeltime<span class="sc">::</span><span class="fu">modeltime_table</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    ets_auto,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    stl_season,</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ets_maa,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    ets_b01,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ets_b05,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ets_b07</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    ets_g01,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    ets_g05,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ets_g07</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -987,7 +987,7 @@ s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \a
 </div>
 </div>
 </div>
-<p>O modelo ajustado automaticamente (<span class="math inline">\(\texttt{ETS()}\)</span>) claramente não capturou o comportamento dos dados, retornando como previsão o último valor do conjunto de treino (naïve forecast). Por outro lado, os demais modelos, apesar de apresentarem diferentes níveis de suavidade, parecem ter desempenhado bem na reprodução dos dados de teste. Os modelos: com múltiplas sazonalidades, <span class="math inline">\(\texttt{ETS(M,A,A)}\)</span> com parâmetros <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> e <span class="math inline">\(\gamma\)</span> ajustados automaticamente e com o parâmetro <span class="math inline">\(\gamma\)</span> igual a 0.5 ( repectivamente modelos 2, 3 e 5), mostram formatos e desempenhos semelhantes. Enquanto os modelos <span class="math inline">\(\texttt{ETS(M,A,A)}\)</span> com parâmetro <span class="math inline">\(\gamma\)</span> igual a 0.1 e 0.7 ( modelos 4 e 6) apresentam o melhor desempenho apesar de serem as curvas com maior e menor níveis de suavidade.</p>
+<p>O modelo ajustado automaticamente (<span class="math inline">\(\texttt{ETS()}\)</span>) claramente não capturou o comportamento dos dados, retornando como previsão o último valor do conjunto de treino (naïve forecast). Por outro lado, os demais modelos, apesar de apresentarem diferentes níveis de suavidade, parecem ter desempenhado bem na reprodução dos dados de teste. Os modelos: com múltiplas sazonalidades, <span class="math inline">\(\texttt{ETS(M,A,A)}\)</span> com parâmetros <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> e <span class="math inline">\(\gamma\)</span> ajustados automaticamente e com o parâmetro <span class="math inline">\(\gamma\)</span> igual a 0.5 (repectivamente modelos 2, 3 e 5), mostram formatos e desempenhos semelhantes. Enquanto os modelos <span class="math inline">\(\texttt{ETS(M,A,A)}\)</span> com parâmetro <span class="math inline">\(\gamma\)</span> igual a 0.1 e 0.7 ( modelos 4 e 6) apresentam o melhor desempenho apesar de serem as curvas com maior e menor níveis de suavidade.</p>
 </div>
 </section>
 <section id="validação-cruzada" class="level2">
@@ -1081,14 +1081,14 @@ s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \a
 <section id="salvando-o-modelo" class="level1">
 <h1>Salvando o Modelo</h1>
 <div class="justify">
-<p>Antes de terminar vou salvar o modelo com a melhor performace a fim de furas comparações com outros métodos que serão criado nos próximos posts.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-23_4ef2e63883c09cec2197eae8845c8b71">
+<p>O modelo escolhido para futuras comparações foi o <span class="math inline">\(\texttt{ETS(M,AD,A)}\)</span> com parâmetros <span class="math inline">\(\alpha = 0.3\)</span>, <span class="math inline">\(\beta = 0.01\)</span> e <span class="math inline">\(\gamma = 0.5\)</span></p>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-23_078a4193c73a46a0e2135d451deb5629">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Período de 16 meses</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Erro multiplicativo</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Trend aditivo</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Sazonalidade aditivo</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(ets_maa, <span class="at">file =</span> <span class="st">"ets-16MAA.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(ets_g05, <span class="at">file =</span> <span class="st">"ets-16MAA.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
