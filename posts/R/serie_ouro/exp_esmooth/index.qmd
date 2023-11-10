@@ -1,0 +1,444 @@
+---
+title: "Cotação do ouro - Parte 3"
+subtitle: "Suavização Exponencial"
+author: "Pedro Lima"
+date: "2023-11-10"
+categories: [Modelos Estatísticos, Série-Temporal,R]
+toc: true
+toc-depth: 3
+draft: false
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
+                      message = FALSE, echo = TRUE, dpi = 180,
+                      fig.width = 8, fig.height = 5)
+
+pacman::p_load(tidyverse,tidyquant,tidymodels,timetk, modeltime,
+               modeltime.resample)
+```
+
+```{r, echo=FALSE}
+# Obter dados da ação de ouro (código GLD)
+gold_data <- tq_get("GLD")
+```
+
+```{r, echo=FALSE}
+gold_mean <-
+  gold_data %>% 
+  group_by(mes = format(date, "%Y-%m")) %>%
+  summarize(media = mean(close, na.rm = TRUE)) %>% 
+   mutate(
+    mes=as_date(mes, format="%Y-%m")
+    )
+```
+
+```{css, echo=FALSE}
+.justify {
+  text-align: justify;
+}
+```
+
+# Introdução
+
+::: justify
+Esta postagem será a primeira da série voltada para a construção de um modelo preditivo. Os dados utilizados, assim como a escolha de alguns dos parâmetros usados para criar os modelos subsequentes, foram adquiridos e sugeridos, na [Parte Um](https://pedroom-blog.netlify.app/posts/serie_ouro/eda/) e na [Parte Dois](https://pedroom-blog.netlify.app/posts/serie_ouro/eda2/) desta série, durante a análise exploratória dos dados.
+
+Como primeira abordagem serão testados modelos de suavização exponencial. O pacote escolhido para realizar esta tarefa foi o `modeltime`, uma extensão do ecossistema `tidymodels`. Além disso, utilizarei o pacote complementar `modeltime.resample` para a validação cruzada.
+:::
+
+# Suavização Exponencial
+
+::: justify
+"A suavização exponencial foi proposta no final dos anos 1950 (Brown, 1959; Holt, 1957; Winters, 1960) e motivou alguns dos métodos de previsão mais bem-sucedidos. As previsões produzidas usando métodos de suavização exponencial são médias ponderadas das observações passadas, com os pesos diminuindo exponencialmente à medida que as observações envelhecem. Em outras palavras, quanto mais recente for a observação, maior será o peso associado a ela" (Hyndman e Athanasopoulos, 2021).
+
+Também chamados de ETS (do inglês Erros, Trend, Season), essa família de modelos foi desenvolvida originalemnte para séries sem tendência e sazonalidade. Sendo expandida posteriormente para séries com tendência, por Holt (1957), e com sazonalidade por Winters (1960). O funcionamento básico deste método se dá através de três equações de suavização, uma para o nível $\ell_t$, uma para a tendência $b_t$ e uma para o componente sazonal $s_t$, com os parâmetros de suavização correspondentes $\alpha$, $\beta^*$, $\gamma$.
+
+A seguir uma breve descrição da evolução do método, o que torna mais fácil o entendimento das equações e parâmetros mencionados.
+
+## Suavização Exponencial Simples
+
+Podendo ser entendida como um "meio termo" entre o método de Naïve, onde só a medida mais próxima teria inportância $(\hat{y}_{T+h|T} = y_T)$, e uma média simples, onde todas as medidas tem a mesma importância $(\hat{y}_{T+h|T} = \frac{1}{T} \sum_{t=1}^{T} y_t)$. A suavização exponencial simples tem os seus valores calculados usando médias ponderadas, onde os pesos diminuem exponencialmente à medida que as observações "envelhecem". Assim o valor suavizado da série é dado por:
+
+$$y_{T+1|T} = \alpha y_T + \alpha (1 - \alpha) y_{T-1} + \alpha (1 - \alpha)^2 y_{T-2} + \ldots,$$
+
+Um modo de representar este método é através de suas componentes. Para a suavização exponencial simples, o único componente incluído é o nível, $\ell_t$.
+
+Equação de Previsão
+
+$$\hat{y}_{t+h|t} = \ell_t,$$
+
+Equação de Suavização
+
+$$\ell_t = \alpha y_t + (1 - \alpha) \ell_{t-1},$$
+
+onde $0 \leq \alpha \leq 1$ é o parâmetro de suavização. A previsão de um passo à frente para o tempo T+1 é uma média ponderada de todas as observações na série $y_1, \ldots, y_T$. A taxa pela qual os pesos diminuem é controlada pelo parâmetro $\alpha$. E $\ell_t$ representa o nível (ou o valor suavizado) da série no tempo $t$.
+
+## Suavização Exponencial com Tendência
+
+O próximo passo envolve a inclusão dos casos em que há presença de tendência nos dados. Nesse cenário, as equações são atualizadas para:
+
+Equação de previsão
+
+$$y_{t+h|t} = \ell_t + h b_t$$
+
+Equação de suavização (nível)
+
+$$ℓ_t = αy_t + (1 - α)(ℓ_{t-1} + b_{t-1})$$
+
+Equação da tendência
+
+$$b_t = \beta^* (\ell_t - \ell_{t-1}) + (1 - \beta^*) b_{t-1}$$
+
+Onde $b_t$ denota uma estimativa da tendência (inclinação) da série no tempo $t$, e $\beta^*$ é o parâmetro de suavização para a tendência, $(0 \leq \beta^* \leq 1)$.
+
+Assim como na suavização exponencial simples, a equação de $\ell_t$ aqui é uma média ponderada da observação $y_t$ e da previsão de treinamento de um passo à frente para o tempo $t$, dada por $\ell_{t-1} + b_{t-1}$. A equação de $b_t$ é uma média ponderada da tendência estimada no tempo $t$ com base em $\ell_t - \ell_{t-1}$ e $b_{t-1}$ é a estimativa anterior da tendência. Assim, a função de previsão não é mais plana, mas apresenta tendência. A $h-\texttt{previsão}$ à frente é igual ao último nível estimado mais $h$ vezes o último valor estimado da tendência. Portanto, as previsões são uma função linear de $h$.
+
+## Suavização Exponencial com Sazonalidade
+
+A versão mais completa desta família de modelos engloba uma equação para capturar a componente sazonal. Existem duas variações deste método, aditivo e multiplicativo, que diferem na natureza do componente sazonal. O método aditivo é preferível quando as variações sazonais são aproximadamente constantes ao longo da série, enquanto o método multiplicativo é preferível quando as variações sazonais estão mudando proporcionalmente ao nível da série.
+
+A versão aditiva é descrita da seguinte forma:
+
+```{=tex}
+\begin{align*}
+\hat{y}_{t+h|t} &= \ell_t + h b_t + s_{t-m(k+1)} \\
+\ell_t &= \alpha (y_t - s_t - m) + (1 - \alpha)(\ell_{t-1} + b_{t-1}) \\
+b_t &= \beta^* (\ell_t - \ell_{t-1}) + (1 - \beta^*) b_{t-1} \\
+s_t &= \gamma (y_t - \ell_{t-1} - b_{t-1}) + (1 - \gamma) s_{t-m} \\
+\end{align*}
+```
+Onde $k$ é a parte inteira de $\frac{{h - 1}}{m}$, o que garante que as estimativas dos índices sazonais usados para previsões provenham do último ano da amostra. A equação de nível mostra uma média ponderada entre a observação ajustada sazonalmente $y_t - s_t - m$ e a previsão não sazonal $\ell_{t-1} + b_{t-1}$ para o tempo $t$. A equação de tendência é idêntica ao método linear de Holt (tópico anterior). A equação sazonal mostra uma média ponderada entre o índice sazonal atual $y_t - \ell_{t-1} - b_{t-1}$ e o índice sazonal do mesmo período do ano anterior (ou seja, $m$ períodos atrás).
+
+A equação para o componente sazonal é frequentemente expressa como:
+
+$$
+s_t = \gamma^* (y_t - \ell_t) + (1 - \gamma^*) s_{t-m}
+$$
+
+Se substituirmos $\ell_t$ a partir da equação de suavização para o nível, apresentada acima, obtemos:
+
+$$
+s_t = \gamma^* (1 - \alpha) (y_t - \ell_{t-1} - b_{t-1}) + [1 - \gamma^* (1 - \alpha)] s_{t-m}
+$$
+
+o que é idêntico à equação de suavização para o componente sazonal com $(\gamma = \gamma^* (1 - \alpha))$. Assim, a restrição usual para o parâmetro é $(0 \leq \gamma^* \leq 1)$, o que se traduz em $(0 \leq \gamma \leq 1 - \alpha)$.
+
+Lembrando que esta é apenas uma simplificação da aplicação do método aditivo de Holt-Winters. Para uma discussão mais detalhada você pode consultar o [capítulo 8](https://otexts.com/fpp3/expsmooth.html) do livro "Forecasting: Principles and Practice" e as referências ali mencionadas.
+:::
+
+# Engines
+
+::: jistify
+O pacote `modeltime` disponibiliza diferentes engines para criação dos modelos.
+
+-   **ets**: "Função padrão para os modelos ETS. Esta funcionalidade é proveniente do pacote `forecast` e permite a aplicação da metodologia de forma totalmente automática. Além do modo automático, permite ao usuário escolher os parâmetros $\alpha$, $\beta^*$, $\gamma$, bem como os tipos de componentes de erro, tendência e sazonalidade, sejam eles aditivos, multiplicativos, 'damped', etc.
+
+-   **smooth_es**: A função funciona como a anterior e retorna a previsão, os valores ajustados, os erros e a matriz de estados. Essa engine é ajustada através de uma função 'adam' (Adaptive Moment Estimation), algoritmo amplamente utilizado para otimizar funções objetivo. Ele é uma variação do gradiente descendente estocástico (SGD) que adapta automaticamente as taxas de aprendizado para cada parâmetro do modelo durante o treinamento. Isso ajuda a melhorar a convergência e a eficiência do treinamento, tornando-o especialmente eficaz em problemas complexos.
+
+-   **CROSTON**: Um caso especial de Suavização Exponencial para demanda intermitente.
+
+-   **Theta**: Um caso especial de Suavização Exponencial com 'drift' que teve um bom desempenho na Competição M3.
+
+-   **stlm_ets**: As previsões de objetos STL são obtidas aplicando um método de previsão não sazonal aos dados ajustados sazonalmente e, em seguida, recompondo-os usando o último ano do componente sazonal. Essa abordagem permite o uso de diferentes periodicidades na construção do modelo.
+
+As 'engines' que serão utilizadas serão a ets e stlm_ets.
+:::
+
+# Plano de Validação Cruzada
+
+::: juntify
+Antes de iniciarmos a construção dos modelos vamos estabelecer um plano de validação cruzada.
+
+A validação cruzada é uma técnica fundamental em aprendizado de máquina e estatística. Ela ajuda a avaliar o desempenho de modelos ao dividir os dados em múltiplos conjuntos de treinamento e teste, mitigando o viés de seleção do conjunto de teste e fornecendo uma estimativa mais confiável do desempenho do modelo em dados não vistos. Essa abordagem geralmente envolve a técnica k-folds, onde o conjunto de dados é dividido em k partes iguais, alternando entre treinamento e teste.
+
+Para a criação dos folders, será utilizada a função `time_series_cv` do pacote `timetk`. Os dados originais serão divididos em oito novos conjuntos, nos quais seis anos serão destinados para "treino" e um ano para teste, com um intervalo de seis meses entre os folders. A criação dos modelos e a primeira avaliação serão realizadas no folder número 1, que contém os dados mais recentes. Para avaliar a estabilidade dos modelos os demais folders serão utilizados.
+
+```{r}
+cv <- 
+  gold_mean %>% 
+  timetk::time_series_cv(
+    assess      = 12 * 1,
+    initial     = 12 * 6,
+    skip        = 12 * 0.5,
+    slice_limit = 8,
+    culmulatime = TRUE
+  )
+```
+
+## Visualizando o Plano de Validação Cruzada
+
+```{r}
+cv %>% 
+  tk_time_series_cv_plan() %>% 
+  plot_time_series_cv_plan(mes,media, .facet_ncol = 2, .interactive = FALSE)
+```
+:::
+
+# Criando os Modelos
+
+::: justify
+Com base nos resultados obtidos durante a análise exploratória, os primeiros modelos foram criados da seguinte forma: foram desenvolvidos modelos com sazonalidade de 12 meses, modelos com sazonalidade de 16 meses $\texttt{(ETS)}$ e modelos com múltiplas sazonalidades de 12 meses e 16 meses $\texttt{(STLM-ETS)}$. Os modelos com sazonalidade de 12 meses $\texttt{(ETS)}$ apresentaram um desempenho inferior e, aparentemente, não conseguiram capturar adequadamente o comportamento dos dados. Portanto, eles não serão utilizados no restante deste estudo.
+
+Os modelos ETS que incorporaram a componente sazonal multiplicativa, identificada durante a EDA, apresentaram um desempenho inferior em comparação com os modelos aditivos. Notavelmente, as configurações $\texttt{ETS(M,A,A)}$ e $\texttt{ETS(M,AD,A)}$ foram as que obteveram o melhor desempenho.
+
+Os modelos selecionados para comparação e análise foram os seguintes: $\texttt{STLM-ETS}$ com componentes periódicas de 12 meses e 16 meses, a opção automatizada do pacote $\texttt{ETS()}$, $\texttt{ETS(M,A,A)}$ com seleção automática dos parâmetros $\alpha$, $\beta$ e $\gamma$, bem como $\texttt{ETS(M,A,A)}$ com diferentes valores de $\gamma$ (0.1, 0.5, 0.7). A ênfase no estudo dos efeitos do parâmetro $\gamma$ deriva do comportamento observado nos dados, onde em sua parte final a componente de tendência aparentemente se torna ausente, enquanto as componentes periódicas assumem maior relevância.
+
+Os modelos foram criados pela combinação das funções `exp_smoothing` e `seasonal_reg`, que selecionam o tipo de modelo a ser utilizado e seus parâmetros, bem como `set_engine`, que determina o algoritmo a ser empregado, e `fit`, que estima os parâmetros de um determinado modelo a partir de um conjunto de dados (`training(cv$splits[[1]])`).
+
+```{r}
+# Modelo totalmente automático
+ets_auto <- 
+ exp_smoothing() %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+```{r}
+#Modelo com multiplas sazonalidades
+stl_season <- 
+  seasonal_reg(
+    seasonal_period_1 = 16,
+    seasonal_period_2 = 12
+  ) %>% 
+  set_engine("stlm_ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+```{r}
+#Modelo com escolha automática dos parâmetros alpha, beta e gamma
+ets_maa <- 
+ exp_smoothing(
+   seasonal_period  = 16,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "additive",
+   ) %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+```{r}
+# Modelo com gamma = 0.1
+# Maior relavância para valores mais distantes
+# Maior suavização da curva
+ets_g01 <- 
+ exp_smoothing(
+   seasonal_period  = 16,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "additive",
+   smooth_level = 0.3,#alpha,
+   smooth_trend = 0.01,#beta
+   smooth_seasonal =0.1#gamma
+   ) %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+```{r}
+# Modelo com gamma = 0.5
+ets_g05 <- 
+ exp_smoothing(
+   seasonal_period  = 16,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "additive",
+   smooth_level = 0.3,#alpha,
+   smooth_trend = 0.01,#beta
+   smooth_seasonal = 0.5#gamma
+   ) %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+
+```{r}
+# Modelo com gamma = 0.7
+# Menor relavância para valores mais distantes
+# Menor suavização da curva
+ets_g07 <- 
+ exp_smoothing(
+   seasonal_period  = 16,
+   error            = "multiplicative",
+   trend            = "additive",
+   season           = "additive",
+   smooth_level = 0.3,#alpha,
+   smooth_trend = 0.01,#beta
+   smooth_seasonal =0.7#gamma
+   ) %>% 
+  set_engine("ets") %>% 
+  fit(media ~ mes, training(cv$splits[[1]]))
+```
+:::
+
+# Comparando os Modelos
+
+::: justify
+Para comparar o desempenho dos modelos em relação ao conjunto de teste o pacote `modeltime` possui a função `modeltime_table`, projetada para realizar previsões em larga escala utilizando modelos criados com `modeltime`, `parsnip`, `workflows` e outras extensões do ecossistema `tidymodels`.
+
+```{r}
+model_table <- 
+  modeltime::modeltime_table(
+    ets_auto,
+    stl_season,
+    ets_maa,
+    ets_g01,
+    ets_g05,
+    ets_g07
+    )
+```
+:::
+
+## Calibrando
+
+::: justify
+O processo de calibração estabelece as bases para atingir precisão e definir os intervalos de confiança das previsões. Isso é feito através do cálculo das previsões e da análise dos resíduos com base nos dados de teste.
+
+```{r}
+calib_table <- 
+  model_table %>% 
+  modeltime_calibrate(testing(cv$splits[[1]]))
+```
+:::
+
+## Conjunto de Teste e Acurácia
+
+::: justify
+Utilizando os dados que foram calibrados, o próximo passo é realizar previsões com os modelos e compará-las ao conjunto de teste. Isso será realizado utilizando as funções `modeltime_forecast` e `plot_modeltime_forecast`, idealizadas para simplificar o processo de previsão e criação de gráficos dos dados originais e dos resultados dos modelos.
+
+```{r}
+calib_table %>% 
+modeltime::modeltime_forecast(
+    new_data = testing(cv$splits[[1]]),
+    actual_data = gold_mean
+  ) %>% 
+  plot_modeltime_forecast(.interactive = TRUE)
+```
+
+As métricas de cada modelo são obtidas através da função `modeltime_accuracy`, que simplifica o cálculos das métricas de precisão.
+
+```{r}
+calib_table %>% 
+  modeltime::modeltime_accuracy() %>% 
+  table_modeltime_accuracy(.interactive = FALSE)
+```
+
+O modelo ajustado automaticamente ($\texttt{ETS()}$) claramente não capturou o comportamento dos dados, retornando como previsão o último valor do conjunto de treino (naïve forecast). Por outro lado, os demais modelos, apesar de apresentarem diferentes níveis de suavidade, parecem ter desempenhado bem na reprodução dos dados de teste. Os modelos: com múltiplas sazonalidades, $\texttt{ETS(M,A,A)}$ com parâmetros $\alpha$, $\beta$ e $\gamma$ ajustados automaticamente e com o parâmetro $\gamma$ igual a 0.5 (repectivamente modelos 2, 3 e 5), mostram formatos e desempenhos semelhantes. Enquanto os modelos $\texttt{ETS(M,A,A)}$ com parâmetro $\gamma$ igual a 0.1 e 0.7 (modelos 4 e 6) apresentam os melhores desempenhos, apesar de serem as curvas com maior e menor nível de suavidade.
+:::
+
+## Validação Cruzada
+
+::: justify
+Para uma melhor compreenção do desempenho e estabilidade dos modelos serão utilizados os folders criados no início deste post, onde os modelos serão novamente ajustados e testados em diferentes janelas temporais de 'treino' e previsão.
+
+Para realizar esta etatapa sera utilizada a função `modeltime_fit_resamples`, idealizada para ajustar os modelos e criar previsões iterativamente a partir das especificações contidas em um objeto `modeltime_table` e de conjuntos de reamostragem (`CV-folders`).
+
+```{r}
+resamples_fitted <- model_table %>%
+    modeltime_fit_resamples(
+        resamples = cv,
+        control   = control_resamples(verbose = FALSE)
+    )
+
+#resamples_fitted
+```
+
+Para avaliar os modelos será utilizada a função `plot_modeltime_resamples`. Essa função plota as metricas de cada um dos modelos em relação a cada um dos conjuntos de reamostragem. A opção iterativa do gráfico é uma maneira conveniente de avaliar o desempenho dos modelos de forma mais detalhada, permitindo uma avaliação individual e comparativa.
+
+```{r}
+resamples_fitted %>%
+    plot_modeltime_resamples(
+      .point_size  = 3, 
+      .point_alpha = 0.8,
+      .interactive = TRUE
+    )
+```
+
+O modelo com o melhor desempenho médio foi $\texttt{ETS(A, M, M)}$ com os parâmetros $\alpha$, $\beta$ e $\gamma$ ajustados automaticamente (modelo 3). Contudo, os resultados médios dos modelos não diferem de modo substâncial.
+
+Os resultados dos modelos nos diferentes folders mostram cenários diversos. No folder 1, existe uma diferença considerável no desempenho dos modelos. Nos folders 2, 3 e 4, os resultados são bem próximos. Nos folders 5 e 6, a diferença entre os modelos volta a ser bem diversa. Já nos folders 7 e 8, os modelos têm um desempenho próximo, mas inferior aos demais folders.
+
+Em linhas gerais, os modelos tiveram um comportamento semelhante em relação aos diferentes folders, apresentando um desempenho melhor nos quatro primeiros conjuntos em relação aos demais. É possível observar que o desempenho dos modelos começa a diminuir quando os conjuntos de treinamento possuem uma menor quantidade de dados, dentro do período de tempo dominado pelas componentes sazonais, e diminui ainda mais quando os conjuntos de teste estão na parte dos dados onde a presença de tendência é mais significativa. Essa piora gradual nos conjuntos subsequentes pode indicar que os modelos têm uma boa capacidade de generalização para a parte dos dados dominada pelas componentes periódicas, e que o comportamento dos dados vem sofrendo mudanças significativas ao longo dos anos.
+:::
+
+## Análise dos Resíduos
+
+::: justify
+A análise de resíduos é uma etapa importante na avaliação de modelos. Ela ajuda a determinar se o modelo está capturando adequadamente as estruturas dos dados. Os resíduos que serão avaliados são em relação aos resultados dos modelos ajustados nos dados contidos no primeiro folder.
+
+A função `plot_modeltime_residuals` oferece um modo prático de avaliar os resíduos dos modelos que foram criados.
+
+```{r, message=FALSE}
+calib_table %>% 
+  modeltime_residuals() %>% 
+  plot_modeltime_residuals(
+     .type = "timeplot",
+     .interactive = FALSE
+     )
+```
+
+```{r, message=FALSE}
+calib_table %>% 
+  modeltime_residuals() %>% 
+  plot_modeltime_residuals(
+     .type = "acf",
+     .interactive = FALSE
+     )
+```
+
+Espera-se que os resíduos de um modelo exibam um comportamento de ruído branco, com média zero e variância constante. Qualquer padrão observado nos resíduos pode indicar que o modelo não está capturando de forma adequada a estrutura subjacente da série temporal. É possível notar que os resíduos dos modelos criados não correspondem exatamente ao comportamento esperado. O gráfico de resíduos não exibe um padrão completamente aleatório, seguindo um padrão próximo aos dados de teste, e os gráficos de ACF e PACF mostram uma autocorrelação residual significativa para o primeiro lag. Apesar disso, é possível considerar que os resíduos estão próximos do comportamento esperado, sendo a maioria dos modelos capaz de capturar as principais estruturas dos dados de forma satisfatória.
+:::
+
+# Realizando Previsões Futuras
+::: justify
+Antes de encerrar esse post é interessante verificar o comportamento dos modelos ao realizar previsões futuras com os modelos reajustados utilizando todo o conjunto de dados.
+
+```{r}
+future_forecast_tbl <- 
+  calib_table %>% 
+  modeltime_refit(gold_mean) %>% 
+  modeltime_forecast(
+    h  = "1 year",
+    actual_data = gold_mean
+  )
+```
+
+```{r}
+future_forecast_tbl %>% 
+  plot_modeltime_forecast(.interactive = TRUE)
+```
+
+O modelo ajustado automaticamente manteve o mesmo comportamento apresentado anteriormente. Em contraste com os resultados obtidos com os modelos ajustados apenas com os dados do primeiro folder, os modelos 3 e 4 exibiram um comportamento muito semelhante e parecem demasiadamente suaves em relação à parte final dos dados. Já os modelos 2, 5 e 6, que enfatizam mais a componente periódica dos dados, parecem ser mais realistas.
+
+A utilização do conjunto de dados completo tornou os modelos que enfatizam informações mais antigas ainda mais suaves, o que não reflete o comportamento atual dos dados. Isso evidencia que o comportamento dos dados, conforme observado durante a EDA, tem sofrido mudanças significativas ao longo do tempo, tornando os dados mais recentes mais representativos para a elaboração dos modelos.
+:::
+
+# Salvando o Modelo
+
+::: justify
+O modelo escolhido para futuras comparações foi o $\texttt{ETS(M,AD,A)}$ com parâmetros $\alpha = 0.3$, $\beta = 0.01$ e $\gamma = 0.5$ (modelo 5). Que, apesar de não ser o modelo com o melhor desempenho, não foi excessivamente suavizado pela inclusão de novos dados, como no caso do modelo 3, mostrando-se mais robusto em relação a mudanças no comportamento dos dados ao longo do tempo.
+
+```{r}
+saveRDS(ets_g05, file = "ets-gamma05.rds")
+```
+:::
+
+# Referências
+
+::: justify
+[Automatic Time Series Forecasting: the forecast Package for R](https://cran.r-project.org/web/packages/forecast/vignettes/JSS2008.pdf)
+
+[Extending Modeltime (Developer Tools)](https://business-science.github.io/modeltime/articles/extending-modeltime.html)
+
+[es: Exponential Smoothing in SSOE state space model](https://rdrr.io/cran/smooth/man/es.html)
+
+[ets: Exponential smoothing state space model](https://pkg.robjhyndman.com/forecast/reference/ets.html)
+
+[Forecasting: Principles and Practice (3rd ed)-Chapter 8 Exponential smoothing](https://otexts.com/fpp3/expsmooth.html)
+
+[Forecasting using stl objects](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.html)
+
+[General Interface for Exponential Smoothing State Space Models](https://business-science.github.io/modeltime/reference/exp_smoothing.html)
+
+[General Interface for Multiple Seasonality Regression Models (TBATS, STLM)](https://business-science.github.io/modeltime/reference/seasonal_reg.html)
+:::

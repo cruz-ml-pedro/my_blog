@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pedro Lima">
+<meta name="dcterms.date" content="2023-08-05">
+
+<title>PeDrOOM Blog - Cotação do ouro - Parte 4</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../../../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="../../../../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../../../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../../../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../../../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../../../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">PeDrOOM Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../CV.html" rel="" target="">
+ <span class="menu-text">Curriculum vitæ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blog.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/cruz-ml-pedro" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/pedro-lima-8a9356268/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Cotação do ouro - Parte 4</h1>
+            <p class="subtitle lead">Modelos lm-mars</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Modelos Estatísticos</div>
+                <div class="quarto-category">Série-Temporal</div>
+                <div class="quarto-category">R</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Pedro Lima </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 5, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#modelos" id="toc-modelos" class="nav-link active" data-scroll-target="#modelos">Modelos</a></li>
+  <li><a href="#comparando-os-modelos" id="toc-comparando-os-modelos" class="nav-link" data-scroll-target="#comparando-os-modelos">Comparando os modelos</a></li>
+  <li><a href="#calibrando" id="toc-calibrando" class="nav-link" data-scroll-target="#calibrando">Calibrando</a></li>
+  <li><a href="#residual" id="toc-residual" class="nav-link" data-scroll-target="#residual">Residual</a></li>
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy">Accuracy</a></li>
+  <li><a href="#test-set-visualization" id="toc-test-set-visualization" class="nav-link" data-scroll-target="#test-set-visualization">Test set visualization</a></li>
+  <li><a href="#validação-cruzada" id="toc-validação-cruzada" class="nav-link" data-scroll-target="#validação-cruzada">Validação Cruzada</a></li>
+  <li><a href="#forecast-future" id="toc-forecast-future" class="nav-link" data-scroll-target="#forecast-future">Forecast future</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-5_7b6ea7d841062cd9687c466263828414">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-6_1dc9cff096645084a55b09e2b96b9b42">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<section id="modelos" class="level2">
+<h2 class="anchored" data-anchor-id="modelos">Modelos</h2>
+<ul>
+<li><p>Trend: Modeled using as.numeric(date)</p></li>
+<li><p>Seasonal: Modeled using month(date)</p></li>
+</ul>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-7_ce9925f704525cc57c270d90577a2060">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model_fit_lm <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(media <span class="sc">~</span> <span class="fu">as.numeric</span>(mes) <span class="sc">+</span> <span class="fu">factor</span>(<span class="fu">month</span>(mes, <span class="at">label =</span> <span class="cn">TRUE</span>), <span class="at">ordered =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> <span class="fu">training</span>(splits))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-8_19ff08ef845324b06e7112e1ada93bc0">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mars_model <span class="ot">&lt;-</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># receita do modelo</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model_spec_mars <span class="ot">&lt;-</span> <span class="fu">mars</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_engine</span>(<span class="st">"earth"</span>) </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#receita para preparar os dados</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>recipe_spec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(media <span class="sc">~</span> mes, <span class="at">data =</span> <span class="fu">training</span>(splits)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_date</span>(mes, <span class="at">features =</span> <span class="st">"month"</span>, <span class="at">ordinal =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_mutate</span>(<span class="at">date_num =</span> <span class="fu">as.numeric</span>(mes)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_normalize</span>(date_num) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_rm</span>(mes)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#colocando as receitas em um fluxo de trabalho e ajustando o modelo  </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>wflw_fit_mars <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_recipe</span>(recipe_spec) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_model</span>(model_spec_mars) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fit</span>(<span class="fu">training</span>(splits))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comparando-os-modelos" class="level2">
+<h2 class="anchored" data-anchor-id="comparando-os-modelos">Comparando os modelos</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_1abf8e341f532f8154e6918e46eb2fe1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_table <span class="ot">&lt;-</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modeltime_table</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  lm_model,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  wflw_fit_mars</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="calibrando" class="level2">
+<h2 class="anchored" data-anchor-id="calibrando">Calibrando</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_e4466a2b9d88a5b3378ad0514a842e60">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>calib_table <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  model_table <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_calibrate</span>(<span class="fu">testing</span>(splits))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="residual" class="level2">
+<h2 class="anchored" data-anchor-id="residual">Residual</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-11_d6cd239def334f9154e0e2a8fbd32ef6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calib_table %&gt;% </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   modeltime_residuals() %&gt;% </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot_modeltime_residuals(</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     .type = "seasonality",</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     .interactive = FALSE</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="accuracy">Accuracy</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_0fe6610341d8a405b483d45653c37475">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>calib_table <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_accuracy</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 9
+  .model_id .model_desc .type   mae  mape  mase smape  rmse   rsq
+      &lt;int&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1         1 LM          Test   10.5  5.89  2.30  6.09  11.5 0.624
+2         2 EARTH       Test   13.3  7.49  2.92  7.79  14.6 0.580</code></pre>
+</div>
+</div>
+</section>
+<section id="test-set-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="test-set-visualization">Test set visualization</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-13_887be7760d5b76560367e867666eb59e">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>calib_table <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_forecast</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">new_data =</span> <span class="fu">testing</span>(splits),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual_data =</span> gold_mean</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_modeltime_forecast</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-be60d3bc9ee124c05bc0" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-be60d3bc9ee124c05bc0">{"x":{"data":[{"x":["2013-01-01","2013-02-01","2013-03-01","2013-04-01","2013-05-01","2013-06-01","2013-07-01","2013-08-01","2013-09-01","2013-10-01","2013-11-01","2013-12-01","2014-01-01","2014-02-01","2014-03-01","2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01","2015-05-01","2015-06-01","2015-07-01","2015-08-01","2015-09-01","2015-10-01","2015-11-01","2015-12-01","2016-01-01","2016-02-01","2016-03-01","2016-04-01","2016-05-01","2016-06-01","2016-07-01","2016-08-01","2016-09-01","2016-10-01","2016-11-01","2016-12-01","2017-01-01","2017-02-01","2017-03-01","2017-04-01","2017-05-01","2017-06-01","2017-07-01","2017-08-01","2017-09-01","2017-10-01","2017-11-01","2017-12-01","2018-01-01","2018-02-01","2018-03-01","2018-04-01","2018-05-01","2018-06-01","2018-07-01","2018-08-01","2018-09-01","2018-10-01","2018-11-01","2018-12-01","2019-01-01","2019-02-01","2019-03-01","2019-04-01","2019-05-01","2019-06-01","2019-07-01","2019-08-01","2019-09-01","2019-10-01","2019-11-01","2019-12-01","2020-01-01","2020-02-01","2020-03-01","2020-04-01","2020-05-01","2020-06-01","2020-07-01","2020-08-01","2020-09-01","2020-10-01","2020-11-01","2020-12-01","2021-01-01","2021-02-01","2021-03-01","2021-04-01","2021-05-01","2021-06-01","2021-07-01","2021-08-01","2021-09-01","2021-10-01","2021-11-01","2021-12-01","2022-01-01","2022-02-01","2022-03-01","2022-04-01","2022-05-01","2022-06-01","2022-07-01","2022-08-01","2022-09-01","2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01","2023-09-01","2023-08-01","2023-07-01","2023-06-01","2023-05-01","2023-04-01","2023-03-01","2023-02-01","2023-01-01","2022-12-01","2022-11-01","2022-10-01","2022-09-01","2022-08-01","2022-07-01","2022-06-01","2022-05-01","2022-04-01","2022-03-01","2022-02-01","2022-01-01","2021-12-01","2021-11-01","2021-10-01","2021-09-01","2021-08-01","2021-07-01","2021-06-01","2021-05-01","2021-04-01","2021-03-01","2021-02-01","2021-01-01","2020-12-01","2020-11-01","2020-10-01","2020-09-01","2020-08-01","2020-07-01","2020-06-01","2020-05-01","2020-04-01","2020-03-01","2020-02-01","2020-01-01","2019-12-01","2019-11-01","2019-10-01","2019-09-01","2019-08-01","2019-07-01","2019-06-01","2019-05-01","2019-04-01","2019-03-01","2019-02-01","2019-01-01","2018-12-01","2018-11-01","2018-10-01","2018-09-01","2018-08-01","2018-07-01","2018-06-01","2018-05-01","2018-04-01","2018-03-01","2018-02-01","2018-01-01","2017-12-01","2017-11-01","2017-10-01","2017-09-01","2017-08-01","2017-07-01","2017-06-01","2017-05-01","2017-04-01","2017-03-01","2017-02-01","2017-01-01","2016-12-01","2016-11-01","2016-10-01","2016-09-01","2016-08-01","2016-07-01","2016-06-01","2016-05-01","2016-04-01","2016-03-01","2016-02-01","2016-01-01","2015-12-01","2015-11-01","2015-10-01","2015-09-01","2015-08-01","2015-07-01","2015-06-01","2015-05-01","2015-04-01","2015-03-01","2015-02-01","2015-01-01","2014-12-01","2014-11-01","2014-10-01","2014-09-01","2014-08-01","2014-07-01","2014-06-01","2014-05-01","2014-04-01","2014-03-01","2014-02-01","2014-01-01","2013-12-01","2013-11-01","2013-10-01","2013-09-01","2013-08-01","2013-07-01","2013-06-01","2013-05-01","2013-04-01","2013-03-01","2013-02-01","2013-01-01","2013-01-01"],"y":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":[".index: 2013-01-01<br />.value: 161.6733<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-02-01<br />.value: 157.6026<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-03-01<br />.value: 154.1335<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-04-01<br />.value: 143.6223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-05-01<br />.value: 136.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-06-01<br />.value: 129.6275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-07-01<br />.value: 124.5000<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-08-01<br />.value: 130.6495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-09-01<br />.value: 130.1940<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-10-01<br />.value: 126.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-11-01<br />.value: 123.0995<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-12-01<br />.value: 117.9129<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-01-01<br />.value: 120.0452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-02-01<br />.value: 125.3863<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-03-01<br />.value: 128.6010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-04-01<br />.value: 125.1343<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-05-01<br />.value: 124.0657<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-06-01<br />.value: 123.4690<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-07-01<br />.value: 126.2314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-08-01<br />.value: 124.6390<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-09-01<br />.value: 118.8629<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-10-01<br />.value: 117.5639<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-11-01<br />.value: 113.0495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-12-01<br />.value: 115.1936<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-01-01<br />.value: 120.3845<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-02-01<br />.value: 117.7737<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-03-01<br />.value: 113.1659<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-04-01<br />.value: 115.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-05-01<br />.value: 114.9670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-06-01<br />.value: 113.3518<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-07-01<br />.value: 108.2091<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-08-01<br />.value: 107.2281<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-09-01<br />.value: 107.8329<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-10-01<br />.value: 110.8818<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-11-01<br />.value: 103.8530<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-12-01<br />.value: 102.2559<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-01-01<br />.value: 105.1437<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-02-01<br />.value: 114.8840<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-03-01<br />.value: 118.9814<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-04-01<br />.value: 118.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-05-01<br />.value: 120.2805<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-06-01<br />.value: 121.9359<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-07-01<br />.value: 127.8365<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-08-01<br />.value: 127.7283<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-09-01<br />.value: 126.5467<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-10-01<br />.value: 120.7352<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-11-01<br />.value: 117.8276<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-12-01<br />.value: 109.6671<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-01-01<br />.value: 113.7645<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-02-01<br />.value: 117.6316<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-03-01<br />.value: 117.2709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-04-01<br />.value: 120.9100<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-05-01<br />.value: 118.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-06-01<br />.value: 119.8641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-07-01<br />.value: 117.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-08-01<br />.value: 122.1083<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-09-01<br />.value: 124.9220<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-10-01<br />.value: 121.6655<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-11-01<br />.value: 121.7029<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-12-01<br />.value: 120.2505<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-01-01<br />.value: 126.4010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-02-01<br />.value: 126.2121<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-03-01<br />.value: 125.7886<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-04-01<br />.value: 126.5762<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-05-01<br />.value: 123.5350<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-06-01<br />.value: 121.3152<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-07-01<br />.value: 117.1405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-08-01<br />.value: 113.6196<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-09-01<br />.value: 113.3689<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-10-01<br />.value: 114.9948<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-11-01<br />.value: 115.4567<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-12-01<br />.value: 118.4384<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-01-01<br />.value: 122.2405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-02-01<br />.value: 124.5884<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-03-01<br />.value: 122.8852<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-04-01<br />.value: 121.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-05-01<br />.value: 121.2118<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-06-01<br />.value: 128.4715<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-07-01<br />.value: 133.4841<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-08-01<br />.value: 141.8223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-09-01<br />.value: 142.0605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-10-01<br />.value: 140.8748<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-11-01<br />.value: 138.5705<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-12-01<br />.value: 139.6105<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-01-01<br />.value: 147.0214<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-02-01<br />.value: 150.1521<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-03-01<br />.value: 149.5950<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-04-01<br />.value: 158.8300<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-05-01<br />.value: 161.6820<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-06-01<br />.value: 163.2695<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-07-01<br />.value: 173.8209<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-08-01<br />.value: 184.9919<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-09-01<br />.value: 180.5962<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-10-01<br />.value: 178.4036<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-11-01<br />.value: 175.3155<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-12-01<br />.value: 174.4714<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-01-01<br />.value: 175.0237<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-02-01<br />.value: 169.3432<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-03-01<br />.value: 161.2452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-04-01<br />.value: 164.9419<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-05-01<br />.value: 173.3370<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-06-01<br />.value: 171.5641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-07-01<br />.value: 169.0600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-08-01<br />.value: 167.1095<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-09-01<br />.value: 166.0405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-10-01<br />.value: 166.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-11-01<br />.value: 170.0790<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-12-01<br />.value: 167.4545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-01-01<br />.value: 169.6110<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-02-01<br />.value: 173.4605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-03-01<br />.value: 182.1404<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-04-01<br />.value: 180.5545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-05-01<br />.value: 172.3824<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-06-01<br />.value: 171.2600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-07-01<br />.value: 161.4650<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-08-01<br />.value: 164.2522<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-09-01<br />.value: 156.4019<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-10-01<br />.value: 155.1367<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-11-01<br />.value: 160.8614<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-12-01<br />.value: 167.2338<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-01-01<br />.value: 176.9275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-02-01<br />.value: 172.4532<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-03-01<br />.value: 178.0157<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-04-01<br />.value: 185.9911<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-05-01<br />.value: 185.1709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-06-01<br />.value: 180.2190<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-07-01<br />.value: 181.0670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-08-01<br />.value: 178.0287<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-09-01<br />.value: 178.6500<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-09-01<br />.value: 178.6500<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-08-01<br />.value: 178.0287<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-07-01<br />.value: 181.0670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-06-01<br />.value: 180.2190<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-05-01<br />.value: 185.1709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-04-01<br />.value: 185.9911<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-03-01<br />.value: 178.0157<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-02-01<br />.value: 172.4532<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-01-01<br />.value: 176.9275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-12-01<br />.value: 167.2338<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-11-01<br />.value: 160.8614<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-10-01<br />.value: 155.1367<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-09-01<br />.value: 156.4019<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-08-01<br />.value: 164.2522<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-07-01<br />.value: 161.4650<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-06-01<br />.value: 171.2600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-05-01<br />.value: 172.3824<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-04-01<br />.value: 180.5545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-03-01<br />.value: 182.1404<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-02-01<br />.value: 173.4605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-01-01<br />.value: 169.6110<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-12-01<br />.value: 167.4545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-11-01<br />.value: 170.0790<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-10-01<br />.value: 166.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-09-01<br />.value: 166.0405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-08-01<br />.value: 167.1095<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-07-01<br />.value: 169.0600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-06-01<br />.value: 171.5641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-05-01<br />.value: 173.3370<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-04-01<br />.value: 164.9419<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-03-01<br />.value: 161.2452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-02-01<br />.value: 169.3432<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-01-01<br />.value: 175.0237<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-12-01<br />.value: 174.4714<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-11-01<br />.value: 175.3155<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-10-01<br />.value: 178.4036<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-09-01<br />.value: 180.5962<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-08-01<br />.value: 184.9919<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-07-01<br />.value: 173.8209<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-06-01<br />.value: 163.2695<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-05-01<br />.value: 161.6820<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-04-01<br />.value: 158.8300<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-03-01<br />.value: 149.5950<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-02-01<br />.value: 150.1521<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-01-01<br />.value: 147.0214<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-12-01<br />.value: 139.6105<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-11-01<br />.value: 138.5705<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-10-01<br />.value: 140.8748<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-09-01<br />.value: 142.0605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-08-01<br />.value: 141.8223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-07-01<br />.value: 133.4841<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-06-01<br />.value: 128.4715<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-05-01<br />.value: 121.2118<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-04-01<br />.value: 121.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-03-01<br />.value: 122.8852<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-02-01<br />.value: 124.5884<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-01-01<br />.value: 122.2405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-12-01<br />.value: 118.4384<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-11-01<br />.value: 115.4567<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-10-01<br />.value: 114.9948<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-09-01<br />.value: 113.3689<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-08-01<br />.value: 113.6196<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-07-01<br />.value: 117.1405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-06-01<br />.value: 121.3152<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-05-01<br />.value: 123.5350<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-04-01<br />.value: 126.5762<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-03-01<br />.value: 125.7886<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-02-01<br />.value: 126.2121<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-01-01<br />.value: 126.4010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-12-01<br />.value: 120.2505<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-11-01<br />.value: 121.7029<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-10-01<br />.value: 121.6655<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-09-01<br />.value: 124.9220<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-08-01<br />.value: 122.1083<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-07-01<br />.value: 117.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-06-01<br />.value: 119.8641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-05-01<br />.value: 118.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-04-01<br />.value: 120.9100<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-03-01<br />.value: 117.2709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-02-01<br />.value: 117.6316<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-01-01<br />.value: 113.7645<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-12-01<br />.value: 109.6671<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-11-01<br />.value: 117.8276<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-10-01<br />.value: 120.7352<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-09-01<br />.value: 126.5467<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-08-01<br />.value: 127.7283<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-07-01<br />.value: 127.8365<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-06-01<br />.value: 121.9359<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-05-01<br />.value: 120.2805<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-04-01<br />.value: 118.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-03-01<br />.value: 118.9814<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-02-01<br />.value: 114.8840<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-01-01<br />.value: 105.1437<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-12-01<br />.value: 102.2559<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-11-01<br />.value: 103.8530<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-10-01<br />.value: 110.8818<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-09-01<br />.value: 107.8329<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-08-01<br />.value: 107.2281<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-07-01<br />.value: 108.2091<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-06-01<br />.value: 113.3518<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-05-01<br />.value: 114.9670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-04-01<br />.value: 115.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-03-01<br />.value: 113.1659<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-02-01<br />.value: 117.7737<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-01-01<br />.value: 120.3845<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-12-01<br />.value: 115.1936<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-11-01<br />.value: 113.0495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-10-01<br />.value: 117.5639<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-09-01<br />.value: 118.8629<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-08-01<br />.value: 124.6390<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-07-01<br />.value: 126.2314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-06-01<br />.value: 123.4690<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-05-01<br />.value: 124.0657<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-04-01<br />.value: 125.1343<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-03-01<br />.value: 128.6010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-02-01<br />.value: 125.3863<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-01-01<br />.value: 120.0452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-12-01<br />.value: 117.9129<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-11-01<br />.value: 123.0995<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-10-01<br />.value: 126.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-09-01<br />.value: 130.1940<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-08-01<br />.value: 130.6495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-07-01<br />.value: 124.5000<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-06-01<br />.value: 129.6275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-05-01<br />.value: 136.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-04-01<br />.value: 143.6223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-03-01<br />.value: 154.1335<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-02-01<br />.value: 157.6026<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-01-01<br />.value: 161.6733<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-01-01<br />.value: 161.6733<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(44,62,80,0.2)","dash":"none"},"fill":"toself","fillcolor":"rgba(51,51,51,0.2)","hoveron":"points","name":"ACTUAL","legendgroup":"ACTUAL","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01","2023-09-01","2023-08-01","2023-07-01","2023-06-01","2023-05-01","2023-04-01","2023-03-01","2023-02-01","2023-01-01","2022-12-01","2022-11-01","2022-10-01","2022-10-01"],"y":[137.936133519364,135.793313535203,134.271168241821,143.712219559956,145.28479289861,144.958997440863,145.163206942349,144.266658136877,143.991165723204,143.524984110487,145.993158730595,144.260931482001,190.329555891099,192.061783139693,189.593608519586,190.059790132303,190.335282545976,191.231831351448,191.027621849962,191.353417307709,189.780843969054,180.33979265092,181.861937944302,184.004757928463,137.936133519364],"text":[".index: 2022-10-01<br />.value: 160.9704<br />.conf_lo: 137.9361<br />.conf_hi: 184.0048<br />.model_desc: 1_LM",".index: 2022-11-01<br />.value: 158.8276<br />.conf_lo: 135.7933<br />.conf_hi: 181.8619<br />.model_desc: 1_LM",".index: 2022-12-01<br />.value: 157.3055<br />.conf_lo: 134.2712<br />.conf_hi: 180.3398<br />.model_desc: 1_LM",".index: 2023-01-01<br />.value: 166.7465<br />.conf_lo: 143.7122<br />.conf_hi: 189.7808<br />.model_desc: 1_LM",".index: 2023-02-01<br />.value: 168.3191<br />.conf_lo: 145.2848<br />.conf_hi: 191.3534<br />.model_desc: 1_LM",".index: 2023-03-01<br />.value: 167.9933<br />.conf_lo: 144.9590<br />.conf_hi: 191.0276<br />.model_desc: 1_LM",".index: 2023-04-01<br />.value: 168.1975<br />.conf_lo: 145.1632<br />.conf_hi: 191.2318<br />.model_desc: 1_LM",".index: 2023-05-01<br />.value: 167.3010<br />.conf_lo: 144.2667<br />.conf_hi: 190.3353<br />.model_desc: 1_LM",".index: 2023-06-01<br />.value: 167.0255<br />.conf_lo: 143.9912<br />.conf_hi: 190.0598<br />.model_desc: 1_LM",".index: 2023-07-01<br />.value: 166.5593<br />.conf_lo: 143.5250<br />.conf_hi: 189.5936<br />.model_desc: 1_LM",".index: 2023-08-01<br />.value: 169.0275<br />.conf_lo: 145.9932<br />.conf_hi: 192.0618<br />.model_desc: 1_LM",".index: 2023-09-01<br />.value: 167.2952<br />.conf_lo: 144.2609<br />.conf_hi: 190.3296<br />.model_desc: 1_LM",".index: 2023-09-01<br />.value: 167.2952<br />.conf_lo: 144.2609<br />.conf_hi: 190.3296<br />.model_desc: 1_LM",".index: 2023-08-01<br />.value: 169.0275<br />.conf_lo: 145.9932<br />.conf_hi: 192.0618<br />.model_desc: 1_LM",".index: 2023-07-01<br />.value: 166.5593<br />.conf_lo: 143.5250<br />.conf_hi: 189.5936<br />.model_desc: 1_LM",".index: 2023-06-01<br />.value: 167.0255<br />.conf_lo: 143.9912<br />.conf_hi: 190.0598<br />.model_desc: 1_LM",".index: 2023-05-01<br />.value: 167.3010<br />.conf_lo: 144.2667<br />.conf_hi: 190.3353<br />.model_desc: 1_LM",".index: 2023-04-01<br />.value: 168.1975<br />.conf_lo: 145.1632<br />.conf_hi: 191.2318<br />.model_desc: 1_LM",".index: 2023-03-01<br />.value: 167.9933<br />.conf_lo: 144.9590<br />.conf_hi: 191.0276<br />.model_desc: 1_LM",".index: 2023-02-01<br />.value: 168.3191<br />.conf_lo: 145.2848<br />.conf_hi: 191.3534<br />.model_desc: 1_LM",".index: 2023-01-01<br />.value: 166.7465<br />.conf_lo: 143.7122<br />.conf_hi: 189.7808<br />.model_desc: 1_LM",".index: 2022-12-01<br />.value: 157.3055<br />.conf_lo: 134.2712<br />.conf_hi: 180.3398<br />.model_desc: 1_LM",".index: 2022-11-01<br />.value: 158.8276<br />.conf_lo: 135.7933<br />.conf_hi: 181.8619<br />.model_desc: 1_LM",".index: 2022-10-01<br />.value: 160.9704<br />.conf_lo: 137.9361<br />.conf_hi: 184.0048<br />.model_desc: 1_LM",".index: 2022-10-01<br />.value: 160.9704<br />.conf_lo: 137.9361<br />.conf_hi: 184.0048<br />.model_desc: 1_LM"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(227,26,28,0.2)","dash":"none"},"fill":"toself","fillcolor":"rgba(51,51,51,0.2)","hoveron":"points","name":"1_LM","legendgroup":"1_LM","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01","2023-09-01","2023-09-01","2023-08-01","2023-07-01","2023-06-01","2023-05-01","2023-04-01","2023-03-01","2023-02-01","2023-01-01","2022-12-01","2022-11-01","2022-10-01","2022-10-01"],"y":[136.999556113644,136.657043128249,136.325578948835,135.983065963441,135.640552978046,135.331186410593,134.988673425199,134.657209245785,134.31469626039,133.983232080976,133.640719095582,133.298206110187,133.298206110187,191.677293125293,192.019806110687,192.362319096082,192.693783275496,193.03629626089,193.367760440304,193.710273425699,194.019639993152,194.362152978546,194.704665963941,195.036130143355,195.378643128749,136.999556113644],"text":[".index: 2022-10-01<br />.value: 166.1891<br />.conf_lo: 136.9996<br />.conf_hi: 195.3786<br />.model_desc: 2_EARTH",".index: 2022-11-01<br />.value: 165.8466<br />.conf_lo: 136.6570<br />.conf_hi: 195.0361<br />.model_desc: 2_EARTH",".index: 2022-12-01<br />.value: 165.5151<br />.conf_lo: 136.3256<br />.conf_hi: 194.7047<br />.model_desc: 2_EARTH",".index: 2023-01-01<br />.value: 165.1726<br />.conf_lo: 135.9831<br />.conf_hi: 194.3622<br />.model_desc: 2_EARTH",".index: 2023-02-01<br />.value: 164.8301<br />.conf_lo: 135.6406<br />.conf_hi: 194.0196<br />.model_desc: 2_EARTH",".index: 2023-03-01<br />.value: 164.5207<br />.conf_lo: 135.3312<br />.conf_hi: 193.7103<br />.model_desc: 2_EARTH",".index: 2023-04-01<br />.value: 164.1782<br />.conf_lo: 134.9887<br />.conf_hi: 193.3678<br />.model_desc: 2_EARTH",".index: 2023-05-01<br />.value: 163.8468<br />.conf_lo: 134.6572<br />.conf_hi: 193.0363<br />.model_desc: 2_EARTH",".index: 2023-06-01<br />.value: 163.5042<br />.conf_lo: 134.3147<br />.conf_hi: 192.6938<br />.model_desc: 2_EARTH",".index: 2023-07-01<br />.value: 163.1728<br />.conf_lo: 133.9832<br />.conf_hi: 192.3623<br />.model_desc: 2_EARTH",".index: 2023-08-01<br />.value: 162.8303<br />.conf_lo: 133.6407<br />.conf_hi: 192.0198<br />.model_desc: 2_EARTH",".index: 2023-09-01<br />.value: 162.4877<br />.conf_lo: 133.2982<br />.conf_hi: 191.6773<br />.model_desc: 2_EARTH",".index: 2023-09-01<br />.value: 162.4877<br />.conf_lo: 133.2982<br />.conf_hi: 191.6773<br />.model_desc: 2_EARTH",".index: 2023-09-01<br />.value: 162.4877<br />.conf_lo: 133.2982<br />.conf_hi: 191.6773<br />.model_desc: 2_EARTH",".index: 2023-08-01<br />.value: 162.8303<br />.conf_lo: 133.6407<br />.conf_hi: 192.0198<br />.model_desc: 2_EARTH",".index: 2023-07-01<br />.value: 163.1728<br />.conf_lo: 133.9832<br />.conf_hi: 192.3623<br />.model_desc: 2_EARTH",".index: 2023-06-01<br />.value: 163.5042<br />.conf_lo: 134.3147<br />.conf_hi: 192.6938<br />.model_desc: 2_EARTH",".index: 2023-05-01<br />.value: 163.8468<br />.conf_lo: 134.6572<br />.conf_hi: 193.0363<br />.model_desc: 2_EARTH",".index: 2023-04-01<br />.value: 164.1782<br />.conf_lo: 134.9887<br />.conf_hi: 193.3678<br />.model_desc: 2_EARTH",".index: 2023-03-01<br />.value: 164.5207<br />.conf_lo: 135.3312<br />.conf_hi: 193.7103<br />.model_desc: 2_EARTH",".index: 2023-02-01<br />.value: 164.8301<br />.conf_lo: 135.6406<br />.conf_hi: 194.0196<br />.model_desc: 2_EARTH",".index: 2023-01-01<br />.value: 165.1726<br />.conf_lo: 135.9831<br />.conf_hi: 194.3622<br />.model_desc: 2_EARTH",".index: 2022-12-01<br />.value: 165.5151<br />.conf_lo: 136.3256<br />.conf_hi: 194.7047<br />.model_desc: 2_EARTH",".index: 2022-11-01<br />.value: 165.8466<br />.conf_lo: 136.6570<br />.conf_hi: 195.0361<br />.model_desc: 2_EARTH",".index: 2022-10-01<br />.value: 166.1891<br />.conf_lo: 136.9996<br />.conf_hi: 195.3786<br />.model_desc: 2_EARTH",".index: 2022-10-01<br />.value: 166.1891<br />.conf_lo: 136.9996<br />.conf_hi: 195.3786<br />.model_desc: 2_EARTH"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(24,188,156,0.2)","dash":"none"},"fill":"toself","fillcolor":"rgba(51,51,51,0.2)","hoveron":"points","name":"2_EARTH","legendgroup":"2_EARTH","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2013-01-01","2013-02-01","2013-03-01","2013-04-01","2013-05-01","2013-06-01","2013-07-01","2013-08-01","2013-09-01","2013-10-01","2013-11-01","2013-12-01","2014-01-01","2014-02-01","2014-03-01","2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01","2015-05-01","2015-06-01","2015-07-01","2015-08-01","2015-09-01","2015-10-01","2015-11-01","2015-12-01","2016-01-01","2016-02-01","2016-03-01","2016-04-01","2016-05-01","2016-06-01","2016-07-01","2016-08-01","2016-09-01","2016-10-01","2016-11-01","2016-12-01","2017-01-01","2017-02-01","2017-03-01","2017-04-01","2017-05-01","2017-06-01","2017-07-01","2017-08-01","2017-09-01","2017-10-01","2017-11-01","2017-12-01","2018-01-01","2018-02-01","2018-03-01","2018-04-01","2018-05-01","2018-06-01","2018-07-01","2018-08-01","2018-09-01","2018-10-01","2018-11-01","2018-12-01","2019-01-01","2019-02-01","2019-03-01","2019-04-01","2019-05-01","2019-06-01","2019-07-01","2019-08-01","2019-09-01","2019-10-01","2019-11-01","2019-12-01","2020-01-01","2020-02-01","2020-03-01","2020-04-01","2020-05-01","2020-06-01","2020-07-01","2020-08-01","2020-09-01","2020-10-01","2020-11-01","2020-12-01","2021-01-01","2021-02-01","2021-03-01","2021-04-01","2021-05-01","2021-06-01","2021-07-01","2021-08-01","2021-09-01","2021-10-01","2021-11-01","2021-12-01","2022-01-01","2022-02-01","2022-03-01","2022-04-01","2022-05-01","2022-06-01","2022-07-01","2022-08-01","2022-09-01","2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01"],"y":[161.673331851051,157.602632221423,154.133501434326,143.622272144664,136.990909229625,129.627500152588,124.499999653209,130.64954514937,130.193999099731,126.990869605023,123.099499130249,117.912857782273,120.045237949916,125.386315998278,128.600951785133,125.134285336449,124.065714154925,123.469047909691,126.231362429532,124.63904716855,118.862857273647,117.563912101414,113.049474214253,115.193636113947,120.38450088501,117.773684451455,113.165909507058,115.12904830206,114.966999816895,113.351818084717,108.209090839733,107.228095281692,107.832856677827,110.881818251176,103.85299949646,102.255908619274,105.143684387207,114.884000015259,118.981363816695,118.719524201893,120.280477251325,121.935908230868,127.836500549316,127.728260869565,126.546667189825,120.7352385748,117.827619280134,109.667142595564,113.764500427246,117.631578947368,117.270870042884,120.909999646639,118.431364579634,119.864090659402,117.719499588013,122.108261108398,124.92200050354,121.665454170921,121.702856881278,120.250500106812,126.400953020368,126.212105600457,125.788571675618,126.576190766834,123.535000540993,121.315238589332,117.140476045154,113.619564553966,113.368947882401,114.994783152705,115.456666128976,118.438421149003,122.240475609189,124.588421470241,122.885238284156,121.431429545085,121.211818695068,128.471499633789,133.484089938077,141.822272560813,142.060499572754,140.874781732974,138.570499420166,139.61047581264,147.021429152716,150.15210442794,149.594999139959,158.829998924619,161.681998443604,163.269545121626,173.820906899192,184.991904849098,180.596189953032,178.403637279164,175.31549987793,174.47136480158,175.023682443719,169.343158922697,161.245218028193,164.941903977167,173.337000274658,171.564091769132,169.059999011812,167.109545621005,166.04047648112,166.129045758929,170.079046340216,167.454546148127,169.611000061035,173.460527118884,182.140433933424,180.554499816895,172.382381620861,171.260000319708,161.464999389648,164.252173382303,156.401903424944,155.136666434152,160.861427670433,167.233808971587,176.927500152588,172.453157926861,178.015651537024,185.99105272795,185.170909534801,180.219047183082,181.066999053955,178.028697138247,178.650001525879],"text":[".index: 2013-01-01<br />.value: 161.6733<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-02-01<br />.value: 157.6026<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-03-01<br />.value: 154.1335<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-04-01<br />.value: 143.6223<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-05-01<br />.value: 136.9909<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-06-01<br />.value: 129.6275<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-07-01<br />.value: 124.5000<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-08-01<br />.value: 130.6495<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-09-01<br />.value: 130.1940<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-10-01<br />.value: 126.9909<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-11-01<br />.value: 123.0995<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-12-01<br />.value: 117.9129<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-01-01<br />.value: 120.0452<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-02-01<br />.value: 125.3863<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-03-01<br />.value: 128.6010<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-04-01<br />.value: 125.1343<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-05-01<br />.value: 124.0657<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-06-01<br />.value: 123.4690<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-07-01<br />.value: 126.2314<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-08-01<br />.value: 124.6390<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-09-01<br />.value: 118.8629<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-10-01<br />.value: 117.5639<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-11-01<br />.value: 113.0495<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-12-01<br />.value: 115.1936<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-01-01<br />.value: 120.3845<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-02-01<br />.value: 117.7737<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-03-01<br />.value: 113.1659<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-04-01<br />.value: 115.1290<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-05-01<br />.value: 114.9670<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-06-01<br />.value: 113.3518<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-07-01<br />.value: 108.2091<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-08-01<br />.value: 107.2281<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-09-01<br />.value: 107.8329<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-10-01<br />.value: 110.8818<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-11-01<br />.value: 103.8530<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-12-01<br />.value: 102.2559<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-01-01<br />.value: 105.1437<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-02-01<br />.value: 114.8840<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-03-01<br />.value: 118.9814<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-04-01<br />.value: 118.7195<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-05-01<br />.value: 120.2805<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-06-01<br />.value: 121.9359<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-07-01<br />.value: 127.8365<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-08-01<br />.value: 127.7283<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-09-01<br />.value: 126.5467<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-10-01<br />.value: 120.7352<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-11-01<br />.value: 117.8276<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-12-01<br />.value: 109.6671<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-01-01<br />.value: 113.7645<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-02-01<br />.value: 117.6316<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-03-01<br />.value: 117.2709<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-04-01<br />.value: 120.9100<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-05-01<br />.value: 118.4314<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-06-01<br />.value: 119.8641<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-07-01<br />.value: 117.7195<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-08-01<br />.value: 122.1083<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-09-01<br />.value: 124.9220<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-10-01<br />.value: 121.6655<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-11-01<br />.value: 121.7029<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-12-01<br />.value: 120.2505<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-01-01<br />.value: 126.4010<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-02-01<br />.value: 126.2121<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-03-01<br />.value: 125.7886<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-04-01<br />.value: 126.5762<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-05-01<br />.value: 123.5350<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-06-01<br />.value: 121.3152<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-07-01<br />.value: 117.1405<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-08-01<br />.value: 113.6196<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-09-01<br />.value: 113.3689<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-10-01<br />.value: 114.9948<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-11-01<br />.value: 115.4567<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-12-01<br />.value: 118.4384<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-01-01<br />.value: 122.2405<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-02-01<br />.value: 124.5884<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-03-01<br />.value: 122.8852<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-04-01<br />.value: 121.4314<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-05-01<br />.value: 121.2118<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-06-01<br />.value: 128.4715<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-07-01<br />.value: 133.4841<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-08-01<br />.value: 141.8223<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-09-01<br />.value: 142.0605<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-10-01<br />.value: 140.8748<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-11-01<br />.value: 138.5705<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-12-01<br />.value: 139.6105<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-01-01<br />.value: 147.0214<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-02-01<br />.value: 150.1521<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-03-01<br />.value: 149.5950<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-04-01<br />.value: 158.8300<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-05-01<br />.value: 161.6820<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-06-01<br />.value: 163.2695<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-07-01<br />.value: 173.8209<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-08-01<br />.value: 184.9919<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-09-01<br />.value: 180.5962<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-10-01<br />.value: 178.4036<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-11-01<br />.value: 175.3155<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-12-01<br />.value: 174.4714<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-01-01<br />.value: 175.0237<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-02-01<br />.value: 169.3432<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-03-01<br />.value: 161.2452<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-04-01<br />.value: 164.9419<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-05-01<br />.value: 173.3370<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-06-01<br />.value: 171.5641<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-07-01<br />.value: 169.0600<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-08-01<br />.value: 167.1095<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-09-01<br />.value: 166.0405<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-10-01<br />.value: 166.1290<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-11-01<br />.value: 170.0790<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-12-01<br />.value: 167.4545<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-01-01<br />.value: 169.6110<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-02-01<br />.value: 173.4605<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-03-01<br />.value: 182.1404<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-04-01<br />.value: 180.5545<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-05-01<br />.value: 172.3824<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-06-01<br />.value: 171.2600<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-07-01<br />.value: 161.4650<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-08-01<br />.value: 164.2522<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-09-01<br />.value: 156.4019<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-10-01<br />.value: 155.1367<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-11-01<br />.value: 160.8614<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-12-01<br />.value: 167.2338<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-01-01<br />.value: 176.9275<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-02-01<br />.value: 172.4532<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-03-01<br />.value: 178.0157<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-04-01<br />.value: 185.9911<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-05-01<br />.value: 185.1709<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-06-01<br />.value: 180.2190<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-07-01<br />.value: 181.0670<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-08-01<br />.value: 178.0287<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-09-01<br />.value: 178.6500<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(44,62,80,1)","dash":"solid"},"hoveron":"points","name":"ACTUAL","legendgroup":"ACTUAL","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01"],"y":[160.970445723913,158.827625739753,157.30548044637,166.746531764505,168.319105103159,167.993309645413,168.197519146898,167.300970341427,167.025477927753,166.559296315037,169.027470935144,167.29524368655],"text":[".index: 2022-10-01<br />.value: 160.9704<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2022-11-01<br />.value: 158.8276<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2022-12-01<br />.value: 157.3055<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-01-01<br />.value: 166.7465<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-02-01<br />.value: 168.3191<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-03-01<br />.value: 167.9933<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-04-01<br />.value: 168.1975<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-05-01<br />.value: 167.3010<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-06-01<br />.value: 167.0255<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-07-01<br />.value: 166.5593<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-08-01<br />.value: 169.0275<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-09-01<br />.value: 167.2952<br />.color_mod: 1_LM<br />.color_mod: 1_LM"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(227,26,28,1)","dash":"solid"},"hoveron":"points","name":"1_LM","legendgroup":"1_LM","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01"],"y":[166.189099621197,165.846586635802,165.515122456388,165.172609470993,164.830096485599,164.520729918146,164.178216932752,163.846752753338,163.504239767943,163.172775588529,162.830262603135,162.48774961774],"text":[".index: 2022-10-01<br />.value: 166.1891<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2022-11-01<br />.value: 165.8466<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2022-12-01<br />.value: 165.5151<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-01-01<br />.value: 165.1726<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-02-01<br />.value: 164.8301<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-03-01<br />.value: 164.5207<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-04-01<br />.value: 164.1782<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-05-01<br />.value: 163.8468<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-06-01<br />.value: 163.5042<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-07-01<br />.value: 163.1728<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-08-01<br />.value: 162.8303<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-09-01<br />.value: 162.4877<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(24,188,156,1)","dash":"solid"},"hoveron":"points","name":"2_EARTH","legendgroup":"2_EARTH","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.2237442922374,"r":7.30593607305936,"b":27.0319634703196,"l":28.4931506849315},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187},"title":{"text":"Forecast Plot","font":{"color":"rgba(44,62,80,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"date","autorange":true,"range":["2012-06-20","2024-03-13"],"tickmode":"auto","ticktext":["2014","2016","2018","2020","2022","2024"],"tickvals":[16071,16801,17532,18262,18993,19723],"categoryorder":"array","categoryarray":["2014","2016","2018","2020","2022","2024"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":true,"range":[97.5997718938,200.034779854223],"tickmode":"auto","ticktext":["100","125","150","175","200"],"tickvals":[100,125,150,175,200],"categoryorder":"array","categoryarray":["100","125","150","175","200"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(44,62,80,1)","width":0.33208800332088,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"title":{"text":"Legend","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"63c5bf46327":{"x":{},"y":{},"ymin":{},"ymax":{},"colour":{},"type":"scatter"},"63c5c1b4185":{"x":{},"y":{},"colour":{}}},"cur_data":"63c5bf46327","visdat":{"63c5bf46327":["function (y) ","x"],"63c5c1b4185":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="validação-cruzada" class="level2">
+<h2 class="anchored" data-anchor-id="validação-cruzada">Validação Cruzada</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-14_f7b3ea477cf1ebd3ca8804de08e6d0f0">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>resamples_fitted <span class="ot">&lt;-</span> model_table <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">modeltime_fit_resamples</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">resamples =</span> cv,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">control   =</span> <span class="fu">control_resamples</span>(<span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>resamples_fitted</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Modeltime Table
+# A tibble: 2 × 4
+  .model_id .model     .model_desc .resample_results
+      &lt;int&gt; &lt;list&gt;     &lt;chr&gt;       &lt;list&gt;           
+1         1 &lt;fit[+]&gt;   LM          &lt;lgl [1]&gt;        
+2         2 &lt;workflow&gt; EARTH       &lt;rsmp[+]&gt;        </code></pre>
+</div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-15_133004ff7d7ee9911f5d74dc8819fba8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>resamples_fitted <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_modeltime_resamples</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">.point_size  =</span> <span class="dv">3</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">.point_alpha =</span> <span class="fl">0.8</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">.interactive =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-16_eddbe8a9e29c8c983270d76cfe11162d">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>resamples_fitted <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">modeltime_resample_accuracy</span>(<span class="at">summary_fns =</span> mean) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">table_modeltime_accuracy</span>(<span class="at">.interactive =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="drrtvqgenc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#drrtvqgenc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#drrtvqgenc thead, #drrtvqgenc tbody, #drrtvqgenc tfoot, #drrtvqgenc tr, #drrtvqgenc td, #drrtvqgenc th {
+  border-style: none;
+}
+
+#drrtvqgenc p {
+  margin: 0;
+  padding: 0;
+}
+
+#drrtvqgenc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#drrtvqgenc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#drrtvqgenc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#drrtvqgenc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#drrtvqgenc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#drrtvqgenc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#drrtvqgenc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#drrtvqgenc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#drrtvqgenc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#drrtvqgenc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#drrtvqgenc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#drrtvqgenc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#drrtvqgenc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#drrtvqgenc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#drrtvqgenc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#drrtvqgenc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#drrtvqgenc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#drrtvqgenc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#drrtvqgenc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#drrtvqgenc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#drrtvqgenc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#drrtvqgenc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#drrtvqgenc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#drrtvqgenc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#drrtvqgenc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#drrtvqgenc .gt_left {
+  text-align: left;
+}
+
+#drrtvqgenc .gt_center {
+  text-align: center;
+}
+
+#drrtvqgenc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#drrtvqgenc .gt_font_normal {
+  font-weight: normal;
+}
+
+#drrtvqgenc .gt_font_bold {
+  font-weight: bold;
+}
+
+#drrtvqgenc .gt_font_italic {
+  font-style: italic;
+}
+
+#drrtvqgenc .gt_super {
+  font-size: 65%;
+}
+
+#drrtvqgenc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#drrtvqgenc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#drrtvqgenc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#drrtvqgenc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#drrtvqgenc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#drrtvqgenc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#drrtvqgenc .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="10" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">Accuracy Table</td>
+    </tr>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id=".model_id">.model_id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=".model_desc">.model_desc</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=".type">.type</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="n">n</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mae">mae</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mape">mape</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mase">mase</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="smape">smape</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="rmse">rmse</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="rsq">rsq</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers=".model_id" class="gt_row gt_right">2</td>
+<td headers=".model_desc" class="gt_row gt_left">EARTH</td>
+<td headers=".type" class="gt_row gt_left">Resamples</td>
+<td headers="n" class="gt_row gt_right">6</td>
+<td headers="mae" class="gt_row gt_right">12.06</td>
+<td headers="mape" class="gt_row gt_right">7.96</td>
+<td headers="mase" class="gt_row gt_right">3.48</td>
+<td headers="smape" class="gt_row gt_right">8.03</td>
+<td headers="rmse" class="gt_row gt_right">13.76</td>
+<td headers="rsq" class="gt_row gt_right">NA</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="forecast-future" class="level2">
+<h2 class="anchored" data-anchor-id="forecast-future">Forecast future</h2>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-17_97ce0f5f9007e0a070aca6a238d6962c">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>future_forecast_tbl <span class="ot">&lt;-</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  calib_table <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_refit</span>(gold_mean) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_forecast</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">h  =</span> <span class="st">"1 year"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual_data =</span> gold_mean</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-18_0478fd0f8e88022fdedd8cc57cb4f9d0">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>future_forecast_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_modeltime_forecast</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-02a712b8272d12460118" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-02a712b8272d12460118">{"x":{"data":[{"x":["2013-01-01","2013-02-01","2013-03-01","2013-04-01","2013-05-01","2013-06-01","2013-07-01","2013-08-01","2013-09-01","2013-10-01","2013-11-01","2013-12-01","2014-01-01","2014-02-01","2014-03-01","2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01","2015-05-01","2015-06-01","2015-07-01","2015-08-01","2015-09-01","2015-10-01","2015-11-01","2015-12-01","2016-01-01","2016-02-01","2016-03-01","2016-04-01","2016-05-01","2016-06-01","2016-07-01","2016-08-01","2016-09-01","2016-10-01","2016-11-01","2016-12-01","2017-01-01","2017-02-01","2017-03-01","2017-04-01","2017-05-01","2017-06-01","2017-07-01","2017-08-01","2017-09-01","2017-10-01","2017-11-01","2017-12-01","2018-01-01","2018-02-01","2018-03-01","2018-04-01","2018-05-01","2018-06-01","2018-07-01","2018-08-01","2018-09-01","2018-10-01","2018-11-01","2018-12-01","2019-01-01","2019-02-01","2019-03-01","2019-04-01","2019-05-01","2019-06-01","2019-07-01","2019-08-01","2019-09-01","2019-10-01","2019-11-01","2019-12-01","2020-01-01","2020-02-01","2020-03-01","2020-04-01","2020-05-01","2020-06-01","2020-07-01","2020-08-01","2020-09-01","2020-10-01","2020-11-01","2020-12-01","2021-01-01","2021-02-01","2021-03-01","2021-04-01","2021-05-01","2021-06-01","2021-07-01","2021-08-01","2021-09-01","2021-10-01","2021-11-01","2021-12-01","2022-01-01","2022-02-01","2022-03-01","2022-04-01","2022-05-01","2022-06-01","2022-07-01","2022-08-01","2022-09-01","2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01","2023-09-01","2023-08-01","2023-07-01","2023-06-01","2023-05-01","2023-04-01","2023-03-01","2023-02-01","2023-01-01","2022-12-01","2022-11-01","2022-10-01","2022-09-01","2022-08-01","2022-07-01","2022-06-01","2022-05-01","2022-04-01","2022-03-01","2022-02-01","2022-01-01","2021-12-01","2021-11-01","2021-10-01","2021-09-01","2021-08-01","2021-07-01","2021-06-01","2021-05-01","2021-04-01","2021-03-01","2021-02-01","2021-01-01","2020-12-01","2020-11-01","2020-10-01","2020-09-01","2020-08-01","2020-07-01","2020-06-01","2020-05-01","2020-04-01","2020-03-01","2020-02-01","2020-01-01","2019-12-01","2019-11-01","2019-10-01","2019-09-01","2019-08-01","2019-07-01","2019-06-01","2019-05-01","2019-04-01","2019-03-01","2019-02-01","2019-01-01","2018-12-01","2018-11-01","2018-10-01","2018-09-01","2018-08-01","2018-07-01","2018-06-01","2018-05-01","2018-04-01","2018-03-01","2018-02-01","2018-01-01","2017-12-01","2017-11-01","2017-10-01","2017-09-01","2017-08-01","2017-07-01","2017-06-01","2017-05-01","2017-04-01","2017-03-01","2017-02-01","2017-01-01","2016-12-01","2016-11-01","2016-10-01","2016-09-01","2016-08-01","2016-07-01","2016-06-01","2016-05-01","2016-04-01","2016-03-01","2016-02-01","2016-01-01","2015-12-01","2015-11-01","2015-10-01","2015-09-01","2015-08-01","2015-07-01","2015-06-01","2015-05-01","2015-04-01","2015-03-01","2015-02-01","2015-01-01","2014-12-01","2014-11-01","2014-10-01","2014-09-01","2014-08-01","2014-07-01","2014-06-01","2014-05-01","2014-04-01","2014-03-01","2014-02-01","2014-01-01","2013-12-01","2013-11-01","2013-10-01","2013-09-01","2013-08-01","2013-07-01","2013-06-01","2013-05-01","2013-04-01","2013-03-01","2013-02-01","2013-01-01","2013-01-01"],"y":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"text":[".index: 2013-01-01<br />.value: 161.6733<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-02-01<br />.value: 157.6026<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-03-01<br />.value: 154.1335<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-04-01<br />.value: 143.6223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-05-01<br />.value: 136.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-06-01<br />.value: 129.6275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-07-01<br />.value: 124.5000<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-08-01<br />.value: 130.6495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-09-01<br />.value: 130.1940<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-10-01<br />.value: 126.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-11-01<br />.value: 123.0995<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-12-01<br />.value: 117.9129<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-01-01<br />.value: 120.0452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-02-01<br />.value: 125.3863<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-03-01<br />.value: 128.6010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-04-01<br />.value: 125.1343<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-05-01<br />.value: 124.0657<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-06-01<br />.value: 123.4690<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-07-01<br />.value: 126.2314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-08-01<br />.value: 124.6390<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-09-01<br />.value: 118.8629<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-10-01<br />.value: 117.5639<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-11-01<br />.value: 113.0495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-12-01<br />.value: 115.1936<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-01-01<br />.value: 120.3845<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-02-01<br />.value: 117.7737<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-03-01<br />.value: 113.1659<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-04-01<br />.value: 115.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-05-01<br />.value: 114.9670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-06-01<br />.value: 113.3518<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-07-01<br />.value: 108.2091<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-08-01<br />.value: 107.2281<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-09-01<br />.value: 107.8329<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-10-01<br />.value: 110.8818<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-11-01<br />.value: 103.8530<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-12-01<br />.value: 102.2559<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-01-01<br />.value: 105.1437<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-02-01<br />.value: 114.8840<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-03-01<br />.value: 118.9814<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-04-01<br />.value: 118.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-05-01<br />.value: 120.2805<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-06-01<br />.value: 121.9359<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-07-01<br />.value: 127.8365<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-08-01<br />.value: 127.7283<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-09-01<br />.value: 126.5467<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-10-01<br />.value: 120.7352<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-11-01<br />.value: 117.8276<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-12-01<br />.value: 109.6671<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-01-01<br />.value: 113.7645<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-02-01<br />.value: 117.6316<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-03-01<br />.value: 117.2709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-04-01<br />.value: 120.9100<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-05-01<br />.value: 118.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-06-01<br />.value: 119.8641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-07-01<br />.value: 117.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-08-01<br />.value: 122.1083<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-09-01<br />.value: 124.9220<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-10-01<br />.value: 121.6655<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-11-01<br />.value: 121.7029<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-12-01<br />.value: 120.2505<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-01-01<br />.value: 126.4010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-02-01<br />.value: 126.2121<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-03-01<br />.value: 125.7886<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-04-01<br />.value: 126.5762<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-05-01<br />.value: 123.5350<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-06-01<br />.value: 121.3152<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-07-01<br />.value: 117.1405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-08-01<br />.value: 113.6196<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-09-01<br />.value: 113.3689<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-10-01<br />.value: 114.9948<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-11-01<br />.value: 115.4567<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-12-01<br />.value: 118.4384<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-01-01<br />.value: 122.2405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-02-01<br />.value: 124.5884<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-03-01<br />.value: 122.8852<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-04-01<br />.value: 121.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-05-01<br />.value: 121.2118<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-06-01<br />.value: 128.4715<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-07-01<br />.value: 133.4841<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-08-01<br />.value: 141.8223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-09-01<br />.value: 142.0605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-10-01<br />.value: 140.8748<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-11-01<br />.value: 138.5705<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-12-01<br />.value: 139.6105<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-01-01<br />.value: 147.0214<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-02-01<br />.value: 150.1521<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-03-01<br />.value: 149.5950<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-04-01<br />.value: 158.8300<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-05-01<br />.value: 161.6820<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-06-01<br />.value: 163.2695<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-07-01<br />.value: 173.8209<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-08-01<br />.value: 184.9919<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-09-01<br />.value: 180.5962<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-10-01<br />.value: 178.4036<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-11-01<br />.value: 175.3155<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-12-01<br />.value: 174.4714<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-01-01<br />.value: 175.0237<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-02-01<br />.value: 169.3432<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-03-01<br />.value: 161.2452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-04-01<br />.value: 164.9419<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-05-01<br />.value: 173.3370<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-06-01<br />.value: 171.5641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-07-01<br />.value: 169.0600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-08-01<br />.value: 167.1095<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-09-01<br />.value: 166.0405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-10-01<br />.value: 166.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-11-01<br />.value: 170.0790<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-12-01<br />.value: 167.4545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-01-01<br />.value: 169.6110<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-02-01<br />.value: 173.4605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-03-01<br />.value: 182.1404<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-04-01<br />.value: 180.5545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-05-01<br />.value: 172.3824<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-06-01<br />.value: 171.2600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-07-01<br />.value: 161.4650<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-08-01<br />.value: 164.2522<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-09-01<br />.value: 156.4019<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-10-01<br />.value: 155.1367<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-11-01<br />.value: 160.8614<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-12-01<br />.value: 167.2338<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-01-01<br />.value: 176.9275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-02-01<br />.value: 172.4532<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-03-01<br />.value: 178.0157<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-04-01<br />.value: 185.9911<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-05-01<br />.value: 185.1709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-06-01<br />.value: 180.2190<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-07-01<br />.value: 181.0670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-08-01<br />.value: 178.0287<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-09-01<br />.value: 178.6500<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-09-01<br />.value: 178.6500<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-08-01<br />.value: 178.0287<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-07-01<br />.value: 181.0670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-06-01<br />.value: 180.2190<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-05-01<br />.value: 185.1709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-04-01<br />.value: 185.9911<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-03-01<br />.value: 178.0157<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-02-01<br />.value: 172.4532<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2023-01-01<br />.value: 176.9275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-12-01<br />.value: 167.2338<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-11-01<br />.value: 160.8614<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-10-01<br />.value: 155.1367<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-09-01<br />.value: 156.4019<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-08-01<br />.value: 164.2522<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-07-01<br />.value: 161.4650<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-06-01<br />.value: 171.2600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-05-01<br />.value: 172.3824<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-04-01<br />.value: 180.5545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-03-01<br />.value: 182.1404<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-02-01<br />.value: 173.4605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2022-01-01<br />.value: 169.6110<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-12-01<br />.value: 167.4545<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-11-01<br />.value: 170.0790<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-10-01<br />.value: 166.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-09-01<br />.value: 166.0405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-08-01<br />.value: 167.1095<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-07-01<br />.value: 169.0600<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-06-01<br />.value: 171.5641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-05-01<br />.value: 173.3370<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-04-01<br />.value: 164.9419<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-03-01<br />.value: 161.2452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-02-01<br />.value: 169.3432<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2021-01-01<br />.value: 175.0237<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-12-01<br />.value: 174.4714<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-11-01<br />.value: 175.3155<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-10-01<br />.value: 178.4036<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-09-01<br />.value: 180.5962<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-08-01<br />.value: 184.9919<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-07-01<br />.value: 173.8209<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-06-01<br />.value: 163.2695<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-05-01<br />.value: 161.6820<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-04-01<br />.value: 158.8300<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-03-01<br />.value: 149.5950<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-02-01<br />.value: 150.1521<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2020-01-01<br />.value: 147.0214<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-12-01<br />.value: 139.6105<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-11-01<br />.value: 138.5705<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-10-01<br />.value: 140.8748<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-09-01<br />.value: 142.0605<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-08-01<br />.value: 141.8223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-07-01<br />.value: 133.4841<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-06-01<br />.value: 128.4715<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-05-01<br />.value: 121.2118<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-04-01<br />.value: 121.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-03-01<br />.value: 122.8852<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-02-01<br />.value: 124.5884<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2019-01-01<br />.value: 122.2405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-12-01<br />.value: 118.4384<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-11-01<br />.value: 115.4567<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-10-01<br />.value: 114.9948<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-09-01<br />.value: 113.3689<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-08-01<br />.value: 113.6196<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-07-01<br />.value: 117.1405<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-06-01<br />.value: 121.3152<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-05-01<br />.value: 123.5350<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-04-01<br />.value: 126.5762<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-03-01<br />.value: 125.7886<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-02-01<br />.value: 126.2121<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2018-01-01<br />.value: 126.4010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-12-01<br />.value: 120.2505<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-11-01<br />.value: 121.7029<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-10-01<br />.value: 121.6655<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-09-01<br />.value: 124.9220<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-08-01<br />.value: 122.1083<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-07-01<br />.value: 117.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-06-01<br />.value: 119.8641<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-05-01<br />.value: 118.4314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-04-01<br />.value: 120.9100<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-03-01<br />.value: 117.2709<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-02-01<br />.value: 117.6316<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2017-01-01<br />.value: 113.7645<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-12-01<br />.value: 109.6671<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-11-01<br />.value: 117.8276<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-10-01<br />.value: 120.7352<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-09-01<br />.value: 126.5467<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-08-01<br />.value: 127.7283<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-07-01<br />.value: 127.8365<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-06-01<br />.value: 121.9359<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-05-01<br />.value: 120.2805<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-04-01<br />.value: 118.7195<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-03-01<br />.value: 118.9814<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-02-01<br />.value: 114.8840<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2016-01-01<br />.value: 105.1437<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-12-01<br />.value: 102.2559<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-11-01<br />.value: 103.8530<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-10-01<br />.value: 110.8818<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-09-01<br />.value: 107.8329<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-08-01<br />.value: 107.2281<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-07-01<br />.value: 108.2091<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-06-01<br />.value: 113.3518<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-05-01<br />.value: 114.9670<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-04-01<br />.value: 115.1290<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-03-01<br />.value: 113.1659<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-02-01<br />.value: 117.7737<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2015-01-01<br />.value: 120.3845<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-12-01<br />.value: 115.1936<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-11-01<br />.value: 113.0495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-10-01<br />.value: 117.5639<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-09-01<br />.value: 118.8629<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-08-01<br />.value: 124.6390<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-07-01<br />.value: 126.2314<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-06-01<br />.value: 123.4690<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-05-01<br />.value: 124.0657<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-04-01<br />.value: 125.1343<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-03-01<br />.value: 128.6010<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-02-01<br />.value: 125.3863<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2014-01-01<br />.value: 120.0452<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-12-01<br />.value: 117.9129<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-11-01<br />.value: 123.0995<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-10-01<br />.value: 126.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-09-01<br />.value: 130.1940<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-08-01<br />.value: 130.6495<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-07-01<br />.value: 124.5000<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-06-01<br />.value: 129.6275<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-05-01<br />.value: 136.9909<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-04-01<br />.value: 143.6223<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-03-01<br />.value: 154.1335<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-02-01<br />.value: 157.6026<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-01-01<br />.value: 161.6733<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL",".index: 2013-01-01<br />.value: 161.6733<br />.conf_lo:       NA<br />.conf_hi:       NA<br />.model_desc: ACTUAL"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(44,62,80,0.2)","dash":"none"},"fill":"toself","fillcolor":"rgba(51,51,51,0.2)","hoveron":"points","name":"ACTUAL","legendgroup":"ACTUAL","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2023-10-01","2023-11-01","2023-12-01","2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-05-01","2024-06-01","2024-07-01","2024-08-01","2024-09-01","2024-09-01","2024-08-01","2024-07-01","2024-06-01","2024-05-01","2024-04-01","2024-03-01","2024-02-01","2024-01-01","2023-12-01","2023-11-01","2023-10-01","2023-10-01"],"y":[145.439011399522,144.082949537405,143.350256903477,152.953390587759,153.976244329651,154.202017212219,155.112698685472,154.223095844757,153.522478891261,153.175763958871,155.143349802995,153.625079975876,199.693704384975,201.211974212094,199.24438836797,199.59110330036,200.291720253856,201.181323094571,200.270641621318,200.04486873875,199.022014996858,189.418881312575,190.151573946504,191.50763580862,145.439011399522],"text":[".index: 2023-10-01<br />.value: 168.4733<br />.conf_lo: 145.4390<br />.conf_hi: 191.5076<br />.model_desc: 1_LM",".index: 2023-11-01<br />.value: 167.1173<br />.conf_lo: 144.0829<br />.conf_hi: 190.1516<br />.model_desc: 1_LM",".index: 2023-12-01<br />.value: 166.3846<br />.conf_lo: 143.3503<br />.conf_hi: 189.4189<br />.model_desc: 1_LM",".index: 2024-01-01<br />.value: 175.9877<br />.conf_lo: 152.9534<br />.conf_hi: 199.0220<br />.model_desc: 1_LM",".index: 2024-02-01<br />.value: 177.0106<br />.conf_lo: 153.9762<br />.conf_hi: 200.0449<br />.model_desc: 1_LM",".index: 2024-03-01<br />.value: 177.2363<br />.conf_lo: 154.2020<br />.conf_hi: 200.2706<br />.model_desc: 1_LM",".index: 2024-04-01<br />.value: 178.1470<br />.conf_lo: 155.1127<br />.conf_hi: 201.1813<br />.model_desc: 1_LM",".index: 2024-05-01<br />.value: 177.2574<br />.conf_lo: 154.2231<br />.conf_hi: 200.2917<br />.model_desc: 1_LM",".index: 2024-06-01<br />.value: 176.5568<br />.conf_lo: 153.5225<br />.conf_hi: 199.5911<br />.model_desc: 1_LM",".index: 2024-07-01<br />.value: 176.2101<br />.conf_lo: 153.1758<br />.conf_hi: 199.2444<br />.model_desc: 1_LM",".index: 2024-08-01<br />.value: 178.1777<br />.conf_lo: 155.1433<br />.conf_hi: 201.2120<br />.model_desc: 1_LM",".index: 2024-09-01<br />.value: 176.6594<br />.conf_lo: 153.6251<br />.conf_hi: 199.6937<br />.model_desc: 1_LM",".index: 2024-09-01<br />.value: 176.6594<br />.conf_lo: 153.6251<br />.conf_hi: 199.6937<br />.model_desc: 1_LM",".index: 2024-08-01<br />.value: 178.1777<br />.conf_lo: 155.1433<br />.conf_hi: 201.2120<br />.model_desc: 1_LM",".index: 2024-07-01<br />.value: 176.2101<br />.conf_lo: 153.1758<br />.conf_hi: 199.2444<br />.model_desc: 1_LM",".index: 2024-06-01<br />.value: 176.5568<br />.conf_lo: 153.5225<br />.conf_hi: 199.5911<br />.model_desc: 1_LM",".index: 2024-05-01<br />.value: 177.2574<br />.conf_lo: 154.2231<br />.conf_hi: 200.2917<br />.model_desc: 1_LM",".index: 2024-04-01<br />.value: 178.1470<br />.conf_lo: 155.1127<br />.conf_hi: 201.1813<br />.model_desc: 1_LM",".index: 2024-03-01<br />.value: 177.2363<br />.conf_lo: 154.2020<br />.conf_hi: 200.2706<br />.model_desc: 1_LM",".index: 2024-02-01<br />.value: 177.0106<br />.conf_lo: 153.9762<br />.conf_hi: 200.0449<br />.model_desc: 1_LM",".index: 2024-01-01<br />.value: 175.9877<br />.conf_lo: 152.9534<br />.conf_hi: 199.0220<br />.model_desc: 1_LM",".index: 2023-12-01<br />.value: 166.3846<br />.conf_lo: 143.3503<br />.conf_hi: 189.4189<br />.model_desc: 1_LM",".index: 2023-11-01<br />.value: 167.1173<br />.conf_lo: 144.0829<br />.conf_hi: 190.1516<br />.model_desc: 1_LM",".index: 2023-10-01<br />.value: 168.4733<br />.conf_lo: 145.4390<br />.conf_hi: 191.5076<br />.model_desc: 1_LM",".index: 2023-10-01<br />.value: 168.4733<br />.conf_lo: 145.4390<br />.conf_hi: 191.5076<br />.model_desc: 1_LM"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(227,26,28,0.2)","dash":"none"},"fill":"toself","fillcolor":"rgba(51,51,51,0.2)","hoveron":"points","name":"1_LM","legendgroup":"1_LM","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2023-10-01","2023-11-01","2023-12-01","2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-05-01","2024-06-01","2024-07-01","2024-08-01","2024-09-01","2024-09-01","2024-09-01","2024-08-01","2024-07-01","2024-06-01","2024-05-01","2024-04-01","2024-03-01","2024-02-01","2024-01-01","2023-12-01","2023-11-01","2023-10-01","2023-10-01"],"y":[190.206052272066,192.750888621669,191.712200154122,197.758469825727,200.30330617533,202.683959534636,205.228795884239,207.691540738694,210.236377088297,212.699121942752,215.243958292354,217.788794641958,217.788794641958,276.167881657063,273.62304530746,271.078208957857,268.615464103402,266.070627753799,263.607882899345,261.063046549742,258.682393190436,256.137556840832,250.091287169227,251.129975636775,248.585139287172,190.206052272066],"text":[".index: 2023-10-01<br />.value: 219.3956<br />.conf_lo: 190.2061<br />.conf_hi: 248.5851<br />.model_desc: 2_EARTH",".index: 2023-11-01<br />.value: 221.9404<br />.conf_lo: 192.7509<br />.conf_hi: 251.1300<br />.model_desc: 2_EARTH",".index: 2023-12-01<br />.value: 220.9017<br />.conf_lo: 191.7122<br />.conf_hi: 250.0913<br />.model_desc: 2_EARTH",".index: 2024-01-01<br />.value: 226.9480<br />.conf_lo: 197.7585<br />.conf_hi: 256.1376<br />.model_desc: 2_EARTH",".index: 2024-02-01<br />.value: 229.4928<br />.conf_lo: 200.3033<br />.conf_hi: 258.6824<br />.model_desc: 2_EARTH",".index: 2024-03-01<br />.value: 231.8735<br />.conf_lo: 202.6840<br />.conf_hi: 261.0630<br />.model_desc: 2_EARTH",".index: 2024-04-01<br />.value: 234.4183<br />.conf_lo: 205.2288<br />.conf_hi: 263.6079<br />.model_desc: 2_EARTH",".index: 2024-05-01<br />.value: 236.8811<br />.conf_lo: 207.6915<br />.conf_hi: 266.0706<br />.model_desc: 2_EARTH",".index: 2024-06-01<br />.value: 239.4259<br />.conf_lo: 210.2364<br />.conf_hi: 268.6155<br />.model_desc: 2_EARTH",".index: 2024-07-01<br />.value: 241.8887<br />.conf_lo: 212.6991<br />.conf_hi: 271.0782<br />.model_desc: 2_EARTH",".index: 2024-08-01<br />.value: 244.4335<br />.conf_lo: 215.2440<br />.conf_hi: 273.6230<br />.model_desc: 2_EARTH",".index: 2024-09-01<br />.value: 246.9783<br />.conf_lo: 217.7888<br />.conf_hi: 276.1679<br />.model_desc: 2_EARTH",".index: 2024-09-01<br />.value: 246.9783<br />.conf_lo: 217.7888<br />.conf_hi: 276.1679<br />.model_desc: 2_EARTH",".index: 2024-09-01<br />.value: 246.9783<br />.conf_lo: 217.7888<br />.conf_hi: 276.1679<br />.model_desc: 2_EARTH",".index: 2024-08-01<br />.value: 244.4335<br />.conf_lo: 215.2440<br />.conf_hi: 273.6230<br />.model_desc: 2_EARTH",".index: 2024-07-01<br />.value: 241.8887<br />.conf_lo: 212.6991<br />.conf_hi: 271.0782<br />.model_desc: 2_EARTH",".index: 2024-06-01<br />.value: 239.4259<br />.conf_lo: 210.2364<br />.conf_hi: 268.6155<br />.model_desc: 2_EARTH",".index: 2024-05-01<br />.value: 236.8811<br />.conf_lo: 207.6915<br />.conf_hi: 266.0706<br />.model_desc: 2_EARTH",".index: 2024-04-01<br />.value: 234.4183<br />.conf_lo: 205.2288<br />.conf_hi: 263.6079<br />.model_desc: 2_EARTH",".index: 2024-03-01<br />.value: 231.8735<br />.conf_lo: 202.6840<br />.conf_hi: 261.0630<br />.model_desc: 2_EARTH",".index: 2024-02-01<br />.value: 229.4928<br />.conf_lo: 200.3033<br />.conf_hi: 258.6824<br />.model_desc: 2_EARTH",".index: 2024-01-01<br />.value: 226.9480<br />.conf_lo: 197.7585<br />.conf_hi: 256.1376<br />.model_desc: 2_EARTH",".index: 2023-12-01<br />.value: 220.9017<br />.conf_lo: 191.7122<br />.conf_hi: 250.0913<br />.model_desc: 2_EARTH",".index: 2023-11-01<br />.value: 221.9404<br />.conf_lo: 192.7509<br />.conf_hi: 251.1300<br />.model_desc: 2_EARTH",".index: 2023-10-01<br />.value: 219.3956<br />.conf_lo: 190.2061<br />.conf_hi: 248.5851<br />.model_desc: 2_EARTH",".index: 2023-10-01<br />.value: 219.3956<br />.conf_lo: 190.2061<br />.conf_hi: 248.5851<br />.model_desc: 2_EARTH"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(24,188,156,0.2)","dash":"none"},"fill":"toself","fillcolor":"rgba(51,51,51,0.2)","hoveron":"points","name":"2_EARTH","legendgroup":"2_EARTH","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2013-01-01","2013-02-01","2013-03-01","2013-04-01","2013-05-01","2013-06-01","2013-07-01","2013-08-01","2013-09-01","2013-10-01","2013-11-01","2013-12-01","2014-01-01","2014-02-01","2014-03-01","2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01","2015-05-01","2015-06-01","2015-07-01","2015-08-01","2015-09-01","2015-10-01","2015-11-01","2015-12-01","2016-01-01","2016-02-01","2016-03-01","2016-04-01","2016-05-01","2016-06-01","2016-07-01","2016-08-01","2016-09-01","2016-10-01","2016-11-01","2016-12-01","2017-01-01","2017-02-01","2017-03-01","2017-04-01","2017-05-01","2017-06-01","2017-07-01","2017-08-01","2017-09-01","2017-10-01","2017-11-01","2017-12-01","2018-01-01","2018-02-01","2018-03-01","2018-04-01","2018-05-01","2018-06-01","2018-07-01","2018-08-01","2018-09-01","2018-10-01","2018-11-01","2018-12-01","2019-01-01","2019-02-01","2019-03-01","2019-04-01","2019-05-01","2019-06-01","2019-07-01","2019-08-01","2019-09-01","2019-10-01","2019-11-01","2019-12-01","2020-01-01","2020-02-01","2020-03-01","2020-04-01","2020-05-01","2020-06-01","2020-07-01","2020-08-01","2020-09-01","2020-10-01","2020-11-01","2020-12-01","2021-01-01","2021-02-01","2021-03-01","2021-04-01","2021-05-01","2021-06-01","2021-07-01","2021-08-01","2021-09-01","2021-10-01","2021-11-01","2021-12-01","2022-01-01","2022-02-01","2022-03-01","2022-04-01","2022-05-01","2022-06-01","2022-07-01","2022-08-01","2022-09-01","2022-10-01","2022-11-01","2022-12-01","2023-01-01","2023-02-01","2023-03-01","2023-04-01","2023-05-01","2023-06-01","2023-07-01","2023-08-01","2023-09-01"],"y":[161.673331851051,157.602632221423,154.133501434326,143.622272144664,136.990909229625,129.627500152588,124.499999653209,130.64954514937,130.193999099731,126.990869605023,123.099499130249,117.912857782273,120.045237949916,125.386315998278,128.600951785133,125.134285336449,124.065714154925,123.469047909691,126.231362429532,124.63904716855,118.862857273647,117.563912101414,113.049474214253,115.193636113947,120.38450088501,117.773684451455,113.165909507058,115.12904830206,114.966999816895,113.351818084717,108.209090839733,107.228095281692,107.832856677827,110.881818251176,103.85299949646,102.255908619274,105.143684387207,114.884000015259,118.981363816695,118.719524201893,120.280477251325,121.935908230868,127.836500549316,127.728260869565,126.546667189825,120.7352385748,117.827619280134,109.667142595564,113.764500427246,117.631578947368,117.270870042884,120.909999646639,118.431364579634,119.864090659402,117.719499588013,122.108261108398,124.92200050354,121.665454170921,121.702856881278,120.250500106812,126.400953020368,126.212105600457,125.788571675618,126.576190766834,123.535000540993,121.315238589332,117.140476045154,113.619564553966,113.368947882401,114.994783152705,115.456666128976,118.438421149003,122.240475609189,124.588421470241,122.885238284156,121.431429545085,121.211818695068,128.471499633789,133.484089938077,141.822272560813,142.060499572754,140.874781732974,138.570499420166,139.61047581264,147.021429152716,150.15210442794,149.594999139959,158.829998924619,161.681998443604,163.269545121626,173.820906899192,184.991904849098,180.596189953032,178.403637279164,175.31549987793,174.47136480158,175.023682443719,169.343158922697,161.245218028193,164.941903977167,173.337000274658,171.564091769132,169.059999011812,167.109545621005,166.04047648112,166.129045758929,170.079046340216,167.454546148127,169.611000061035,173.460527118884,182.140433933424,180.554499816895,172.382381620861,171.260000319708,161.464999389648,164.252173382303,156.401903424944,155.136666434152,160.861427670433,167.233808971587,176.927500152588,172.453157926861,178.015651537024,185.99105272795,185.170909534801,180.219047183082,181.066999053955,178.028697138247,178.650001525879],"text":[".index: 2013-01-01<br />.value: 161.6733<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-02-01<br />.value: 157.6026<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-03-01<br />.value: 154.1335<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-04-01<br />.value: 143.6223<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-05-01<br />.value: 136.9909<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-06-01<br />.value: 129.6275<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-07-01<br />.value: 124.5000<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-08-01<br />.value: 130.6495<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-09-01<br />.value: 130.1940<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-10-01<br />.value: 126.9909<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-11-01<br />.value: 123.0995<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2013-12-01<br />.value: 117.9129<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-01-01<br />.value: 120.0452<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-02-01<br />.value: 125.3863<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-03-01<br />.value: 128.6010<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-04-01<br />.value: 125.1343<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-05-01<br />.value: 124.0657<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-06-01<br />.value: 123.4690<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-07-01<br />.value: 126.2314<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-08-01<br />.value: 124.6390<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-09-01<br />.value: 118.8629<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-10-01<br />.value: 117.5639<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-11-01<br />.value: 113.0495<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2014-12-01<br />.value: 115.1936<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-01-01<br />.value: 120.3845<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-02-01<br />.value: 117.7737<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-03-01<br />.value: 113.1659<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-04-01<br />.value: 115.1290<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-05-01<br />.value: 114.9670<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-06-01<br />.value: 113.3518<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-07-01<br />.value: 108.2091<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-08-01<br />.value: 107.2281<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-09-01<br />.value: 107.8329<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-10-01<br />.value: 110.8818<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-11-01<br />.value: 103.8530<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2015-12-01<br />.value: 102.2559<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-01-01<br />.value: 105.1437<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-02-01<br />.value: 114.8840<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-03-01<br />.value: 118.9814<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-04-01<br />.value: 118.7195<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-05-01<br />.value: 120.2805<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-06-01<br />.value: 121.9359<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-07-01<br />.value: 127.8365<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-08-01<br />.value: 127.7283<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-09-01<br />.value: 126.5467<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-10-01<br />.value: 120.7352<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-11-01<br />.value: 117.8276<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2016-12-01<br />.value: 109.6671<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-01-01<br />.value: 113.7645<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-02-01<br />.value: 117.6316<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-03-01<br />.value: 117.2709<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-04-01<br />.value: 120.9100<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-05-01<br />.value: 118.4314<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-06-01<br />.value: 119.8641<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-07-01<br />.value: 117.7195<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-08-01<br />.value: 122.1083<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-09-01<br />.value: 124.9220<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-10-01<br />.value: 121.6655<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-11-01<br />.value: 121.7029<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2017-12-01<br />.value: 120.2505<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-01-01<br />.value: 126.4010<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-02-01<br />.value: 126.2121<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-03-01<br />.value: 125.7886<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-04-01<br />.value: 126.5762<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-05-01<br />.value: 123.5350<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-06-01<br />.value: 121.3152<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-07-01<br />.value: 117.1405<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-08-01<br />.value: 113.6196<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-09-01<br />.value: 113.3689<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-10-01<br />.value: 114.9948<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-11-01<br />.value: 115.4567<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2018-12-01<br />.value: 118.4384<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-01-01<br />.value: 122.2405<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-02-01<br />.value: 124.5884<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-03-01<br />.value: 122.8852<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-04-01<br />.value: 121.4314<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-05-01<br />.value: 121.2118<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-06-01<br />.value: 128.4715<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-07-01<br />.value: 133.4841<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-08-01<br />.value: 141.8223<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-09-01<br />.value: 142.0605<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-10-01<br />.value: 140.8748<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-11-01<br />.value: 138.5705<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2019-12-01<br />.value: 139.6105<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-01-01<br />.value: 147.0214<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-02-01<br />.value: 150.1521<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-03-01<br />.value: 149.5950<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-04-01<br />.value: 158.8300<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-05-01<br />.value: 161.6820<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-06-01<br />.value: 163.2695<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-07-01<br />.value: 173.8209<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-08-01<br />.value: 184.9919<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-09-01<br />.value: 180.5962<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-10-01<br />.value: 178.4036<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-11-01<br />.value: 175.3155<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2020-12-01<br />.value: 174.4714<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-01-01<br />.value: 175.0237<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-02-01<br />.value: 169.3432<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-03-01<br />.value: 161.2452<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-04-01<br />.value: 164.9419<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-05-01<br />.value: 173.3370<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-06-01<br />.value: 171.5641<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-07-01<br />.value: 169.0600<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-08-01<br />.value: 167.1095<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-09-01<br />.value: 166.0405<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-10-01<br />.value: 166.1290<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-11-01<br />.value: 170.0790<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2021-12-01<br />.value: 167.4545<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-01-01<br />.value: 169.6110<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-02-01<br />.value: 173.4605<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-03-01<br />.value: 182.1404<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-04-01<br />.value: 180.5545<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-05-01<br />.value: 172.3824<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-06-01<br />.value: 171.2600<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-07-01<br />.value: 161.4650<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-08-01<br />.value: 164.2522<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-09-01<br />.value: 156.4019<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-10-01<br />.value: 155.1367<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-11-01<br />.value: 160.8614<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2022-12-01<br />.value: 167.2338<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-01-01<br />.value: 176.9275<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-02-01<br />.value: 172.4532<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-03-01<br />.value: 178.0157<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-04-01<br />.value: 185.9911<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-05-01<br />.value: 185.1709<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-06-01<br />.value: 180.2190<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-07-01<br />.value: 181.0670<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-08-01<br />.value: 178.0287<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL",".index: 2023-09-01<br />.value: 178.6500<br />.color_mod: ACTUAL<br />.color_mod: ACTUAL"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(44,62,80,1)","dash":"solid"},"hoveron":"points","name":"ACTUAL","legendgroup":"ACTUAL","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2023-10-01","2023-11-01","2023-12-01","2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-05-01","2024-06-01","2024-07-01","2024-08-01","2024-09-01"],"y":[168.473323604071,167.117261741955,166.384569108026,175.987702792308,177.010556534201,177.236329416768,178.147010890021,177.257408049306,176.556791095811,176.21007616342,178.177662007544,176.659392180426],"text":[".index: 2023-10-01<br />.value: 168.4733<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-11-01<br />.value: 167.1173<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2023-12-01<br />.value: 166.3846<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-01-01<br />.value: 175.9877<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-02-01<br />.value: 177.0106<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-03-01<br />.value: 177.2363<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-04-01<br />.value: 178.1470<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-05-01<br />.value: 177.2574<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-06-01<br />.value: 176.5568<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-07-01<br />.value: 176.2101<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-08-01<br />.value: 178.1777<br />.color_mod: 1_LM<br />.color_mod: 1_LM",".index: 2024-09-01<br />.value: 176.6594<br />.color_mod: 1_LM<br />.color_mod: 1_LM"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(227,26,28,1)","dash":"solid"},"hoveron":"points","name":"1_LM","legendgroup":"1_LM","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":["2023-10-01","2023-11-01","2023-12-01","2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-05-01","2024-06-01","2024-07-01","2024-08-01","2024-09-01"],"y":[219.395595779619,221.940432129222,220.901743661675,226.94801333328,229.492849682883,231.873503042189,234.418339391792,236.881084246247,239.42592059585,241.888665450304,244.433501799907,246.97833814951],"text":[".index: 2023-10-01<br />.value: 219.3956<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-11-01<br />.value: 221.9404<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2023-12-01<br />.value: 220.9017<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-01-01<br />.value: 226.9480<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-02-01<br />.value: 229.4928<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-03-01<br />.value: 231.8735<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-04-01<br />.value: 234.4183<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-05-01<br />.value: 236.8811<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-06-01<br />.value: 239.4259<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-07-01<br />.value: 241.8887<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-08-01<br />.value: 244.4335<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH",".index: 2024-09-01<br />.value: 246.9783<br />.color_mod: 2_EARTH<br />.color_mod: 2_EARTH"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(24,188,156,1)","dash":"solid"},"hoveron":"points","name":"2_EARTH","legendgroup":"2_EARTH","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.2237442922374,"r":7.30593607305936,"b":27.0319634703196,"l":28.4931506849315},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187},"title":{"text":"Forecast Plot","font":{"color":"rgba(44,62,80,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"date","autorange":true,"range":["2012-06-01","2025-04-02"],"tickmode":"auto","ticktext":["2015","2020","2025"],"tickvals":[16436,18262,20089],"categoryorder":"array","categoryarray":["2015","2020","2025"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":true,"range":[93.5603099673843,284.863480308953],"tickmode":"auto","ticktext":["100","150","200","250"],"tickvals":[100,150,200,250],"categoryorder":"array","categoryarray":["100","150","200","250"],"nticks":null,"ticks":"outside","tickcolor":"rgba(204,204,204,1)","ticklen":3.65296803652968,"tickwidth":0.22139200221392,"showticklabels":true,"tickfont":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(204,204,204,1)","gridwidth":0.22139200221392,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(44,62,80,1)","width":0.33208800332088,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(44,62,80,1)","family":"","size":11.689497716895},"title":{"text":"Legend","font":{"color":"rgba(44,62,80,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"63caee3120":{"x":{},"y":{},"ymin":{},"ymax":{},"colour":{},"type":"scatter"},"63c1b975878":{"x":{},"y":{},"colour":{}}},"cur_data":"63caee3120","visdat":{"63caee3120":["function (y) ","x"],"63c1b975878":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

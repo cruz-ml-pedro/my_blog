@@ -16,7 +16,6 @@ about:
       href: https://github.com/cruz-ml-pedro
 ---
 
-
 # Saudações a todos!
 
 Me chamo Pedro Lima, sou geofísico de formação e mestre em ciências, é um prazer dar as boas-vindas a vocês em meu blog. Neste espaço pretendo compartilhar minha jornada de exploração e aprendizado contínuo sobre uma variedade de conteúdos relaionados a análise e modelagem de dados.
@@ -28,4 +27,3 @@ Caso tenha interesse em entrar em contato, vocês encontrarão links para minhas
 Com entusiasmo,
 
 Pedro Lima
-
