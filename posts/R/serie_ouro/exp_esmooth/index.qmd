@@ -390,6 +390,7 @@ Espera-se que os resíduos de um modelo exibam um comportamento de ruído branco
 :::
 
 # Realizando Previsões Futuras
+
 ::: justify
 Antes de encerrar esse post é interessante verificar o comportamento dos modelos ao realizar previsões futuras com os modelos reajustados utilizando todo o conjunto de dados.
 
