@@ -1,8 +1,8 @@
 ---
-title: "Elasticidade-Preço da Demanda"
-subtitle: "Modelo Aditivo Generalizado"
+title: "Modelagem Elasticidade Preço-Demanda"
+subtitle: "Modelos Aditivos Generalizados (GAMs)"
 author: "Pedro Lima"
-date: "2023-11-07"
+date: "2023-12-21"
 categories: [Modelos Estatísticos, Python]
 toc: true
 toc-depth: 3
@@ -11,19 +11,29 @@ format:
     code-tools: false
     code-fold: false
 jupyter: python3
-draft: true
+draft: false
 ---
 
+```{=html}
 <style>
     .justificado {
         text-align: justify;
     }
 </style>
+```
 
 # Introdução
 
+::: justificado
+Em um mercado dinâmico, compreender a relação entre o preço de um produto e sua demanda é essencial para estratégias eficazes de precificação. Neste artigo, embarcaremos em uma exploração da aplicação de Modelos Aditivos Generalizados (GAMs) para modelar a variação da demanda em relação ao preço.
+
+Dado meu conhecimento inicial limitado sobre o tema, optarei por começar minha incursão por meio de um exemplo simples. Utilizarei o conceito de quantil de expectativa para criar modelos que representem diferentes cenários da relação entre demanda e preço. Essa abordagem inicial permitirá não apenas uma compreensão mais acessível do método, mas também a construção de modelos que capturam tanto o comportamento médio quanto cenários extremos. 
+:::
+
 # Elasticidade-Preço da Demanda
-A elasticidade preço da demanda é um conceito econômico que mede a sensibilidade da quantidade demandada de um bem em relação às mudanças no seu preço. Em outras palavras, a elasticidade preço da demanda indica como a quantidade demandada de um bem ou serviço responde às variações no preço desse bem ou serviço.
+
+::: justificado
+Antes de adentrarmos nos modelos, é interessante compreender o conceito de elasticidade-preço da demanda, mesmo não sendo o objetivo deste post calcular o índice em si, mas sim criar a intuição de como utilizar GAMs como estratégia de precificação. Esse indicador mensura a sensibilidade da quantidade demandada de um bem diante das variações em seu preço. Trata-se de uma ferramenta valiosa para empresas, governos e economistas, pois oferece discernimento sobre como as alterações nos preços impactam o comportamento dos consumidores e, por conseguinte, a receita total. Uma compreensão da elasticidade também desempenha papel crucial na formulação de políticas públicas.
 
 A fórmula básica para calcular a elasticidade preço da demanda (EPD) é:
 
@@ -33,31 +43,31 @@ $$
 
 O resultado dessa fórmula pode ser classificado em diferentes categorias:
 
-1. Elasticidade Perfeitamente Inelástica $\text{EPD} = 0$
+1.  Elasticidade Perfeitamente Inelástica $\text{EPD} = 0$
 
-    - A quantidade demandada permanece constante, independentemente das mudanças no preço.
+    -   A quantidade demandada permanece constante, independentemente das mudanças no preço.
 
-2. Inelástica $(0 < \text{EPD} < 1)$:
+2.  Inelástica $(0 < \text{EPD} < 1)$:
 
-    - A quantidade demandada responde menos do que proporcionalmente às mudanças no preço. Isso significa que, se o preço aumentar, a receita total (preço multiplicado pela quantidade) também aumentará.
+    -   A quantidade demandada responde menos do que proporcionalmente às mudanças no preço. Isso significa que, se o preço aumentar, a receita total (preço multiplicado pela quantidade) também aumentará.
 
-3. Unitária $(\text{EPD} = 1)$:
+3.  Unitária $(\text{EPD} = 1)$:
 
-    - A quantidade demandada muda na mesma proporção que o preço, resultando em receita total constante.
+    -   A quantidade demandada muda na mesma proporção que o preço, resultando em receita total constante.
 
-4. Elastica ($\text{EPD} > 1)$:
+4.  Elástica ($\text{EPD} > 1)$:
 
-    - A quantidade demandada responde mais do que proporcionalmente às mudanças no preço. Se o preço aumentar, a receita total diminuirá.
+    -   A quantidade demandada responde mais do que proporcionalmente às mudanças no preço. Se o preço aumentar, a receita total diminuirá.
 
-5. Elasticidade Perfeitamente Elástica $(\text{EPD} = \infty)$:
+5.  Elasticidade Perfeitamente Elástica $(\text{EPD} = \infty)$:
 
-    - A quantidade demandada é extremamente sensível às mudanças no preço. Pequenas alterações no preço levam a mudanças infinitas na quantidade demandada.
-
-A elasticidade preço da demanda é uma ferramenta valiosa para empresas, governos e economistas, pois fornece insights sobre como as mudanças nos preços afetam o comportamento dos consumidores e, por sua vez, a receita total. Uma compreensão da elasticidade também é crucial para a formulação de políticas públicas e estratégias de precificação no mundo dos negócios.
+    -   A quantidade demandada é extremamente sensível às mudanças no preço. Pequenas alterações no preço levam a mudanças extremas na quantidade demandada.
+:::
 
 # Modelos Aditivos Generalizados (GAMs)
 
-Os Modelos Aditivos Generalizados (GAMs) são uma extensão dos modelos lineares generalizados (GLMs) que incorporam termos não lineares e interações de forma flexível. Vamos explorar a formulação matemática do GAM.
+::: justificado
+Os GAMs, extensão dos modelos lineares generalizados (GLMs), são uma ferramenta poderosa na modelagem estatística, permitindo a captura de relações não lineares entre variáveis.
 
 Em um GAM, a função preditiva é expressa como a soma de funções suaves de preditores, e a estrutura de suavização é estimada a partir dos dados. Suponhamos que estejamos interessados em prever uma variável de resposta $Y$ usando preditores $X_1, X_2, \ldots, X_p$. A formulação básica de um GAM é dada por:
 
@@ -65,19 +75,28 @@ $$g(\mu) = \beta_0 + f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)$$
 
 onde:
 
-  - $g(.)$ é a função de ligação (pode ser logarítmica para modelos de regressão logística, identidade para modelos de regressão linear, etc.).
-  
-  - $\mu$ é a média da distribuição condicional da resposta.
-  
-  - $\beta_0$ é o intercepto.
-  
-  - $f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)$ são funções suaves dos preditores.
-  
-As funções suaves $f_i(X_i)$ são geralmente representadas usando splines ou outras formas de suavização. 
+-   $g(.)$ é a função de ligação (pode ser logarítmica para modelos de regressão logística, identidade para modelos de regressão linear, etc.).
 
-A função $f_i(.)$ captura a relação não linear entre o preditor $X_i$  e a resposta $Y$. Essas funções podem ser construídas usando splines cúbicos, por exemplo.
+-   $\mu$ é a média da distribuição condicional da resposta.
 
-O modelo é ajustado aos dados por meio de uma abordagem de otimização para estimar os coeficientes $\beta_0$ e as funções suaves $f_i(.)$  que minimizam uma função de perda.
+-   $\beta_0$ é o intercepto.
+
+-   $f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)$ são funções suaves dos preditores.
+
+As funções suaves $f_i(X_i)$ são geralmente representadas usando splines ou outras formas de suavização.
+
+O modelo é ajustado aos dados por meio de uma abordagem de otimização para estimar os coeficientes $\beta_0$ e as funções suaves $f_i(.)$ que minimizam uma função de perda.
+:::
+
+## Quantil de Expectativa (Expectile)
+
+::: justificado
+"Expectile" é uma abreviação de "expectation quantile" (quantil de expectativa). Em estatísticas e modelagem estatística, um expectil representa um valor condicional associado a um determinado quantil da distribuição de uma variável aleatória. Em outras palavras, é uma medida de tendência central que foca em um quantil específico da distribuição, proporcionando uma visão mais detalhada das características dessa distribuição em comparação com a média condicional. O uso de expectis é particularmente útil quando se deseja entender o comportamento de uma variável em diferentes percentis da sua distribuição.
+:::
+
+# Carregando os pacotes necessários
+::: justificado
+O código abaixo importa os pacotes necessários para a criação dos modelos. Se por acaso você não tiver algum desses pacotes instalados, basta utilizar `!pip install 'nome do pacote'`. 
 
 ```{python}
 import pandas as pd
@@ -89,9 +108,30 @@ import warnings
 warnings.filterwarnings('ignore')
 ```
 
+Se você está começando a utilizar o Python, assim como eu, aqui está uma breve descrição sobre os pacotes utilizados:
+
+-  Pandas:
+
+    - O Pandas é uma biblioteca essencial para manipulação e análise de dados. Com suas estruturas de dados poderosas, como o DataFrame, facilita a organização e a exploração eficiente de conjuntos de dados.
+    
+-  NumPy:
+
+    - O NumPy é uma biblioteca fundamental para computação numérica em Python. Sua principal contribuição é a introdução de arrays multidimensionais, proporcionando suporte robusto para operações matemáticas e facilitando cálculos complexos.
+
+-  Matplotlib.pyplot:
+
+    - O Matplotlib.pyplot é uma ferramenta poderosa para visualização de dados. Essa biblioteca permite a criação de gráficos e plots, possibilitando a apresentação clara e compreensível de resultados de análises.
+
+-  PyGAM:
+
+    - O PyGAM é uma biblioteca especializada em Modelos Aditivos Generalizados (GAMs). Destacamos as funções s e ExpectileGAM. A função s é fundamental para especificar termos suaves em modelos, enquanto ExpectileGAM é utilizada para modelar a expectativa condicional de variáveis de resposta, proporcionando flexibilidade na análise estatística.
+:::
+
 # Criando os dados
 
-<div class="justificado">
+::: justificado
+O código baixo está criando dados simulados para as variáveis 'price' e 'quantity' com base em distribuições aleatórias.
+
 ```{python}
 #gerando os dados
 np.random.seed(0)
@@ -101,18 +141,9 @@ quantity = 1000 - 5 * price + np.random.normal(loc=0, scale=50,size=n)
 quantity = quantity.clip(min=0)
 ```
 
-Esse trecho de código está criando dados simulados para as variáveis price e quantity com base em distribuições aleatórias. Vamos analisar linha por linha:
+A variável 'price' foi gerada a partir de uma distribuição exponencial, representando os preços dos produtos simulados. Enquanto isso, a variável 'quantity' foi construída como uma relação linear com 'price', mais um componente de ruído normal. Essa abordagem visa simular a relação entre preço e quantidade demandada.
 
-np.random.seed(0): Configura a semente para o gerador de números aleatórios do NumPy. Isso garante que os números aleatórios gerados sejam os mesmos em diferentes execuções do código, tornando os resultados reproduzíveis.
-
-n = 100: Define o tamanho da amostra como 100.
-
-price = np.sort(np.random.exponential(scale=100, size=n)): Gera uma amostra de 100 valores a partir de uma distribuição exponencial com uma escala de 100. Em seguida, esses valores são ordenados em ordem crescente usando np.sort() e atribuídos à variável price.
-
-quantity = 1000 - 5 \* price + np.random.normal(loc=0, scale=50, size=n): Gera valores para a variável quantity com base em uma relação linear com a variável price. Adiciona-se ruído normal à relação linear usando np.random.normal() com uma média (loc) de 0 e um desvio padrão (scale) de 50.
-
-quantity = quantity.clip(min=0): Substitui qualquer valor negativo em quantity por 0. Isso é feito usando o método clip(), garantindo que a quantidade não seja negativa.
-
+O trecho de código a seguir adiciona outliers aos dados simulados
 
 ```{python}
 #adicionando outliers
@@ -123,18 +154,6 @@ price = np.concatenate([price, outliers_prices])
 quantity = np.concatenate([quantity, outliers_quantity])
 ```
 
-Este trecho de código adiciona outliers aos dados simulados já gerados para as variáveis price e quantity. Vamos analisar linha por linha:
-
-n_outliers = 10: Define o número de outliers como 10.
-
-outliers_prices = np.random.uniform(5, 50, n_outliers): Gera 10 valores uniformemente distribuídos entre 5 e 50, representando os preços dos outliers.
-
-outliers_quantity = 1100 + np.random.normal(loc=0, scale=50, size=n_outliers): Gera 10 valores para as quantidades dos outliers, adicionando ruído normal à média de 1100, com um desvio padrão de 50.
-
-price = np.concatenate(\[price, outliers_prices\]): Concatena os valores de outliers_prices ao final da array price. Isso adiciona os outliers à variável price.
-
-quantity = np.concatenate(\[quantity, outliers_quantity\]): Concatena os valores de outliers_quantity ao final da array quantity. Isso adiciona os outliers à variável quantity.
-
 ```{python}
 #adicionando outliers
 n_outliers = 10
@@ -144,17 +163,7 @@ price = np.concatenate([price, outliers_prices])
 quantity = np.concatenate([quantity, outliers_quantity])
 ```
 
-Neste trecho de código, você está adicionando mais 10 outliers às variáveis price e quantity. Vamos analisar cada linha:
-
-n_outliers = 10: Define novamente o número de outliers como 10.
-
-outliers_prices = np.random.uniform(51, 100, n_outliers): Gera 10 valores uniformemente distribuídos entre 51 e 100, representando os preços dos novos outliers.
-
-outliers_quantity = 900 + np.random.normal(loc=0, scale=50, size=n_outliers): Gera 10 valores para as quantidades dos novos outliers, adicionando ruído normal à média de 900, com um desvio padrão de 50.
-
-price = np.concatenate(\[price, outliers_prices\]): Concatena os valores de outliers_prices ao final da array price. Isso adiciona os novos outliers à variável price.
-
-quantity = np.concatenate(\[quantity, outliers_quantity\]): Concatena os valores de outliers_quantity ao final da array quantity. Isso adiciona os novos outliers à variável quantity.
+Criando um DataFrame a partir das variáveis 'price' e 'quantity'.
 
 ```{python}
 df = pd.DataFrame({
@@ -162,42 +171,42 @@ df = pd.DataFrame({
   'Quantity': quantity
 })
 ```
+:::
 
-Este trecho de código cria um DataFrame do Pandas chamado df a partir das variáveis price e quantity. Vamos entender cada parte:
-</div>
+# Criando os Modelos
+::: justificado
 
-# filtrando
+## Preparando os dados
+
+Removendo outliers.
 
 ```{python}
 df = df[df['Price'] >= 5]
 ```
 
-# Criando o Modelo
+Criando duas variáveis, x e y, a partir de um DataFrame df. 
+
 ```{python}
 x = df[['Price']]
 y = df['Quantity']
 ```
-<div class="justificado">
 
-Esse trecho de código está criando duas variáveis, x e y, a partir de um DataFrame df. Aqui está a explicação:
+para a criação de x esta sendo aplicadoo o uso de colchetes duplos (\[\['Price'\]\]) que cria um DataFrame em vez de uma Série. Portanto, x será um DataFrame com uma única coluna 'Price'. Já y está sendo atribuído com a coluna 'Quantity' do DataFrame original df, resultando em uma Série.
+:::
 
-`x = df[['Price']]`: Aqui, x está sendo atribuído com uma nova DataFrame que contém apenas a coluna 'Price' do DataFrame original df. O uso de colchetes duplos ([['Price']]) cria um DataFrame em vez de uma Série. Portanto, x será um DataFrame com uma única coluna 'Price'.
+## Quantil GAMs
 
-`y = df['Quantity']`: Aqui, y está sendo atribuído com a coluna 'Quantity' do DataFrame original df. Isso resulta em uma Série, pois estamos pegando apenas uma coluna.
-Portanto, ao final dessas linhas de código, x será um DataFrame que contém apenas a coluna 'Price', e y será uma Série que contém a coluna 'Quantity'. 
+::: justificado
+Nesse trecho de código, vamos criar uma lista chamada quantiles com os valores de \[0.025, 0.5, 0.975\], nossos quantis de interesse. Também está sendo criado um dicionário vazio chamado `gam_results`. Os dicionários em Python são estruturas de dados que mapeiam chaves a valores. Eles são úteis para armazenar e organizar dados.
 
-# Quantil GAMs
-Nesse trecho de código, parece que você está criando uma lista chamada quantiles com os valores [0.025, 0.5, 0.975] e um dicionário vazio chamado gam_results. Aqui está uma explicação mais detalhada:
 ```{python}
 quantiles = [0.025, 0.5, 0.975]
 gam_results = {}
 ```
-quantiles = [0.025, 0.5, 0.975]: Isso cria uma lista chamada quantiles que contém os valores 0.025, 0.5 e 0.975. Esses valores são frequentemente usados para calcular percentis ou quantis em estatísticas.
 
-gam_results = {}: Isso cria um dicionário vazio chamado gam_results. Os dicionários em Python são estruturas de dados que mapeiam chaves a valores. Eles são úteis para armazenar e organizar dados.
+Neste trecho de código, vamos iterar sobre os valores da lista quantiles e, para cada valor q na lista, está criando e ajustando um modelo GAM através da função `ExpectileGAM`, específica para estimar expectativas condicionais de quantis (percentis) de uma variável de resposta. Em outras palavras, ela é projetada para modelar a relação entre variáveis preditoras e a expectativa condicional de determinados quantis da variável resposta, em vez de estimar a média condicional.
 
-Juntos, essas duas linhas sugerem que você pode estar planejando armazenar resultados ou estatísticas calculadas usando modelos GAM (Generalized Additive Models) para os quantis especificados. Talvez você vá preencher gam_results com informações sobre o modelo GAM em diferentes quantis. O propósito exato dependerá do restante do código, que não está incluído na sua pergunta.
-
+O `s(0)` indica uma spline univariada aplicada à variável.
 
 ```{python}
 for q in quantiles:
@@ -207,39 +216,30 @@ for q in quantiles:
   
 #gam_results
 ```
-Neste trecho de código, parece que você está iterando sobre os valores da lista quantiles e, para cada valor q na lista, está criando e ajustando um modelo GAM (Generalized Additive Model) de Expectile usando a biblioteca de modelos estatísticos, possivelmente pyGAM.
 
-Aqui está uma explicação passo a passo:
-
-for q in quantiles:: Este é um loop que percorre cada valor na lista quantiles. Para cada iteração, a variável q receberá o valor do próximo quantil.
-
-gam = ExpectileGAM(s(0),expectile=q): Aqui, você está criando um modelo GAM de Expectile. O s(0) indica uma spline univariada (função suave) aplicada à primeira variável (presumivelmente, a coluna 'Price' que você mencionou anteriormente). expectile=q indica que você está ajustando o modelo para um valor específico de expectile, onde q é o valor atual do loop.
-
-gam.fit(x, y): Esta linha ajusta o modelo GAM aos dados. Presumivelmente, x é o DataFrame que contém a coluna 'Price', e y é a Série que contém a coluna 'Quantity'.
-
-gam_results[q] = gam: Aqui, você está armazenando o modelo GAM ajustado no dicionário gam_results, usando o valor q como chave. Isso cria uma entrada no dicionário para cada quantil com o modelo GAM correspondente.
-
-Portanto, ao final desse loop, gam_results conterá modelos GAM ajustados para cada quantil especificado na lista quantiles. Esses modelos podem ser utilizados posteriormente para previsões ou análises.
-</div>
+Ao final desse loop, `gam_results` conterá modelos GAM ajustados para cada quantil especificado na lista quantiles.
+:::
 
 # Visualizando
+::: justificado
+Vamos visualizar os modelos criados.
 
 ```{python}
-# Scaterplot
+
 plt.figure(figsize=(8,6))
 plt.scatter(df['Price'], df['Quantity'], alpha=0.5, label='Dados')
 
-  # plot quantile GAMs
+
 
 xx = np.linspace(df['Price'].min(), df['Price'].max(), 1000).reshape(-1,1)
 
 for q, gam in gam_results.items():
   plt.plot(xx, gam.predict(xx), label=f'{int(q*100)}º Quantis GAMs')
   
-#add title and labels
+
 plt.xlabel('Preço')
 plt.ylabel('Demanda')
-plt.title('Quantis GAMs - Elasticidade de Preço vs Demanda (Outliers Removidos)')
+plt.title('Quantis GAMs - Preço vs Demanda (Outliers Removidos)')
 plt.legend()
 plt.grid(True, which='both',
 linestyle='--', linewidth=0.5)
@@ -247,29 +247,25 @@ plt.tight_layout()
 plt.show()
 ```
 
-<div class="justificado">
-Este trecho de código utiliza a biblioteca Matplotlib para criar um gráfico de dispersão dos dados e, em seguida, traça curvas de quantis para modelos GAM ajustados. Vamos passar por ele linha por linha:
+Este trecho de código emprega a biblioteca Matplotlib para gerar um gráfico de dispersão dos dados e, posteriormente, desenha curvas de quantis para os modelos GAM ajustados. O resultado final é um gráfico que exibe os dados originais acompanhados por um conjunto de curvas suaves que representam os quantis GAM ajustados para a relação entre preço e demanda. 
+:::
 
-plt.figure(figsize=(8,6)): Inicia uma nova figura com um tamanho de 8 por 6 polegadas. Isso afeta o tamanho do gráfico que será gerado.
+# Conclusão
+::: justificado
+Ao longo desta análise, empreguei a função ExpectileGAM para criar modelos que vão além da simples estimativa da média condicional. A utilização de diferentes valores de 'expectile'  permitiu a construção de cenários extremos, representando tanto o pior quanto o melhor caso para a relação entre preço e demanda. Esta abordagem pode proporciona insights valiosos sobre o comportamento da variação da demanda em relação ao preço, auxiliando inclusive na identificação de possíveis outliers.
 
-plt.scatter(df['Price'], df['Quantity'], alpha=0.5, label='Dados'): Plota um gráfico de dispersão (scatter plot) dos dados. Os valores de 'Price' são colocados no eixo x e os valores de 'Quantity' no eixo y. O argumento alpha=0.5 controla a transparência dos pontos, e label='Dados' fornece uma etiqueta para a legenda.
+A modelagem com funções de base splines permitiu a captura de padrões não-lineares, tornando os modelos mais flexíveis e adaptáveis à complexidade subjacente dos dados. Os gráficos resultantes, com curvas suaves representando diferentes quantis, oferecem uma visualização clara dos cenários possíveis.
 
-xx = np.linspace(df['Price'].min(), df['Price'].max(), 1000).reshape(-1,1): Gera 1000 pontos igualmente espaçados no intervalo mínimo e máximo dos preços no DataFrame original. Isso é feito para criar uma linha suave ao plotar as curvas de quantis GAM.
+Ao considerar os piores e melhores cenários de preços, abre-se uma janela estratégica valiosa para a formulação de estratégias de precificação mais robustas. Compreender como a demanda pode variar em extremos é crucial para a tomada de decisões informadas, capacitando empresas a ajustar suas estratégias de acordo com diferentes contextos de mercado.
 
-O próximo bloco usa um loop for para iterar sobre os itens no dicionário gam_results:
+Este estudo, embora um exemplo simples, ilustra o potêncial da modelagem com GAMs na análise de elasticidade do preço. Em futuras postagens sobre esse tema, pretendo aprofundar a análise utilizando dados reais.
+:::
 
-`for q, gam in gam_results.items():`
-    `plt.plot(xx, gam.predict(xx), label=f'{int(q*100)}º Quantis GAMs')`
-    
-q é o valor do quantil.
-gam é o modelo GAM correspondente a esse quantil.
-gam.predict(xx) prediz os valores de 'Quantity' para os pontos em xx usando o modelo GAM.
-label=f'{int(q*100)}º Quantis GAMs' fornece uma etiqueta para a legenda que inclui o valor do quantil em termos percentuais.
-As linhas seguintes configuram o título, rótulos dos eixos, legenda, e adicionam uma grade ao gráfico.
+# Referências
+::: justificado
+[Price Elasticity and Optimization in Python (feat. pyGAM)](https://www.youtube.com/watch?v=tRku0RgRQtc&t=881s)
 
-plt.tight_layout(): Ajusta automaticamente a disposição dos subplots para evitar sobreposição.
+[Welcome to pyGAM’s documentation!](https://pygam.readthedocs.io/en/latest/index.html)
 
-plt.show(): Exibe o gráfico.
-
-O resultado final é um gráfico que mostra os dados originais com um conjunto de curvas suaves representando os quantis GAM ajustados para a relação entre preço e demanda. Cada curva é rotulada de acordo com o valor do quantil.
-</div>
+[ExpectileGAM](https://pygam.readthedocs.io/en/latest/api/expectilegam.html)
+:::

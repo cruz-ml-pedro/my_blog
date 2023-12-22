@@ -13,6 +13,7 @@ draft: true
 knitr::opts_chunk$set(cache = TRUE, cache.lazy = FALSE, warning = FALSE,
                       message = FALSE, echo = TRUE, dpi = 180,
                       fig.width = 8, fig.height = 5)
+
 pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime, xgboost,
                modeltime.resample)
 ```
@@ -40,6 +41,7 @@ gold_mean <-
 ```
 
 # Introdução
+
 ::: justify
 Continuando com a criação de modelos preditivos, este post será sobre ARIMA. A estrutura do artigo, sequência de passos e funções utilizadas na construção dos modelos é a mesma do [post anterior](https://pedroom-blog.netlify.app/posts/r/serie_ouro/exp_esmooth/). A única diferença em relação a esses tópicos é a utilização do pacote `xgboost`.
 
@@ -48,29 +50,31 @@ pacman::p_load(tidyverse,tidyquant, tidymodels,timetk, modeltime, xgboost,
                modeltime.resample)
 ```
 
-Os modelos ARIMA têm como pressuposto a estacionariedade nos dados e adota como abordagem para garantia dessa condição a técnica de diferenciação. Esses temas foram abordados em postagens anteriores ([Parte um](https://pedroom-blog.netlify.app/posts/r/serie_ouro/eda/), [Parte dois](https://pedroom-blog.netlify.app/posts/r/serie_ouro/eda2/)) e para uma explicação sobre mais detalhada  desses temas, você pode consultar o material deste [link](https://otexts.com/fpp3/stationarity.html).
+Os modelos ARIMA têm como pressuposto a estacionariedade nos dados e adota como abordagem para garantia dessa condição a técnica de diferenciação. Esses temas foram abordados em postagens anteriores ([Parte um](https://pedroom-blog.netlify.app/posts/r/serie_ouro/eda/), [Parte dois](https://pedroom-blog.netlify.app/posts/r/serie_ouro/eda2/)) e para uma explicação sobre mais detalhada desses temas, você pode consultar o material deste [link](https://otexts.com/fpp3/stationarity.html).
 :::
 
 # Modelos ARIMA
+
 ::: justify
 Os Modelos ARIMA têm como objetivo capturar e descrever as autocorrelações presentes nos dados, destacando-se como poderosas ferramentas para a análise e previsão de séries temporais. A expressão "ARIMA" é um acrônimo para "Autoregressive Integrated Moving Average" e engloba três componentes fundamentais:
 
--  Componente Autoregressivo (AR):
+-   Componente Autoregressivo (AR):
 
     Este componente leva em consideração as dependências lineares entre observações passadas. Ele é responsável por modelar a influência das observações anteriores sobre a atual, contribuindo para a predição da série temporal.
-    
--  Componente de Média Móvel (MA):
+
+-   Componente de Média Móvel (MA):
 
     O componente de média móvel modela o ruído presente na série temporal. Ele considera as relações entre os termos de erro anteriores, permitindo a incorporação de padrões não lineares e capturando variações não explicadas pelo componente autoregressivo.
-    
--  Integração (I):
+
+-   Integração (I):
 
     O termo "integration" refere-se à reversão do processo de diferenciação. A ordem de integração (representada pelo valor de "d" no modelo ARIMA(p, d, q)) indica quantas vezes é necessário diferenciar a série para torná-la estacionária. Esse processo é crucial para garantir a aplicabilidade dos modelos ARIMA.
-    
+
 Esses componentes combinados tornam os modelos ARIMA flexíveis e capazes de lidar com uma variedade de padrões temporais.
 :::
 
 ## modelos autoregressivos (AR):
+
 ::: justify
 Os modelos autoregressivos, conhecidos por serem flexíveis e capazem de lidar com diferentes padrões em séries temporais, funcionam de modo análogo a uma regressão linear, onde os regressores são valores defasados (lagged) da variável de interesse $y_t$
 
@@ -87,40 +91,56 @@ A variância do termo de erro resulta em alterações na escala dos resultados. 
 
 ## Modelos de Médias Móveis (MA)
 
-$$y_t = c + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \theta_2 \varepsilon_{t-2} + \ldots + \theta_q \varepsilon_{t-q}
+::: justify
+Os modelos de médias, projetados para capturar padrões de variação de curto prazo nos dados, ao invés de usar valores passados para realizar uma regressão, utiliza os erros de previsão passadas $\varepsilon_t$. Conforme indica a equação abaixo.
+
+$$
+y_t = c + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \theta_2 \varepsilon_{t-2} + \ldots + \theta_q \varepsilon_{t-q}
 $$
 
-# Engines
-::: justify
+Onde $\varepsilon_t$ é ruido branco. Observe que cada valor de $y_t$ pode ser considerado como uma média móvel ponderada dos erros de previsão passados. No entanto, os modelos de médias móveis não devem ser confundidos com o alisamento de médias móveis normalemnte usado em análise de sinais. Um modelo de média móvel é usado para prever valores futuros, enquanto o alisamento de médias móveis é utilizado para estimar a tendência-ciclo de valores passados.
 
+Assim como nos modelos autoregressivos, a variancia do erro altera apenas a escala dos valores da série e não o padrão, que depende dos parâmetros $\theta_1 + \ldots + \theta_q$.
 :::
 
-## Auto ARIMA
+## ARIMA
+
 ::: justify
-A função auto_arima foi projetada para facilitar a modelagem e previsão de séries temporais, automatizando o processo de seleção do melhor modelo ARIMA. A função utiliza critérios de avaliação estatística, como o Critério de Informação de Akaike (AIC) e o Critério de Informação Bayesiano (BIC), para avaliar e comparar o ajuste de diferentes modelos. Além dos parâmetros ARIMA, a função também pode lidar com modelos SARIMA e selecionar automaticamente os parâmetros sazonais (P, D, Q, S) quando a série apresenta sazonalidade.
+Os modelos ARIMA resultam da integração dos modelos anteriores com a diferenciação, incorporando tanto os valores passados quanto os erros atrasados da série temporal diferenciada como preditores. A formulação completa do modelo pode ser expressa da seguinte maneira,
 
-Apesar da automação também é permitido que você insira algumas restrições ou diretrizes para o processo de seleção, como limitar os valores máximos de p, d e q, ou forçar a inclusão de sazonalidade. Contudo a função será utilizado apenas em sua forma automática, deixando os parametros identificados durante a EDA para os demais modelos.
+$$
+y'_t = c + \phi_1 y'_{t-1} + \dots + \phi_p y'_{t-p} + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q} + \varepsilon_t
+$$
 
-O código a seguir faz a seleção automática do melhor modelo ARIMA através da função `arima_reg()` e do "motor" `auto_arima`.
+Onde $y'_t$ é a série diferenciada, podendo ter sido diferenciada mais de uma vez. Representados como $\texttt{ARIMA(p,d,q)}$, onde $p$ é a ordem da parte autoregressiva, $d$ é a quantidade de diferenças necessárias para tornar os dados estacionários e $q$ é a ordem da parte de médias móveis.
+
+Esses modelos não abordam a sazonalidade nos dados e têm como pré-requisito a estacionariedade dos mesmos.
 :::
 
 ## SARIMA
+
 ::: justify
-Para ajustar o modelo SARIMA, será utilizada a mesma função anterior, `arima_reg()`, mas com a 'engine' arima. Neste modelo, todos os parâmetros (p, d, q) e (P, D, Q, S) serão empregados. Para fins de comparação, serão criados dois modelos SARIMA, um com um componente S de 18 meses e outro com um componente S de 12 meses.
+Um modelo ARIMA sazonal (SARIMA) é formado ao incluir termos sazonais adicionais nos modelos ARIMA. A parte sazonal do modelo consiste em termos semelhantes aos componentes não sazonais, mas envolvem defasagens do período sazonal (P,D,Q). Os termos sazonais adicionais são simplesmente multiplicados pelos termos não sazonais.
+
+O exemplo abaixo é de um modelo (sem constante) para dados trimestrais $\texttt{ARIMA(1,1,1)(1,1,1)[4]}$
+
+$$
+(1 - \phi_1 B)(1 - \Phi_1 B^4)(1 - B)(1 - B^4) y_t = (1 + \theta_1 B)(1 + \Theta_1 B^4) \varepsilon_t
+$$
+
+Lembrando que este é apenas uma breve introdução sobre modelos ARIMA. Para uma abordagem mais detalhada, recomendo consultar o [capítulo 9](https://otexts.com/fpp3/arima.html) 'Forecasting: Principles and Practice', onde você encontrará informações mais aprofundadas e referências adicionais.
 :::
 
-## SARIMA com multiplas periodicidades
+# Engines
+
 ::: justify
-Trata-se de uma extensão do modelo SARIMA tradicional, que possibilita a incorporação de múltiplas sazonalidades em uma série temporal. Este modelo é especialmente útil quando os dados apresentam padrões sazonais em diferentes escalas de tempo.
+-   **auto_arima**: A função auto_arima foi projetada para facilitar a modelagem e previsão de séries temporais, automatizando o processo de seleção do melhor modelo ARIMA. A função utiliza critérios de avaliação estatística, como o Critério de Informação de Akaike (AIC) e o Critério de Informação Bayesiano (BIC), para avaliar e comparar o ajuste de diferentes modelos. Além dos parâmetros ARIMA, a função também pode lidar com modelos SARIMA e selecionar automaticamente os parâmetros sazonais (P, D, Q, S) quando a série apresenta sazonalidade.
 
-Para a criação desse modelo foi utilizada a função `season_reg()` e a 'engine' `stlm_arima`. Uma aordagem que combina a decomposição de sazonalidade e tendência usando STLM (Seasonal and Trend decomposition using Loess) com a modelagem ARIMA para fazer previsões em séries temporais. Isso é comum ao usar a decomposição STLM para entender a estrutura da série temporal e, em seguida, aplicar modelos ARIMA ajustados aos dados decompostos para fazer previsões mais precisas.
+Apesar da automação também é permitido que você insira algumas restrições ou diretrizes para o processo de seleção, como limitar os valores máximos de p, d e q, ou forçar a inclusão de sazonalidade. Contudo a função será utilizado apenas em sua forma automática, deixando os parametros identificados durante a EDA para os demais modelos.
 
-Serão consideradas apenas as componentes de 18 e 12 meses, uma vez que a componente de 6 meses não se mostrou consistente ao longo dos dados.
-:::
+-   **arima**:
 
-## ARIMA + XGBOOST dos erros
-::: justify
-A combinação de modelos SARIMA com algoritmos de machine learning, como o XGBoost (Extreme Gradient Boosting), é uma abordagem útil para melhorar a previsão de séries temporais, especialmente quando os dados exibem padrões complexos e não lineares. A ideia principal é aproveitar a capacidade de ambos os modelos para capturar diferentes aspectos da série temporal.
+-   **arima_xgboost**: A combinação de modelos SARIMA com algoritmos de machine learning, como o XGBoost (Extreme Gradient Boosting), é uma abordagem útil para melhorar a previsão de séries temporais, especialmente quando os dados exibem padrões complexos e não lineares. A ideia principal é aproveitar a capacidade de ambos os modelos para capturar diferentes aspectos da série temporal.
 
 A função aqui utilizada, arima_boost(), é uma maneira de gerar uma especificação de um modelo de série temporal que utiliza o boosting para melhorar a modelagem de erros (residuais) em Regressores Exógenos. Funciona tanto com o ARIMA "automático" (auto_arima) quanto com o ARIMA padrão (arima). Os principais algoritmos são:
 
@@ -129,9 +149,12 @@ A função aqui utilizada, arima_boost(), é uma maneira de gerar uma especifica
 -   ngine = arima_xgboost
 
 Esta função permite não apenas a seleção dos parâmetros comuns aos modelos SARIMA, mas também a seleção dos parâmetros associados ao modelo XGBoost. Como mencionado, essa abordagem tem como foco a melhoria dos resultados relacionados aos regressores exógenos, que são criados no seguinte trecho de código: `media ~ mes + as.numeric(mes) + factor(month(mes, label = TRUE), ordered = F)`.
+
+-   **stlm_arima**:
 :::
 
 # Plano de Validação Cruzada
+
 ::: justify
 Antes de iniciarmos a construção do modelo vamos estabelecer um plano de validação cruzada.
 
@@ -152,6 +175,7 @@ cv <-
 :::
 
 ## Visualizando o Plano de Validação Cruzada
+
 ::: justify
 ```{r}
 cv %>% 
@@ -161,6 +185,7 @@ cv %>%
 :::
 
 # Criando os Modelos
+
 ::: justify
 A seguir, serão criados diversos modelos, todos eles pertencentes à família ARIMA, e, posteriormente, serão comparados. Para a criação desses modelos, diferentes funções e "motores" serão empregados, e estes serão melhor explicados nos próximos tópicos. É importante destacar que a mesma função pode ser utilizada com diferentes "motores". A escolha dos "motores" é sempre feita por meio da função `set_engine()`.
 
@@ -174,13 +199,13 @@ auto_arima <-
 ```{r}
 model_arima <- 
   arima_reg(
-    seasonal_period = 16,
-    non_seasonal_ar = 1,
+        seasonal_period = 16,
+        non_seasonal_ar = 0,
         non_seasonal_differences = 1,
-        non_seasonal_ma          = 0,
-        seasonal_ar              = 1,
+        non_seasonal_ma          = 1,
+        seasonal_ar              = 0,
         seasonal_differences     = 1,
-        seasonal_ma              = 0
+        seasonal_ma              = 1
     ) %>% 
   set_engine("arima") %>% 
   fit(media ~ mes, training(cv$splits[[1]]))
@@ -189,13 +214,13 @@ model_arima <-
 ```{r}
 model_arima2 <- 
   arima_reg(
-    seasonal_period = 12,
-    non_seasonal_ar = 1,
+        seasonal_period = 12,
+        non_seasonal_ar = 0,
         non_seasonal_differences = 1,
-        non_seasonal_ma          = 0,
-        seasonal_ar              = 1,
+        non_seasonal_ma          = 1,
+        seasonal_ar              = 0,
         seasonal_differences     = 1,
-        seasonal_ma              = 0
+        seasonal_ma              = 1
     ) %>% 
   set_engine("arima") %>% 
   fit(media ~ mes, training(cv$splits[[1]]))
@@ -211,17 +236,16 @@ arima_m_season <-
   fit(media ~ mes, training(cv$splits[[1]]))
 ```
 
-
 ```{r}
 model_fit_arima_boosted <- 
   arima_boost(
-    seasonal_period = 16,
-    non_seasonal_ar = 1,
+    seasonal_period = 12,
+    non_seasonal_ar = 0,
     non_seasonal_differences = 1,
-    non_seasonal_ma = 0,
-    seasonal_ar     = 1,
+    non_seasonal_ma = 1,
+    seasonal_ar     = 0,
     seasonal_differences = 1,
-    seasonal_ma     = 0,
+    seasonal_ma     = 1,
 
     # XGBoost Args
     tree_depth = 6,
@@ -234,6 +258,7 @@ model_fit_arima_boosted <-
 :::
 
 # Comparando os Modelos
+
 ::: justify
 Para realizar a comparação dos modelos ajustados, o pacote `modeltime` disponibiliza a função `model_table()`, que permite a aplicação de diferentes procedimentos a todos os modelos de uma só vez.
 
@@ -250,6 +275,7 @@ modeltime_table(
 :::
 
 ## Calibrando
+
 ::: justify
 A seguir, iremos calibrar os modelos usando os dados de teste. A calibração estabelece os fundamentos para a criação dos resultados de acurácia, resíduos dos modelos, e dos intervalos de confiança nas previsões.
 
@@ -261,6 +287,7 @@ calib_table <-
 :::
 
 ## Conjunto de Teste e Acurácia
+
 ::: justify
 Vamos agora avaliar o desempenho dos modelos em relação aos dados de teste. É importante lembrar que os modelos não foram treinados com o conjunto de dados completo, que abrange aproximadamente 10 anos, mas sim com um intervalo de 7 anos, conforme explicado durante o planejamento da validação cruzada.
 
@@ -283,6 +310,7 @@ calib_table %>%
 :::
 
 ## Validação Cruzada
+
 ::: justify
 Até o momento utilizamos apenas o primeiro folder criado para realização da validação cruzada. Vamos agora varificar o desempenho médio em todos folders criados. A principal vantagem dessa abordagem é fornecer uma avaliação robusta e imparcial do desempenho de um modelo, mitigando problemas como overfitting (ajuste excessivo) e subajuste (underfitting).
 
@@ -309,6 +337,7 @@ resamples_fitted %>%
 :::
 
 ## Análise dos Resíduos
+
 ::: justify
 Com os modelos calibrados, podemos avaliar os resíduos dos modelos. A função `modeltime_residuals()`, em conjunto com a função `plot_modeltime_residuals()`, oferece diversas opções de visualização dos resíduos, que incluem:
 
@@ -338,6 +367,7 @@ calib_table %>%
 :::
 
 # Realizando Previsões Futuras
+
 ::: justify
 Por último vamos criar previsões futuras dos diferentes modelo que foram ajustados. Para isso vamos reajustar os modelos, desta vez no conjunto de dados completo.
 
@@ -346,7 +376,7 @@ future_forecast_tbl <-
   calib_table %>% 
   modeltime_refit(gold_mean) %>% 
   modeltime_forecast(
-    h  = "1 year",
+    h  = "2 year",
     actual_data = gold_mean
   )
 ```
@@ -358,6 +388,7 @@ future_forecast_tbl %>%
 :::
 
 # Salvando o Modelo
+
 ::: justify
 ```{r}
 #saveRDS(ets_g05, file = "ets-gamma05.rds")
@@ -365,11 +396,12 @@ future_forecast_tbl %>%
 :::
 
 # Conclusão
-::: justify
 
+::: justify
 :::
 
 # Referências
+
 ::: justify
 -   [Forecasting: Principles and Practice (3rd ed)/Chapter 9 ARIMA models](https://otexts.com/fpp3/arima.html)
 
@@ -379,5 +411,5 @@ future_forecast_tbl %>%
 
 -   [Getting Started with Modeltime Resample](https://business-science.github.io/modeltime.resample/articles/getting-started.html)
 
--  [Modelagem Econométrica de Séries Temporais Estacionárias](https://rpubs.com/Heitor_Mont/847069)
+-   [Modelagem Econométrica de Séries Temporais Estacionárias](https://rpubs.com/Heitor_Mont/847069)
 :::

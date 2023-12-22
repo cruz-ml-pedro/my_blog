@@ -198,15 +198,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
   <li><a href="#modelos-arima" id="toc-modelos-arima" class="nav-link" data-scroll-target="#modelos-arima">Modelos ARIMA</a>
   <ul class="collapse">
-  <li><a href="#modelo-ar" id="toc-modelo-ar" class="nav-link" data-scroll-target="#modelo-ar">modelo AR:</a></li>
-  </ul></li>
-  <li><a href="#engines" id="toc-engines" class="nav-link" data-scroll-target="#engines">Engines</a>
-  <ul class="collapse">
-  <li><a href="#auto-arima" id="toc-auto-arima" class="nav-link" data-scroll-target="#auto-arima">Auto ARIMA</a></li>
+  <li><a href="#modelos-autoregressivos-ar" id="toc-modelos-autoregressivos-ar" class="nav-link" data-scroll-target="#modelos-autoregressivos-ar">modelos autoregressivos (AR):</a></li>
+  <li><a href="#modelos-de-médias-móveis-ma" id="toc-modelos-de-médias-móveis-ma" class="nav-link" data-scroll-target="#modelos-de-médias-móveis-ma">Modelos de Médias Móveis (MA)</a></li>
+  <li><a href="#arima" id="toc-arima" class="nav-link" data-scroll-target="#arima">ARIMA</a></li>
   <li><a href="#sarima" id="toc-sarima" class="nav-link" data-scroll-target="#sarima">SARIMA</a></li>
-  <li><a href="#sarima-com-multiplas-periodicidades" id="toc-sarima-com-multiplas-periodicidades" class="nav-link" data-scroll-target="#sarima-com-multiplas-periodicidades">SARIMA com multiplas periodicidades</a></li>
-  <li><a href="#arima-xgboost-dos-erros" id="toc-arima-xgboost-dos-erros" class="nav-link" data-scroll-target="#arima-xgboost-dos-erros">ARIMA + XGBOOST dos erros</a></li>
   </ul></li>
+  <li><a href="#engines" id="toc-engines" class="nav-link" data-scroll-target="#engines">Engines</a></li>
   <li><a href="#plano-de-validação-cruzada" id="toc-plano-de-validação-cruzada" class="nav-link" data-scroll-target="#plano-de-validação-cruzada">Plano de Validação Cruzada</a>
   <ul class="collapse">
   <li><a href="#visualizando-o-plano-de-validação-cruzada" id="toc-visualizando-o-plano-de-validação-cruzada" class="nav-link" data-scroll-target="#visualizando-o-plano-de-validação-cruzada">Visualizando o Plano de Validação Cruzada</a></li>
@@ -264,57 +261,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Esses componentes combinados tornam os modelos ARIMA flexíveis e capazes de lidar com uma variedade de padrões temporais.</p>
 </div>
-<section id="modelo-ar" class="level2">
-<h2 class="anchored" data-anchor-id="modelo-ar">modelo AR:</h2>
+<section id="modelos-autoregressivos-ar" class="level2">
+<h2 class="anchored" data-anchor-id="modelos-autoregressivos-ar">modelos autoregressivos (AR):</h2>
 <div class="justify">
 <p>Os modelos autoregressivos, conhecidos por serem flexíveis e capazem de lidar com diferentes padrões em séries temporais, funcionam de modo análogo a uma regressão linear, onde os regressores são valores defasados (lagged) da variável de interesse <span class="math inline">\(y_t\)</span></p>
 <p>Assim um modelo autoregressivos (<span class="math inline">\(\texttt{AR(p)}\)</span>) de ordem <span class="math inline">\(p\)</span> pode ser descrito do seguinte modo,</p>
 <p><span class="math display">\[
 y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \ldots + \phi_p y_{t-p} + \epsilon_t
 \]</span></p>
-<p>sendo <span class="math inline">\(\epsilon_t\)</span> ruído branco</p>
+<p>sendo <span class="math inline">\(\epsilon_t\)</span> ruído branco.</p>
+<p>A variância do termo de erro resulta em alterações na escala dos resultados. Mudanças nos parãmetros <span class="math inline">\(\phi_1, \ldots, \phi_p\)</span> resultam em padrões diferentes de séries temporais.</p>
+</div>
+</section>
+<section id="modelos-de-médias-móveis-ma" class="level2">
+<h2 class="anchored" data-anchor-id="modelos-de-médias-móveis-ma">Modelos de Médias Móveis (MA)</h2>
+<div class="justify">
+<p>Os modelos de médias, projetados para capturar padrões de variação de curto prazo nos dados, ao invés de usar valores passados para realizar uma regressão, utiliza os erros de previsão passadas <span class="math inline">\(\varepsilon_t\)</span>. Conforme indica a equação abaixo.</p>
+<p><span class="math display">\[
+y_t = c + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \theta_2 \varepsilon_{t-2} + \ldots + \theta_q \varepsilon_{t-q}
+\]</span></p>
+<p>Onde <span class="math inline">\(\varepsilon_t\)</span> é ruido branco. Observe que cada valor de <span class="math inline">\(y_t\)</span> pode ser considerado como uma média móvel ponderada dos erros de previsão passados. No entanto, os modelos de médias móveis não devem ser confundidos com o alisamento de médias móveis normalemnte usado em análise de sinais. Um modelo de média móvel é usado para prever valores futuros, enquanto o alisamento de médias móveis é utilizado para estimar a tendência-ciclo de valores passados.</p>
+<p>Assim como nos modelos autoregressivos, a variancia do erro altera apenas a escala dos valores da série e não o padrão, que depende dos parâmetros <span class="math inline">\(\theta_1 + \ldots + \theta_q\)</span>.</p>
+</div>
+</section>
+<section id="arima" class="level2">
+<h2 class="anchored" data-anchor-id="arima">ARIMA</h2>
+<div class="justify">
+<p>Os modelos ARIMA resultam da integração dos modelos anteriores com a diferenciação, incorporando tanto os valores passados quanto os erros atrasados da série temporal diferenciada como preditores. A formulação completa do modelo pode ser expressa da seguinte maneira,</p>
+<p><span class="math display">\[
+y'_t = c + \phi_1 y'_{t-1} + \dots + \phi_p y'_{t-p} + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q} + \varepsilon_t
+\]</span></p>
+<p>Onde <span class="math inline">\(y'_t\)</span> é a série diferenciada, podendo ter sido diferenciada mais de uma vez. Representados como <span class="math inline">\(\texttt{ARIMA(p,d,q)}\)</span>, onde <span class="math inline">\(p\)</span> é a ordem da parte autoregressiva, <span class="math inline">\(d\)</span> é a quantidade de diferenças necessárias para tornar os dados estacionários e <span class="math inline">\(q\)</span> é a ordem da parte de médias móveis.</p>
+<p>Esses modelos não abordam a sazonalidade nos dados e têm como pré-requisito a estacionariedade dos mesmos.</p>
+</div>
+</section>
+<section id="sarima" class="level2">
+<h2 class="anchored" data-anchor-id="sarima">SARIMA</h2>
+<div class="justify">
+<p>Um modelo ARIMA sazonal (SARIMA) é formado ao incluir termos sazonais adicionais nos modelos ARIMA. A parte sazonal do modelo consiste em termos semelhantes aos componentes não sazonais, mas envolvem defasagens do período sazonal (P,D,Q). Os termos sazonais adicionais são simplesmente multiplicados pelos termos não sazonais.</p>
+<p>O exemplo abaixo é de um modelo (sem constante) para dados trimestrais <span class="math inline">\(\texttt{ARIMA(1,1,1)(1,1,1)[4]}\)</span></p>
+<p><span class="math display">\[
+(1 - \phi_1 B)(1 - \Phi_1 B^4)(1 - B)(1 - B^4) y_t = (1 + \theta_1 B)(1 + \Theta_1 B^4) \varepsilon_t
+\]</span></p>
+<p>Lembrando que este é apenas uma breve introdução sobre modelos ARIMA. Para uma abordagem mais detalhada, recomendo consultar o <a href="https://otexts.com/fpp3/arima.html">capítulo 9</a> ‘Forecasting: Principles and Practice’, onde você encontrará informações mais aprofundadas e referências adicionais.</p>
 </div>
 </section>
 </section>
 <section id="engines" class="level1">
 <h1>Engines</h1>
 <div class="justify">
-
-</div>
-<section id="auto-arima" class="level2">
-<h2 class="anchored" data-anchor-id="auto-arima">Auto ARIMA</h2>
-<div class="justify">
-<p>A função auto_arima foi projetada para facilitar a modelagem e previsão de séries temporais, automatizando o processo de seleção do melhor modelo ARIMA. A função utiliza critérios de avaliação estatística, como o Critério de Informação de Akaike (AIC) e o Critério de Informação Bayesiano (BIC), para avaliar e comparar o ajuste de diferentes modelos. Além dos parâmetros ARIMA, a função também pode lidar com modelos SARIMA e selecionar automaticamente os parâmetros sazonais (P, D, Q, S) quando a série apresenta sazonalidade.</p>
+<ul>
+<li><strong>auto_arima</strong>: A função auto_arima foi projetada para facilitar a modelagem e previsão de séries temporais, automatizando o processo de seleção do melhor modelo ARIMA. A função utiliza critérios de avaliação estatística, como o Critério de Informação de Akaike (AIC) e o Critério de Informação Bayesiano (BIC), para avaliar e comparar o ajuste de diferentes modelos. Além dos parâmetros ARIMA, a função também pode lidar com modelos SARIMA e selecionar automaticamente os parâmetros sazonais (P, D, Q, S) quando a série apresenta sazonalidade.</li>
+</ul>
 <p>Apesar da automação também é permitido que você insira algumas restrições ou diretrizes para o processo de seleção, como limitar os valores máximos de p, d e q, ou forçar a inclusão de sazonalidade. Contudo a função será utilizado apenas em sua forma automática, deixando os parametros identificados durante a EDA para os demais modelos.</p>
-<p>O código a seguir faz a seleção automática do melhor modelo ARIMA através da função <code>arima_reg()</code> e do “motor” <code>auto_arima</code>.</p>
-</div>
-</section>
-<section id="sarima" class="level2">
-<h2 class="anchored" data-anchor-id="sarima">SARIMA</h2>
-<div class="justify">
-<p>Para ajustar o modelo SARIMA, será utilizada a mesma função anterior, <code>arima_reg()</code>, mas com a ‘engine’ arima. Neste modelo, todos os parâmetros (p, d, q) e (P, D, Q, S) serão empregados. Para fins de comparação, serão criados dois modelos SARIMA, um com um componente S de 18 meses e outro com um componente S de 12 meses.</p>
-</div>
-</section>
-<section id="sarima-com-multiplas-periodicidades" class="level2">
-<h2 class="anchored" data-anchor-id="sarima-com-multiplas-periodicidades">SARIMA com multiplas periodicidades</h2>
-<div class="justify">
-<p>Trata-se de uma extensão do modelo SARIMA tradicional, que possibilita a incorporação de múltiplas sazonalidades em uma série temporal. Este modelo é especialmente útil quando os dados apresentam padrões sazonais em diferentes escalas de tempo.</p>
-<p>Para a criação desse modelo foi utilizada a função <code>season_reg()</code> e a ‘engine’ <code>stlm_arima</code>. Uma aordagem que combina a decomposição de sazonalidade e tendência usando STLM (Seasonal and Trend decomposition using Loess) com a modelagem ARIMA para fazer previsões em séries temporais. Isso é comum ao usar a decomposição STLM para entender a estrutura da série temporal e, em seguida, aplicar modelos ARIMA ajustados aos dados decompostos para fazer previsões mais precisas.</p>
-<p>Serão consideradas apenas as componentes de 18 e 12 meses, uma vez que a componente de 6 meses não se mostrou consistente ao longo dos dados.</p>
-</div>
-</section>
-<section id="arima-xgboost-dos-erros" class="level2">
-<h2 class="anchored" data-anchor-id="arima-xgboost-dos-erros">ARIMA + XGBOOST dos erros</h2>
-<div class="justify">
-<p>A combinação de modelos SARIMA com algoritmos de machine learning, como o XGBoost (Extreme Gradient Boosting), é uma abordagem útil para melhorar a previsão de séries temporais, especialmente quando os dados exibem padrões complexos e não lineares. A ideia principal é aproveitar a capacidade de ambos os modelos para capturar diferentes aspectos da série temporal.</p>
+<ul>
+<li><p><strong>arima</strong>:</p></li>
+<li><p><strong>arima_xgboost</strong>: A combinação de modelos SARIMA com algoritmos de machine learning, como o XGBoost (Extreme Gradient Boosting), é uma abordagem útil para melhorar a previsão de séries temporais, especialmente quando os dados exibem padrões complexos e não lineares. A ideia principal é aproveitar a capacidade de ambos os modelos para capturar diferentes aspectos da série temporal.</p></li>
+</ul>
 <p>A função aqui utilizada, arima_boost(), é uma maneira de gerar uma especificação de um modelo de série temporal que utiliza o boosting para melhorar a modelagem de erros (residuais) em Regressores Exógenos. Funciona tanto com o ARIMA “automático” (auto_arima) quanto com o ARIMA padrão (arima). Os principais algoritmos são:</p>
 <ul>
 <li><p>engine = auto_arima_xgboost</p></li>
 <li><p>ngine = arima_xgboost</p></li>
 </ul>
 <p>Esta função permite não apenas a seleção dos parâmetros comuns aos modelos SARIMA, mas também a seleção dos parâmetros associados ao modelo XGBoost. Como mencionado, essa abordagem tem como foco a melhoria dos resultados relacionados aos regressores exógenos, que são criados no seguinte trecho de código: <code>media ~ mes + as.numeric(mes) + factor(month(mes, label = TRUE), ordered = F)</code>.</p>
+<ul>
+<li><strong>stlm_arima</strong>:</li>
+</ul>
 </div>
-</section>
 </section>
 <section id="plano-de-validação-cruzada" class="level1">
 <h1>Plano de Validação Cruzada</h1>
@@ -357,30 +370,30 @@ y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \ldots + \phi_p y_{t-p} + \epsilon_t
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"auto_arima"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_49e7b3de6278a4a48829a9b2bf760b09">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-9_63e1344f0b27205acf269814d26d6b34">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_arima <span class="ot">&lt;-</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arima_reg</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">16</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ar =</span> <span class="dv">1</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_period =</span> <span class="dv">16</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ar =</span> <span class="dv">0</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_differences =</span> <span class="dv">1</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ma          =</span> <span class="dv">0</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ar              =</span> <span class="dv">1</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ma          =</span> <span class="dv">1</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ar              =</span> <span class="dv">0</span>,</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_differences     =</span> <span class="dv">1</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ma              =</span> <span class="dv">0</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ma              =</span> <span class="dv">1</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"arima"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_58645209ad529cc70a52c0ed67dfb793">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-10_21a529ea5e77edbb8e0644ebc12d53e5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model_arima2 <span class="ot">&lt;-</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arima_reg</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">12</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ar =</span> <span class="dv">1</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_period =</span> <span class="dv">12</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ar =</span> <span class="dv">0</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_differences =</span> <span class="dv">1</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ma          =</span> <span class="dv">0</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ar              =</span> <span class="dv">1</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">non_seasonal_ma          =</span> <span class="dv">1</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ar              =</span> <span class="dv">0</span>,</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_differences     =</span> <span class="dv">1</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ma              =</span> <span class="dv">0</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">seasonal_ma              =</span> <span class="dv">1</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"arima"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -394,16 +407,16 @@ y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \ldots + \phi_p y_{t-p} + \epsilon_t
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"stlm_arima"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(media <span class="sc">~</span> mes, <span class="fu">training</span>(cv<span class="sc">$</span>splits[[<span class="dv">1</span>]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_3f7b7a41a944d3568ec8f8fd96f00d20">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-12_0eb27a84df98dba1dff348e43b60fc4a">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model_fit_arima_boosted <span class="ot">&lt;-</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arima_boost</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">16</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ar =</span> <span class="dv">1</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_period =</span> <span class="dv">12</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ar =</span> <span class="dv">0</span>,</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_differences =</span> <span class="dv">1</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ma =</span> <span class="dv">0</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_ar     =</span> <span class="dv">1</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">non_seasonal_ma =</span> <span class="dv">1</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_ar     =</span> <span class="dv">0</span>,</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_differences =</span> <span class="dv">1</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_ma     =</span> <span class="dv">0</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal_ma     =</span> <span class="dv">1</span>,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># XGBoost Args</span></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">tree_depth =</span> <span class="dv">6</span>,</span>
@@ -1044,12 +1057,12 @@ y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \ldots + \phi_p y_{t-p} + \epsilon_t
 <h1>Realizando Previsões Futuras</h1>
 <div class="justify">
 <p>Por último vamos criar previsões futuras dos diferentes modelo que foram ajustados. Para isso vamos reajustar os modelos, desta vez no conjunto de dados completo.</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-21_d74bbce8b06dfe977ad20cfed93b766b">
+<div class="cell" data-hash="index_cache/html/unnamed-chunk-21_e179ddb4cfe0cfbae57258e997f474cc">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>future_forecast_tbl <span class="ot">&lt;-</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  calib_table <span class="sc">%&gt;%</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_refit</span>(gold_mean) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">modeltime_forecast</span>(</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">h  =</span> <span class="st">"1 year"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">h  =</span> <span class="st">"2 year"</span>,</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">actual_data =</span> gold_mean</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

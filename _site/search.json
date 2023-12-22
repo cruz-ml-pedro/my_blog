@@ -109,7 +109,7 @@
     "href": "blog.html",
     "title": "Posts",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nCotação do ouro - Parte 3\n\n\nSuavização Exponencial\n\n\n\n\nModelos Estatísticos\n\n\nSérie-Temporal\n\n\nR\n\n\n\n\n\n\n\n\n\n\n\nNov 10, 2023\n\n\nPedro Lima\n\n\n18 min\n\n\n\n\n\n\n  \n\n\n\n\nCotação do ouro - Parte 2\n\n\nAnálise Exploratória - Parte 2\n\n\n\n\nEDA\n\n\nSérie-Temporal\n\n\nR\n\n\n\n\n\n\n\n\n\n\n\nOct 17, 2023\n\n\nPedro Lima\n\n\n24 min\n\n\n\n\n\n\n  \n\n\n\n\nCotação do ouro - Parte 1\n\n\nAnálise Exploratória - Parte 1\n\n\n\n\nEDA\n\n\nSérie-Temporal\n\n\nR\n\n\n\n\n\n\n\n\n\n\n\nSep 25, 2023\n\n\nPedro Lima\n\n\n25 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n\n\n\n\n  \n\n\n\n\nModelagem Elasticidade Preço-Demanda\n\n\nModelos Aditivos Generalizados (GAMs)\n\n\n\n\nModelos Estatísticos\n\n\nPython\n\n\n\n\n\n\n\n\n\n\n\nDec 21, 2023\n\n\nPedro Lima\n\n\n9 min\n\n\n\n\n\n\n  \n\n\n\n\nCotação do ouro - Parte 3\n\n\nSuavização Exponencial\n\n\n\n\nModelos Estatísticos\n\n\nSérie-Temporal\n\n\nR\n\n\n\n\n\n\n\n\n\n\n\nNov 10, 2023\n\n\nPedro Lima\n\n\n18 min\n\n\n\n\n\n\n  \n\n\n\n\nCotação do ouro - Parte 2\n\n\nAnálise Exploratória - Parte 2\n\n\n\n\nEDA\n\n\nSérie-Temporal\n\n\nR\n\n\n\n\n\n\n\n\n\n\n\nOct 17, 2023\n\n\nPedro Lima\n\n\n24 min\n\n\n\n\n\n\n  \n\n\n\n\nCotação do ouro - Parte 1\n\n\nAnálise Exploratória - Parte 1\n\n\n\n\nEDA\n\n\nSérie-Temporal\n\n\nR\n\n\n\n\n\n\n\n\n\n\n\nSep 25, 2023\n\n\nPedro Lima\n\n\n25 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/EDA-ouro/index.html#análise-preliminar",
@@ -1419,5 +1419,40 @@
     "title": "Cotação do ouro - Parte 3",
     "section": "Análise dos Resíduos",
     "text": "Análise dos Resíduos\n\nA análise de resíduos é uma etapa importante na avaliação de modelos. Ela ajuda a determinar se o modelo está capturando adequadamente as estruturas dos dados. Os resíduos que serão avaliados são em relação aos resultados dos modelos ajustados nos dados contidos no primeiro folder.\nA função plot_modeltime_residuals oferece um modo prático de avaliar os resíduos dos modelos que foram criados.\n\ncalib_table %&gt;% \n  modeltime_residuals() %&gt;% \n  plot_modeltime_residuals(\n     .type = \"timeplot\",\n     .interactive = FALSE\n     )\n\n\n\n\n\ncalib_table %&gt;% \n  modeltime_residuals() %&gt;% \n  plot_modeltime_residuals(\n     .type = \"acf\",\n     .interactive = FALSE\n     )\n\n\n\n\nEspera-se que os resíduos de um modelo exibam um comportamento de ruído branco, com média zero e variância constante. Qualquer padrão observado nos resíduos pode indicar que o modelo não está capturando de forma adequada a estrutura subjacente da série temporal. É possível notar que os resíduos dos modelos criados não correspondem exatamente ao comportamento esperado. O gráfico de resíduos não exibe um padrão completamente aleatório, seguindo um padrão próximo aos dados de teste, e os gráficos de ACF e PACF mostram uma autocorrelação residual significativa para o primeiro lag. Apesar disso, é possível considerar que os resíduos estão próximos do comportamento esperado, sendo a maioria dos modelos capaz de capturar as principais estruturas dos dados de forma satisfatória."
+  },
+  {
+    "objectID": "posts/Python/price_elasticity/index.html",
+    "href": "posts/Python/price_elasticity/index.html",
+    "title": "Modelagem Elasticidade Preço-Demanda",
+    "section": "",
+    "text": "Em um mercado dinâmico, compreender a relação entre o preço de um produto e sua demanda é essencial para estratégias eficazes de precificação. Neste artigo, embarcaremos em uma exploração da aplicação de Modelos Aditivos Generalizados (GAMs) para modelar a variação da demanda em relação ao preço.\nDado meu conhecimento inicial limitado sobre o tema, optarei por começar minha incursão por meio de um exemplo simples. Utilizarei o conceito de quantil de expectativa para criar modelos que representem diferentes cenários da relação entre demanda e preço. Essa abordagem inicial permitirá não apenas uma compreensão mais acessível do método, mas também a construção de modelos que capturam tanto o comportamento médio quanto cenários extremos."
+  },
+  {
+    "objectID": "posts/Python/price_elasticity/index.html#expectile",
+    "href": "posts/Python/price_elasticity/index.html#expectile",
+    "title": "Modelagem de Cenários de Precificação com Modelos Aditivos Generalizados (GAMs)",
+    "section": "Expectile",
+    "text": "Expectile\n\n“Expectile” é uma abreviação de “expectation quantile” (quantil de expectativa). Em estatísticas e modelagem estatística, um expectil representa um valor condicional associado a um determinado quantil da distribuição de uma variável aleatória. Em outras palavras, é uma medida de tendência central que foca em um quantil específico da distribuição, proporcionando uma visão mais detalhada das características dessa distribuição em comparação com a média condicional. O uso de expectis é particularmente útil quando se deseja entender o comportamento de uma variável em diferentes percentis da sua distribuição."
+  },
+  {
+    "objectID": "posts/Python/price_elasticity/index.html#preparando-os-dados",
+    "href": "posts/Python/price_elasticity/index.html#preparando-os-dados",
+    "title": "Modelagem Elasticidade Preço-Demanda",
+    "section": "Preparando os dados",
+    "text": "Preparando os dados\nRemovendo outliers.\n\ndf = df[df['Price'] &gt;= 5]\n\nCriando duas variáveis, x e y, a partir de um DataFrame df.\n\nx = df[['Price']]\ny = df['Quantity']\n\npara a criação de x esta sendo aplicadoo o uso de colchetes duplos ([[‘Price’]]) que cria um DataFrame em vez de uma Série. Portanto, x será um DataFrame com uma única coluna ‘Price’. Já y está sendo atribuído com a coluna ‘Quantity’ do DataFrame original df, resultando em uma Série."
+  },
+  {
+    "objectID": "posts/Python/price_elasticity/index.html#quantil-gams",
+    "href": "posts/Python/price_elasticity/index.html#quantil-gams",
+    "title": "Modelagem Elasticidade Preço-Demanda",
+    "section": "Quantil GAMs",
+    "text": "Quantil GAMs\n\nNesse trecho de código, vamos criar uma lista chamada quantiles com os valores de [0.025, 0.5, 0.975], nossos quantis de interesse. Também está sendo criado um dicionário vazio chamado gam_results. Os dicionários em Python são estruturas de dados que mapeiam chaves a valores. Eles são úteis para armazenar e organizar dados.\n\nquantiles = [0.025, 0.5, 0.975]\ngam_results = {}\n\nNeste trecho de código, vamos iterar sobre os valores da lista quantiles e, para cada valor q na lista, está criando e ajustando um modelo GAM através da função ExpectileGAM, específica para estimar expectativas condicionais de quantis (percentis) de uma variável de resposta. Em outras palavras, ela é projetada para modelar a relação entre variáveis preditoras e a expectativa condicional de determinados quantis da variável resposta, em vez de estimar a média condicional.\nO s(0) indica uma spline univariada aplicada à variável.\n\nfor q in quantiles:\n  gam = ExpectileGAM(s(0),expectile=q)\n  gam.fit(x,y)\n  gam_results[q] = gam\n  \n#gam_results\n\nAo final desse loop, gam_results conterá modelos GAM ajustados para cada quantil especificado na lista quantiles."
+  },
+  {
+    "objectID": "posts/Python/price_elasticity/index.html#quantil-de-expectativa-expectile",
+    "href": "posts/Python/price_elasticity/index.html#quantil-de-expectativa-expectile",
+    "title": "Modelagem Elasticidade Preço-Demanda",
+    "section": "Quantil de Expectativa (Expectile)",
+    "text": "Quantil de Expectativa (Expectile)\n\n“Expectile” é uma abreviação de “expectation quantile” (quantil de expectativa). Em estatísticas e modelagem estatística, um expectil representa um valor condicional associado a um determinado quantil da distribuição de uma variável aleatória. Em outras palavras, é uma medida de tendência central que foca em um quantil específico da distribuição, proporcionando uma visão mais detalhada das características dessa distribuição em comparação com a média condicional. O uso de expectis é particularmente útil quando se deseja entender o comportamento de uma variável em diferentes percentis da sua distribuição."
   }
 ]

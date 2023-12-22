@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pedro Lima">
-<meta name="dcterms.date" content="2023-11-07">
+<meta name="dcterms.date" content="2023-12-21">
 
-<title>PeDrOOM Blog - Elasticidade-Preço da Demanda</title>
+<title>PeDrOOM Blog - Modelagem Elasticidade Preço-Demanda</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -148,8 +148,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Elasticidade-Preço da Demanda</h1>
-            <p class="subtitle lead">Modelo Aditivo Generalizado</p>
+      <h1 class="title">Modelagem Elasticidade Preço-Demanda</h1>
+            <p class="subtitle lead">Modelos Aditivos Generalizados (GAMs)</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Modelos Estatísticos</div>
                 <div class="quarto-category">Python</div>
@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 7, 2023</p>
+        <p class="date">December 21, 2023</p>
       </div>
     </div>
     
@@ -188,11 +188,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a></li>
   <li><a href="#elasticidade-preço-da-demanda" id="toc-elasticidade-preço-da-demanda" class="nav-link" data-scroll-target="#elasticidade-preço-da-demanda">Elasticidade-Preço da Demanda</a></li>
-  <li><a href="#modelos-aditivos-generalizados-gams" id="toc-modelos-aditivos-generalizados-gams" class="nav-link" data-scroll-target="#modelos-aditivos-generalizados-gams">Modelos Aditivos Generalizados (GAMs)</a></li>
+  <li><a href="#modelos-aditivos-generalizados-gams" id="toc-modelos-aditivos-generalizados-gams" class="nav-link" data-scroll-target="#modelos-aditivos-generalizados-gams">Modelos Aditivos Generalizados (GAMs)</a>
+  <ul class="collapse">
+  <li><a href="#quantil-de-expectativa-expectile" id="toc-quantil-de-expectativa-expectile" class="nav-link" data-scroll-target="#quantil-de-expectativa-expectile">Quantil de Expectativa (Expectile)</a></li>
+  </ul></li>
+  <li><a href="#carregando-os-pacotes-necessários" id="toc-carregando-os-pacotes-necessários" class="nav-link" data-scroll-target="#carregando-os-pacotes-necessários">Carregando os pacotes necessários</a></li>
   <li><a href="#criando-os-dados" id="toc-criando-os-dados" class="nav-link" data-scroll-target="#criando-os-dados">Criando os dados</a></li>
-  <li><a href="#filtrando" id="toc-filtrando" class="nav-link" data-scroll-target="#filtrando">filtrando</a></li>
-  <li><a href="#criando-o-modelo" id="toc-criando-o-modelo" class="nav-link" data-scroll-target="#criando-o-modelo">Criando o Modelo</a></li>
+  <li><a href="#criando-o-modelo" id="toc-criando-o-modelo" class="nav-link" data-scroll-target="#criando-o-modelo">Criando o Modelo</a>
+  <ul class="collapse">
+  <li><a href="#preparando-os-dados" id="toc-preparando-os-dados" class="nav-link" data-scroll-target="#preparando-os-dados">Preparando os dados</a></li>
+  <li><a href="#quantil-gams" id="toc-quantil-gams" class="nav-link" data-scroll-target="#quantil-gams">Quantil GAMs</a></li>
+  </ul></li>
   <li><a href="#visualizando" id="toc-visualizando" class="nav-link" data-scroll-target="#visualizando">Visualizando</a></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão">Conclusão</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -209,10 +218,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 <section id="introdução" class="level1">
 <h1>Introdução</h1>
+<div class="justificado">
+<p>Em um mercado dinâmico, compreender a relação entre o preço de um produto e sua demanda é essencial para estratégias eficazes de precificação. Neste artigo, embarcaremos em uma exploração da aplicação de Modelos Aditivos Generalizados (GAMs) para modelar a variação da demanda em relação ao preço.</p>
+<p>Dado meu conhecimento inicial limitado sobre o tema, optarei por começar minha incursão por meio de um exemplo simples. Utilizarei o conceito de quantil de expectativa para criar modelos que representem diferentes cenários da relação entre demanda e preço. Essa abordagem inicial permitirá não apenas uma compreensão mais acessível do método, mas também a construção de modelos que capturam tanto o comportamento médio quanto cenários extremos.</p>
+</div>
 </section>
 <section id="elasticidade-preço-da-demanda" class="level1">
 <h1>Elasticidade-Preço da Demanda</h1>
-<p>A elasticidade preço da demanda é um conceito econômico que mede a sensibilidade da quantidade demandada de um bem em relação às mudanças no seu preço. Em outras palavras, a elasticidade preço da demanda indica como a quantidade demandada de um bem ou serviço responde às variações no preço desse bem ou serviço.</p>
+<div class="justificado">
+<p>Antes de adentrarmos nos modelos, é interessante compreender o conceito de elasticidade-preço da demanda, mesmo não sendo o objetivo deste post calcular o índice em si, mas sim criar a intuição de como utilizar GAMs como estratégia de precificação. Esse indicador mensura a sensibilidade da quantidade demandada de um bem diante das variações em seu preço. Trata-se de uma ferramenta valiosa para empresas, governos e economistas, pois oferece discernimento sobre como as alterações nos preços impactam o comportamento dos consumidores e, por conseguinte, a receita total. Uma compreensão da elasticidade também desempenha papel crucial na formulação de políticas públicas.</p>
 <p>A fórmula básica para calcular a elasticidade preço da demanda (EPD) é:</p>
 <p><span class="math display">\[
 \text{EPD} = \frac{\%\text{Variação na Quantidade Demandada}}{\%\text{Variação no Preço}}
@@ -231,20 +245,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>A quantidade demandada muda na mesma proporção que o preço, resultando em receita total constante.</li>
 </ul></li>
-<li><p>Elastica (<span class="math inline">\(\text{EPD} &gt; 1)\)</span>:</p>
+<li><p>Elástica (<span class="math inline">\(\text{EPD} &gt; 1)\)</span>:</p>
 <ul>
 <li>A quantidade demandada responde mais do que proporcionalmente às mudanças no preço. Se o preço aumentar, a receita total diminuirá.</li>
 </ul></li>
 <li><p>Elasticidade Perfeitamente Elástica <span class="math inline">\((\text{EPD} = \infty)\)</span>:</p>
 <ul>
-<li>A quantidade demandada é extremamente sensível às mudanças no preço. Pequenas alterações no preço levam a mudanças infinitas na quantidade demandada.</li>
+<li>A quantidade demandada é extremamente sensível às mudanças no preço. Pequenas alterações no preço levam a mudanças extremas na quantidade demandada.</li>
 </ul></li>
 </ol>
-<p>A elasticidade preço da demanda é uma ferramenta valiosa para empresas, governos e economistas, pois fornece insights sobre como as mudanças nos preços afetam o comportamento dos consumidores e, por sua vez, a receita total. Uma compreensão da elasticidade também é crucial para a formulação de políticas públicas e estratégias de precificação no mundo dos negócios.</p>
+</div>
 </section>
 <section id="modelos-aditivos-generalizados-gams" class="level1">
 <h1>Modelos Aditivos Generalizados (GAMs)</h1>
-<p>Os Modelos Aditivos Generalizados (GAMs) são uma extensão dos modelos lineares generalizados (GLMs) que incorporam termos não lineares e interações de forma flexível. Vamos explorar a formulação matemática do GAM.</p>
+<div class="justificado">
+<p>Os GAMs, extensão dos modelos lineares generalizados (GLMs), são uma ferramenta poderosa na modelagem estatística, permitindo a captura de relações não lineares entre variáveis.</p>
 <p>Em um GAM, a função preditiva é expressa como a soma de funções suaves de preditores, e a estrutura de suavização é estimada a partir dos dados. Suponhamos que estejamos interessados em prever uma variável de resposta <span class="math inline">\(Y\)</span> usando preditores <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>. A formulação básica de um GAM é dada por:</p>
 <p><span class="math display">\[g(\mu) = \beta_0 + f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)\]</span></p>
 <p>onde:</p>
@@ -255,8 +270,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><span class="math inline">\(f_1(X_1) + f_2(X_2) + \ldots + f_p(X_p)\)</span> são funções suaves dos preditores.</p></li>
 </ul>
 <p>As funções suaves <span class="math inline">\(f_i(X_i)\)</span> são geralmente representadas usando splines ou outras formas de suavização.</p>
-<p>A função <span class="math inline">\(f_i(.)\)</span> captura a relação não linear entre o preditor <span class="math inline">\(X_i\)</span> e a resposta <span class="math inline">\(Y\)</span>. Essas funções podem ser construídas usando splines cúbicos, por exemplo.</p>
 <p>O modelo é ajustado aos dados por meio de uma abordagem de otimização para estimar os coeficientes <span class="math inline">\(\beta_0\)</span> e as funções suaves <span class="math inline">\(f_i(.)\)</span> que minimizam uma função de perda.</p>
+</div>
+<section id="quantil-de-expectativa-expectile" class="level2">
+<h2 class="anchored" data-anchor-id="quantil-de-expectativa-expectile">Quantil de Expectativa (Expectile)</h2>
+<div class="justificado">
+<p>“Expectile” é uma abreviação de “expectation quantile” (quantil de expectativa). Em estatísticas e modelagem estatística, um expectil representa um valor condicional associado a um determinado quantil da distribuição de uma variável aleatória. Em outras palavras, é uma medida de tendência central que foca em um quantil específico da distribuição, proporcionando uma visão mais detalhada das características dessa distribuição em comparação com a média condicional. O uso de expectis é particularmente útil quando se deseja entender o comportamento de uma variável em diferentes percentis da sua distribuição.</p>
+</div>
+</section>
+</section>
+<section id="carregando-os-pacotes-necessários" class="level1">
+<h1>Carregando os pacotes necessários</h1>
+<div class="justificado">
+<p>O código abaixo importa os pacotes necessários para a criação dos modelos. Se por acaso você não tiver algum desses pacotes instalados, basta utilizar <code>!pip install 'nome do pacote'</code>.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -266,10 +292,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Se você está começando a utilizar o Python, assim como eu, aqui está uma breve descrição sobre os pacotes utilizados:</p>
+<ul>
+<li><p>Pandas:</p>
+<ul>
+<li>O Pandas é uma biblioteca essencial para manipulação e análise de dados. Com suas estruturas de dados poderosas, como o DataFrame, facilita a organização e a exploração eficiente de conjuntos de dados.</li>
+</ul></li>
+<li><p>NumPy:</p>
+<ul>
+<li>O NumPy é uma biblioteca fundamental para computação numérica em Python. Sua principal contribuição é a introdução de arrays multidimensionais, proporcionando suporte robusto para operações matemáticas e facilitando cálculos complexos.</li>
+</ul></li>
+<li><p>Matplotlib.pyplot:</p>
+<ul>
+<li>O Matplotlib.pyplot é uma ferramenta poderosa para visualização de dados. Essa biblioteca permite a criação de gráficos e plots, possibilitando a apresentação clara e compreensível de resultados de análises.</li>
+</ul></li>
+<li><p>PyGAM:</p>
+<ul>
+<li>O PyGAM é uma biblioteca especializada em Modelos Aditivos Generalizados (GAMs). Destacamos as funções s e ExpectileGAM. A função s é fundamental para especificar termos suaves em modelos, enquanto ExpectileGAM é utilizada para modelar a expectativa condicional de variáveis de resposta, proporcionando flexibilidade na análise estatística.</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="criando-os-dados" class="level1">
 <h1>Criando os dados</h1>
 <div class="justificado">
+<p>O código baixo está criando dados simulados para as variáveis ‘price’ e ‘quantity’ com base em distribuições aleatórias.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#gerando os dados</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
@@ -278,12 +325,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> <span class="dv">1000</span> <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> price <span class="op">+</span> np.random.normal(loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">50</span>,size<span class="op">=</span>n)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> quantity.clip(<span class="bu">min</span><span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Esse trecho de código está criando dados simulados para as variáveis price e quantity com base em distribuições aleatórias. Vamos analisar linha por linha:</p>
-<p>np.random.seed(0): Configura a semente para o gerador de números aleatórios do NumPy. Isso garante que os números aleatórios gerados sejam os mesmos em diferentes execuções do código, tornando os resultados reproduzíveis.</p>
-<p>n = 100: Define o tamanho da amostra como 100.</p>
-<p>price = np.sort(np.random.exponential(scale=100, size=n)): Gera uma amostra de 100 valores a partir de uma distribuição exponencial com uma escala de 100. Em seguida, esses valores são ordenados em ordem crescente usando np.sort() e atribuídos à variável price.</p>
-<p>quantity = 1000 - 5 * price + np.random.normal(loc=0, scale=50, size=n): Gera valores para a variável quantity com base em uma relação linear com a variável price. Adiciona-se ruído normal à relação linear usando np.random.normal() com uma média (loc) de 0 e um desvio padrão (scale) de 50.</p>
-<p>quantity = quantity.clip(min=0): Substitui qualquer valor negativo em quantity por 0. Isso é feito usando o método clip(), garantindo que a quantidade não seja negativa.</p>
+<p>A variável ‘price’ foi gerada a partir de uma distribuição exponencial, representando os preços dos produtos simulados. Enquanto isso, a variável ‘quantity’ foi construída como uma relação linear com ‘price’, mais um componente de ruído normal. Essa abordagem visa simular a relação entre preço e quantidade demandada.</p>
+<p>O trecho de código a seguir adiciona outliers aos dados simulados</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#adicionando outliers</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n_outliers <span class="op">=</span> <span class="dv">10</span></span>
@@ -292,12 +335,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> np.concatenate([price, outliers_prices])</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> np.concatenate([quantity, outliers_quantity])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Este trecho de código adiciona outliers aos dados simulados já gerados para as variáveis price e quantity. Vamos analisar linha por linha:</p>
-<p>n_outliers = 10: Define o número de outliers como 10.</p>
-<p>outliers_prices = np.random.uniform(5, 50, n_outliers): Gera 10 valores uniformemente distribuídos entre 5 e 50, representando os preços dos outliers.</p>
-<p>outliers_quantity = 1100 + np.random.normal(loc=0, scale=50, size=n_outliers): Gera 10 valores para as quantidades dos outliers, adicionando ruído normal à média de 1100, com um desvio padrão de 50.</p>
-<p>price = np.concatenate([price, outliers_prices]): Concatena os valores de outliers_prices ao final da array price. Isso adiciona os outliers à variável price.</p>
-<p>quantity = np.concatenate([quantity, outliers_quantity]): Concatena os valores de outliers_quantity ao final da array quantity. Isso adiciona os outliers à variável quantity.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#adicionando outliers</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n_outliers <span class="op">=</span> <span class="dv">10</span></span>
@@ -306,47 +343,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>price <span class="op">=</span> np.concatenate([price, outliers_prices])</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> np.concatenate([quantity, outliers_quantity])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Neste trecho de código, você está adicionando mais 10 outliers às variáveis price e quantity. Vamos analisar cada linha:</p>
-<p>n_outliers = 10: Define novamente o número de outliers como 10.</p>
-<p>outliers_prices = np.random.uniform(51, 100, n_outliers): Gera 10 valores uniformemente distribuídos entre 51 e 100, representando os preços dos novos outliers.</p>
-<p>outliers_quantity = 900 + np.random.normal(loc=0, scale=50, size=n_outliers): Gera 10 valores para as quantidades dos novos outliers, adicionando ruído normal à média de 900, com um desvio padrão de 50.</p>
-<p>price = np.concatenate([price, outliers_prices]): Concatena os valores de outliers_prices ao final da array price. Isso adiciona os novos outliers à variável price.</p>
-<p>quantity = np.concatenate([quantity, outliers_quantity]): Concatena os valores de outliers_quantity ao final da array quantity. Isso adiciona os novos outliers à variável quantity.</p>
+<p>Criando um DataFrame a partir das variáveis ‘price’ e ‘quantity’.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Price'</span> : price,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Quantity'</span>: quantity</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Este trecho de código cria um DataFrame do Pandas chamado df a partir das variáveis price e quantity. Vamos entender cada parte:</p>
-</div>
-</section>
-<section id="filtrando" class="level1">
-<h1>filtrando</h1>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">'Price'</span>] <span class="op">&gt;=</span> <span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="criando-o-modelo" class="level1">
 <h1>Criando o Modelo</h1>
+<section id="preparando-os-dados" class="level2 justificado">
+<h2 class="anchored" data-anchor-id="preparando-os-dados">Preparando os dados</h2>
+<p>Removendo outliers.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">'Price'</span>] <span class="op">&gt;=</span> <span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Criando duas variáveis, x e y, a partir de um DataFrame df.</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> df[[<span class="st">'Price'</span>]]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'Quantity'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>para a criação de x esta sendo aplicadoo o uso de colchetes duplos ([[‘Price’]]) que cria um DataFrame em vez de uma Série. Portanto, x será um DataFrame com uma única coluna ‘Price’. Já y está sendo atribuído com a coluna ‘Quantity’ do DataFrame original df, resultando em uma Série.</p>
+</section>
+<section id="quantil-gams" class="level2">
+<h2 class="anchored" data-anchor-id="quantil-gams">Quantil GAMs</h2>
 <div class="justificado">
-<p>Esse trecho de código está criando duas variáveis, x e y, a partir de um DataFrame df. Aqui está a explicação:</p>
-<p><code>x = df[['Price']]</code>: Aqui, x está sendo atribuído com uma nova DataFrame que contém apenas a coluna ‘Price’ do DataFrame original df. O uso de colchetes duplos ([[‘Price’]]) cria um DataFrame em vez de uma Série. Portanto, x será um DataFrame com uma única coluna ‘Price’.</p>
-<p><code>y = df['Quantity']</code>: Aqui, y está sendo atribuído com a coluna ‘Quantity’ do DataFrame original df. Isso resulta em uma Série, pois estamos pegando apenas uma coluna. Portanto, ao final dessas linhas de código, x será um DataFrame que contém apenas a coluna ‘Price’, e y será uma Série que contém a coluna ‘Quantity’.</p>
-<section id="quantil-gams" class="level1">
-<h1>Quantil GAMs</h1>
-<p>Nesse trecho de código, parece que você está criando uma lista chamada quantiles com os valores [0.025, 0.5, 0.975] e um dicionário vazio chamado gam_results. Aqui está uma explicação mais detalhada:</p>
+<p>Nesse trecho de código, vamos criar uma lista chamada quantiles com os valores de [0.025, 0.5, 0.975], nossos quantis de interesse. Também está sendo criado um dicionário vazio chamado <code>gam_results</code>. Os dicionários em Python são estruturas de dados que mapeiam chaves a valores. Eles são úteis para armazenar e organizar dados.</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>quantiles <span class="op">=</span> [<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gam_results <span class="op">=</span> {}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>quantiles = [0.025, 0.5, 0.975]: Isso cria uma lista chamada quantiles que contém os valores 0.025, 0.5 e 0.975. Esses valores são frequentemente usados para calcular percentis ou quantis em estatísticas.</p>
-<p>gam_results = {}: Isso cria um dicionário vazio chamado gam_results. Os dicionários em Python são estruturas de dados que mapeiam chaves a valores. Eles são úteis para armazenar e organizar dados.</p>
-<p>Juntos, essas duas linhas sugerem que você pode estar planejando armazenar resultados ou estatísticas calculadas usando modelos GAM (Generalized Additive Models) para os quantis especificados. Talvez você vá preencher gam_results com informações sobre o modelo GAM em diferentes quantis. O propósito exato dependerá do restante do código, que não está incluído na sua pergunta.</p>
+<p>Neste trecho de código, vamos iterar sobre os valores da lista quantiles e, para cada valor q na lista, está criando e ajustando um modelo GAM através da função <code>ExpectileGAM</code>, específica para estimar expectativas condicionais de quantis (percentis) de uma variável de resposta. Em outras palavras, ela é projetada para modelar a relação entre variáveis preditoras e a expectativa condicional de determinados quantis da variável resposta, em vez de estimar a média condicional.</p>
+<p>O <code>s(0)</code> indica uma spline univariada aplicada à variável.</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> q <span class="kw">in</span> quantiles:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  gam <span class="op">=</span> ExpectileGAM(s(<span class="dv">0</span>),expectile<span class="op">=</span>q)</span>
@@ -355,54 +385,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#gam_results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Neste trecho de código, parece que você está iterando sobre os valores da lista quantiles e, para cada valor q na lista, está criando e ajustando um modelo GAM (Generalized Additive Model) de Expectile usando a biblioteca de modelos estatísticos, possivelmente pyGAM.</p>
-<p>Aqui está uma explicação passo a passo:</p>
-<p>for q in quantiles:: Este é um loop que percorre cada valor na lista quantiles. Para cada iteração, a variável q receberá o valor do próximo quantil.</p>
-<p>gam = ExpectileGAM(s(0),expectile=q): Aqui, você está criando um modelo GAM de Expectile. O s(0) indica uma spline univariada (função suave) aplicada à primeira variável (presumivelmente, a coluna ‘Price’ que você mencionou anteriormente). expectile=q indica que você está ajustando o modelo para um valor específico de expectile, onde q é o valor atual do loop.</p>
-<p>gam.fit(x, y): Esta linha ajusta o modelo GAM aos dados. Presumivelmente, x é o DataFrame que contém a coluna ‘Price’, e y é a Série que contém a coluna ‘Quantity’.</p>
-<p>gam_results[q] = gam: Aqui, você está armazenando o modelo GAM ajustado no dicionário gam_results, usando o valor q como chave. Isso cria uma entrada no dicionário para cada quantil com o modelo GAM correspondente.</p>
-<p>Portanto, ao final desse loop, gam_results conterá modelos GAM ajustados para cada quantil especificado na lista quantiles. Esses modelos podem ser utilizados posteriormente para previsões ou análises.</p>
-</section>
+<p>Ao final desse loop, <code>gam_results</code> conterá modelos GAM ajustados para cada quantil especificado na lista quantiles.</p>
 </div>
+</section>
 </section>
 <section id="visualizando" class="level1">
 <h1>Visualizando</h1>
+<div class="justificado">
+<p>Vamos visualizar os modelos criados.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scaterplot</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">'Price'</span>], df[<span class="st">'Quantity'</span>], alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Dados'</span>)</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(df[<span class="st">'Price'</span>], df[<span class="st">'Quantity'</span>], alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Dados'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># plot quantile GAMs</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>xx <span class="op">=</span> np.linspace(df[<span class="st">'Price'</span>].<span class="bu">min</span>(), df[<span class="st">'Price'</span>].<span class="bu">max</span>(), <span class="dv">1000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> q, gam <span class="kw">in</span> gam_results.items():</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  plt.plot(xx, gam.predict(xx), label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span><span class="bu">int</span>(q<span class="op">*</span><span class="dv">100</span>)<span class="sc">}</span><span class="ss">º Quantis GAMs'</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#add title and labels</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Preço'</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Demanda'</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Quantis GAMs - Elasticidade de Preço vs Demanda (Outliers Removidos)'</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>xx <span class="op">=</span> np.linspace(df[<span class="st">'Price'</span>].<span class="bu">min</span>(), df[<span class="st">'Price'</span>].<span class="bu">max</span>(), <span class="dv">1000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> q, gam <span class="kw">in</span> gam_results.items():</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  plt.plot(xx, gam.predict(xx), label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span><span class="bu">int</span>(q<span class="op">*</span><span class="dv">100</span>)<span class="sc">}</span><span class="ss">º Quantis GAMs'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Preço'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Demanda'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Quantis GAMs - Preço vs Demanda (Outliers Removidos)'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-11-output-1.png" width="758" height="566"></p>
 </div>
 </div>
+<p>Este trecho de código emprega a biblioteca Matplotlib para gerar um gráfico de dispersão dos dados e, posteriormente, desenha curvas de quantis para os modelos GAM ajustados. O resultado final é um gráfico que exibe os dados originais acompanhados por um conjunto de curvas suaves que representam os quantis GAM ajustados para a relação entre preço e demanda.</p>
+</div>
+</section>
+<section id="conclusão" class="level1">
+<h1>Conclusão</h1>
 <div class="justificado">
-<p>Este trecho de código utiliza a biblioteca Matplotlib para criar um gráfico de dispersão dos dados e, em seguida, traça curvas de quantis para modelos GAM ajustados. Vamos passar por ele linha por linha:</p>
-<p>plt.figure(figsize=(8,6)): Inicia uma nova figura com um tamanho de 8 por 6 polegadas. Isso afeta o tamanho do gráfico que será gerado.</p>
-<p>plt.scatter(df[‘Price’], df[‘Quantity’], alpha=0.5, label=‘Dados’): Plota um gráfico de dispersão (scatter plot) dos dados. Os valores de ‘Price’ são colocados no eixo x e os valores de ‘Quantity’ no eixo y. O argumento alpha=0.5 controla a transparência dos pontos, e label=‘Dados’ fornece uma etiqueta para a legenda.</p>
-<p>xx = np.linspace(df[‘Price’].min(), df[‘Price’].max(), 1000).reshape(-1,1): Gera 1000 pontos igualmente espaçados no intervalo mínimo e máximo dos preços no DataFrame original. Isso é feito para criar uma linha suave ao plotar as curvas de quantis GAM.</p>
-<p>O próximo bloco usa um loop for para iterar sobre os itens no dicionário gam_results:</p>
-<p><code>for q, gam in gam_results.items():</code> <code>plt.plot(xx, gam.predict(xx), label=f'{int(q*100)}º Quantis GAMs')</code></p>
-<p>q é o valor do quantil. gam é o modelo GAM correspondente a esse quantil. gam.predict(xx) prediz os valores de ‘Quantity’ para os pontos em xx usando o modelo GAM. label=f’{int(q*100)}º Quantis GAMs’ fornece uma etiqueta para a legenda que inclui o valor do quantil em termos percentuais. As linhas seguintes configuram o título, rótulos dos eixos, legenda, e adicionam uma grade ao gráfico.</p>
-<p>plt.tight_layout(): Ajusta automaticamente a disposição dos subplots para evitar sobreposição.</p>
-<p>plt.show(): Exibe o gráfico.</p>
-<p>O resultado final é um gráfico que mostra os dados originais com um conjunto de curvas suaves representando os quantis GAM ajustados para a relação entre preço e demanda. Cada curva é rotulada de acordo com o valor do quantil.</p>
+<p>Ao longo desta análise, empreguei a função ExpectileGAM para criar modelos que vão além da simples estimativa da média condicional. A utilização de diferentes valores de ‘expectile’ permitiu a construção de cenários extremos, representando tanto o pior quanto o melhor caso para a relação entre preço e demanda. Esta abordagem pode proporciona insights valiosos sobre o comportamento da variação da demanda em relação ao preço.</p>
+<p>A modelagem com funções de base splines permitiu a captura de padrões não-lineares, tornando os modelos mais flexíveis e adaptáveis à complexidade subjacente dos dados. Os gráficos resultantes, com curvas suaves representando diferentes quantis, oferecem uma visualização clara dos cenários possíveis.</p>
+<p>Ao considerar os piores e melhores cenários de preços, abre-se uma janela estratégica valiosa para a formulação de estratégias de precificação mais robustas. Compreender como a demanda pode variar em extremos é crucial para a tomada de decisões informadas, capacitando empresas a ajustar suas estratégias de acordo com diferentes contextos de mercado.</p>
+<p>Este estudo, embora um exemplo simples, ilustra o potêncial da modelagem com GAMs na análise de elasticidade do preço. Em futuras postagens sobre esse tema, pretendo aprofundar a análise utilizando dados reais.</p>
+</div>
+</section>
+<section id="referências" class="level1">
+<h1>Referências</h1>
+<div class="justificado">
+<p><a href="https://www.youtube.com/watch?v=tRku0RgRQtc&amp;t=881s">Price Elasticity and Optimization in Python (feat. pyGAM)</a></p>
+<p><a href="https://pygam.readthedocs.io/en/latest/index.html">Welcome to pyGAM’s documentation!</a></p>
+<p><a href="https://pygam.readthedocs.io/en/latest/api/expectilegam.html">ExpectileGAM</a></p>
 </div>
 
 
